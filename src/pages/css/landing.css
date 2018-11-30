@@ -1,0 +1,38 @@
+.bg-landing {
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: url('../../assets/geometric-landing-design.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.nav-brand-landing {
+  font-size: 1.8em;
+  color: #fff!important;
+  font-weight: bolder;
+  text-shadow: 2px 5px 15px rgba(255, 123, 0, 0.5);
+}
+
+.mobile-app-rupiah {
+  width: 50%;
+  height: 10%!important;
+}
+
+.landing-text {
+  color: #fff;
+}
+
+.landing-text p, .landing-text h1 {
+  text-shadow: 10px 5px 20px rgb(255, 123, 0);
+}
+
+.landing-text h1 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.landing-text p {
+  font-weight: 400;
+}

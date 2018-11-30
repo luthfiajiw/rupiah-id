@@ -1,0 +1,160 @@
+.bg-sign-in {
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: url('../../assets/geometric-landing-design.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.sign-in {
+  text-shadow: 2px 5px 10px rgb(202, 129, 0, .5);
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (min-width: 768px) {
+  .sign-in {
+    width: 30%!important;
+  }
+}
+
+.title-form {
+  font-size: 3em;
+  text-shadow: 2px 5px 10px rgb(252, 126, 9);
+}
+
+.form-signin {
+  background-color: rgba(202, 123, 0, .5);
+  border-radius: 10px;
+  color: #fff;
+  padding: 30px 0;
+}
+
+.InputBox {
+  position: relative;
+}
+
+.InputBox input {
+  width: 50%;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  text-indent: 8px;
+  font-size: 14px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+}
+
+.InputBox label {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  text-align: left;
+  margin-bottom: 0;
+  transition: .5s;
+  -webkit-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+}
+
+.InputBox input:focus ~ label,
+.InputBox input:valid ~ label {
+  top: -18px;
+}
+
+.btn-masuk, .btn-daftar{
+  background-color: #ffc837;
+  position: relative;
+  padding: 10px;
+  border: none;
+  color: rgb(255, 115, 0);
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 17px;
+  letter-spacing: 1px;
+  transition: .5s;
+  -webkit-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+}
+
+.btn-form {
+  background-color: #ffc837;
+  position: relative;
+  padding: 10px;
+  border: none;
+  color: rgb(255, 115, 0);
+  width: 50%;
+  margin: 20px 0;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 17px;
+  letter-spacing: 1px;
+  transition: .5s;
+  -webkit-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -o-transition: .5s;
+}
+
+.hr-form {
+  width: 50%;
+  margin-top: 30px;
+}
+
+.btn-masuk:hover, .btn-daftar:hover {
+  transform: translateY(-20%);
+  box-shadow: 0px 7px 5px rgb(255, 126, 9);
+}
+
+.btn-masuk:hover, .btn-daftar:hover, .btn-form:hover {
+  background-color: #fed772;
+}
+
+.forget-pass {
+  color: #fff;
+  font-size: 12px;
+}
+
+.forget-pass:hover {
+  color: #ddd;
+}
+
+
+.email::before {
+  content: "\f0e0";
+  font-family: FontAwesome;
+  padding: 0px 10px 0px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+.user::before {
+  content: "\f007";
+  font-family: FontAwesome;
+  padding: 0px 10px 0px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.password::before {
+  content: "\f023";
+  font-family: FontAwesome;
+  padding: 0px 10px 0px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}

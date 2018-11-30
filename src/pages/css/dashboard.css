@@ -1,0 +1,65 @@
+.dashboard {
+  min-height: 100vh;
+}
+
+.dashboard li {
+  margin: 0 10px;
+}
+
+.btn-switch {
+  background-color: #ffb817;
+  border-radius: 5px;
+}
+
+.btn-day, .btn-month {
+  margin: auto 1px;
+  padding-left: 32px;
+  padding-right: 32px;
+  background-color: #ffb817;
+  color: #fff;
+}
+
+.btn-daily {
+  position: relative;
+}
+
+.dashboard .btn-day:hover, .dashboard .btn-month:hover {
+  background-color: #ff9906;
+  color: #fff;
+}
+
+.dashboard .card-header {
+  background-color: #ffb817;
+  color: white;
+  border: none;
+}
+.dashboard .card-body {
+  color: #ff9906;
+}
+
+.dashboard .card-footer {
+  background-color: transparent!important;
+  text-align: left!important;
+}
+
+.oren--Active {
+  background-color: #ff9906!important;
+  color: #fff;
+}
+
+.oren {
+  color: #ffb817;
+}
+
+.items-sold {
+  padding: 30px;
+}
+
+thead {
+  background-color: #ff9906;
+  color: #fff;
+}
+
+th {
+  border-color: #fff!important;
+}

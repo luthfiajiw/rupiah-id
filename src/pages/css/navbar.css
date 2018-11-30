@@ -1,0 +1,54 @@
+.logo {
+  font-size: 2em;
+  font-weight: bolder;
+  text-shadow: 2px 5px 15px rgba(255, 123, 0, 0.5);
+}
+
+.navbar-dashboard, .dropdown-menu{
+  background-image: linear-gradient(180deg, #ff9906, #ffb817);
+}
+
+.dropdown-item:hover, .nav-link:hover {
+  background-color: #ffb817;
+  border-radius: 5px;
+}
+
+.navbar-dashboard a, .navbar-dashboard ul li {
+  color: #fff!important;
+}
+
+.dashboard-icon::before {
+  content: "\f201";
+  font-family: FontAwesome;
+  padding: 12px 10px 12px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.datas::before {
+  content: "\f126";
+  font-family: FontAwesome;
+  padding: 12px 10px 12px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.transaction::before {
+  content: "\f24e";
+  font-family: FontAwesome;
+  padding: 12px 10px 12px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.setting::before {
+  content: "\f013";
+  font-family: FontAwesome;
+  padding: 12px 10px 12px 10px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
