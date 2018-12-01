@@ -3,6 +3,10 @@ import './css/dashboard.css';
 import Navbar from './Navbar';
 import Daily from './dashboard/Daily';
 import Monthly from './dashboard/Monthly';
+import Datas from './Datas';
+import Purchases from './Purchases';
+import Sales from './Sales';
+import Store from './Store';
 import Ink from 'react-ink';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 
@@ -38,6 +42,10 @@ class Dashboard extends Component {
             <Switch>
               <Route path="/dashboard/daily" component={Daily}/>
               <Route path="/dashboard/monthly" component={Monthly}/>
+              <Route path="/datas" component={Datas}/>
+              <Route path="/purchases" component={Purchases}/>
+              <Route path="/sales" component={Sales}/>
+              <Route path="/store" component={Store}/>
             </Switch>
           </div>
     );

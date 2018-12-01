@@ -14,7 +14,9 @@ class Landing extends Component {
     return (
         <div className="bg-landing">
           <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand nav-brand-landing ml-auto" href="#">LOGO</a>
+            <a class="navbar-brand ml-auto" href="#">
+              <img className="nav-brand-landing" src={require('../assets/rupiah-id.svg')} alt="logo rupiah"/>
+            </a>
           </nav>
 
           <div className="container pt-5">

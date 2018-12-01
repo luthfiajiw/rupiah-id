@@ -6,10 +6,6 @@ import SignIn from './pages/Sign-in.js';
 import SignUp from './pages/Sign-up.js';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
-import Datas from './pages/Datas';
-import Purchases from './pages/Purchases';
-import Sales from './pages/Sales';
-import Store from './pages/Store';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -24,10 +20,6 @@ class App extends Component {
             <Route path="/sign-in" component={SignIn}/>
             <Route path="/dashboard/daily" component={Dashboard}/>
             <Route path="/dashboard/monthly" component={Dashboard}/>
-            <Route path="/datas" component={Datas}/>
-            <Route path="/purchases" component={Purchases}/>
-            <Route path="/sales" component={Sales}/>
-            <Route path="/store" component={Store}/>
           </Switch>
         </div>
       </BrowserRouter>

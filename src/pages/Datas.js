@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from './Navbar';
 import Category from './datas/Category';
 import Customer from './datas/Customer';
 import Stock from './datas/Stock';
@@ -10,8 +11,8 @@ class Datas extends Component {
 
   render() {
     return (
-      <BrowserRouter>
         <div>
+          <Navbar/>
           <h1 className="">Datas</h1>
           <Switch>
             <Route exact path="/datas/category" component={Category}/>
@@ -21,7 +22,6 @@ class Datas extends Component {
             <Route path="/datas/supplier" component={Supplier}/>
           </Switch>
         </div>
-      </BrowserRouter>
     );
   }
 
