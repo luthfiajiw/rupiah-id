@@ -1,0 +1,61 @@
+.rounded {
+  border-radius: 5px;
+}
+
+.datas-menu{
+  min-height: 100vh;
+  background: url('../../assets/dashboard-background.svg');
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.datas-box {
+  padding: 80px;
+  position: relative;
+}
+
+.datas-box-muted {
+  z-index: 0;
+}
+
+.datas-box-cream {
+  background-color: rgb(255, 213, 85);
+  color: #333;
+  z-index: 10;
+  transition: .3s;
+  border-radius: 10px;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  -ms-transition: .3s;
+}
+
+.datas-box-red {
+  background-color: rgb(255, 85, 85);
+  color: #fff;
+  z-index: 10;
+  transition: .3s;
+  border-radius: 10px;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  -o-transition: .3s;
+  -ms-transition: .3s;
+}
+
+.datas-box-cream:hover {
+  box-shadow: 0px 1px 5px rgba(108, 108, 108, 0.2);
+  transform: scale(1.02);
+  color: #333;
+  text-decoration: none;
+}
+
+.datas-box-red:hover {
+  box-shadow: 0px 1px 5px rgba(108, 108, 108, 0.2);
+  transform: scale(1.02);
+  color: #fff;
+  text-decoration: none;
+}
+
+.datas-box-cream h3 {
+  text-shadow: 5px 5px 5px rgba(152, 152, 152, .2);
+}

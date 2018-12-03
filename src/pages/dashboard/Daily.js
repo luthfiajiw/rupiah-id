@@ -49,7 +49,7 @@ class Daily extends Component {
           </div>
         </div>
 
-        <div className="row shadow mt-5 py-2 ">
+        <div className="row bg-white shadow mt-5 py-2 ">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Penjualan</h1>
@@ -92,7 +92,7 @@ class Daily extends Component {
           </div>
         </div>
 
-        <div className="row shadow mt-5 py-2 ">
+        <div className="row bg-white shadow mt-5 py-2 ">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Pembelian</h1>
@@ -135,7 +135,7 @@ class Daily extends Component {
           </div>
         </div>
 
-        <div className="row shadow mt-5 py-2 ">
+        <div className="row bg-white shadow mt-5 py-2 ">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Stok Barang</h1>
@@ -160,7 +160,7 @@ class Daily extends Component {
           </div>
         </div>
 
-        <div className="row shadow my-5 py-2 ">
+        <div className="row bg-white shadow my-5 py-2 ">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Mutasi Barang</h1>

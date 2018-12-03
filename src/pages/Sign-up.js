@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
   state = {
-    data: "AUOAUO",
+    data: undefined,
     username: "",
     email: "",
     password: ""
@@ -20,8 +20,9 @@ class SignUp extends Component {
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
     axios.post('http://10.10.10.240:8000/api/v1/register', formData).then(res => {
-      console.log(res);
-      console.log(res.data);
+      this.setState({
+        data: res.data
+      })
     })
   }
 
@@ -31,8 +32,27 @@ class SignUp extends Component {
     })
   }
 
+  signUp = () => {
+    this.setState({
+      data: "loading"
+    })
+  }
+
+  componentDidUpdate() {
+    this.setState({
+      data: res.data
+    })
+  }
+
 
   render() {
+
+    if (this.state.data == "loading") {
+      return(
+        <h1>LOADING</h1>
+      )
+    }
+    console.log(this.state.data);
     return (
       <div className="bg-sign-in">
         <div className="sign-in text-center">
@@ -51,12 +71,12 @@ class SignUp extends Component {
               <label>Password</label>
             </div>
             {/* <Link to={`/${this.state.data === null ? "sign-up" : "sign-in"}`}> */}
-            <button type="button" className="btn btn-form" onClick={this.postData}>
+            <button type="button" className="btn btn-form" onClick={this.signUp}>
               Daftar
             </button>
           {/* </Link> */}
           <br/>
-          <Link to="/sign-in" className="forget-pass" href="">Masuk Dengan Akun Anda</Link>
+          <Link to="/sign-in" className="forget-pass" onClick={this.signUp}>Masuk Dengan Akun Anda</Link>
 
           </form>
         </div>

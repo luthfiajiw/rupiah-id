@@ -49,7 +49,7 @@ class Monthly extends Component {
           </div>
         </div>
 
-        <div className="row mt-5 py-2 shadow">
+        <div className="row bg-white mt-5 py-2 shadow">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Penjualan</h1>
@@ -91,7 +91,7 @@ class Monthly extends Component {
           </div>
         </div>
 
-        <div className="row mt-5 py-2 shadow">
+        <div className="row bg-white mt-5 py-2 shadow">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Pembelian</h1>
@@ -133,7 +133,7 @@ class Monthly extends Component {
           </div>
         </div>
 
-        <div className="row mt-5 py-2 shadow">
+        <div className="row bg-white mt-5 py-2 shadow">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Stok Barang</h1>
@@ -158,7 +158,7 @@ class Monthly extends Component {
           </div>
         </div>
 
-        <div className="row mt-5 py-2 shadow">
+        <div className="row bg-white my-5 py-2 shadow">
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Mutasi Barang</h1>
