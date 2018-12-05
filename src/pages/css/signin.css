@@ -8,6 +8,23 @@
   background-size: cover;
 }
 
+.logo-r {
+  margin-top: 10%;
+  width: 10%;
+}
+
+.sweet-loading {
+  min-height: 100vh;
+  background: url('../../assets/geometric-landing-design.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.logo-rupiah {
+  margin-bottom: 20px;
+  width: 50%;
+}
+
 .sign-in {
   text-shadow: 2px 5px 10px rgb(202, 129, 0, .5);
   color: #fff;
@@ -21,6 +38,10 @@
 @media screen and (min-width: 768px) {
   .sign-in {
     width: 30%!important;
+  }
+
+  .logo-rupiah {
+    width: 50%;
   }
 }
 
