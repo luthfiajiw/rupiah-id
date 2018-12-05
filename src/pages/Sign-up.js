@@ -99,7 +99,7 @@ class SignUp extends Component {
 
   signUp = () => {
     this.setState({
-      data: "load"
+      data: "loading"
     })
   }
 
@@ -181,7 +181,7 @@ class SignUp extends Component {
               <label data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter">Password</label>
             </div>
             {/* <Link to={`/${this.state.data === null ? "sign-up" : "sign-in"}`}> */}
-            <button type="button" className="btn btn-form" onClick={this.signUp} disabled={this.state.disabled}>
+            <button type="button" className="btn btn-form" onClick={this.postData} disabled={!this.state.disabled}>
               Daftar
             </button>
           {/* </Link> */}
