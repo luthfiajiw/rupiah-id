@@ -75,3 +75,8 @@
 .profileSubmit:hover {
   background-color: #ff9906;
 }
+
+.txtFile {
+  background-color: #fff;
+  color: #b8b8b8;
+}

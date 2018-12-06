@@ -8,6 +8,7 @@ class Profile extends Component {
     token: undefined,
     data: undefined,
     avatar: "",
+    txtFile: "Belum ada file yang dipilih",
     username: "",
     email: "",
     fullname: "",
@@ -43,9 +44,22 @@ class Profile extends Component {
 
     let btnEdit = this.refs.btnEdit;
     let fileEdit = this.refs.fileEdit;
+    let txtFile = this.refs.txtFile;
 
     btnEdit.addEventListener("click", () => {
       fileEdit.click();
+    })
+
+    fileEdit.addEventListener("change", () => {
+      if (fileEdit.value) {
+        this.setState({
+          txtFile: fileEdit.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]
+        })
+      } else {
+        this.setState({
+          txtFile: "Belum ada file yang dipilih"
+        })
+      }
     })
   }
 
@@ -64,6 +78,7 @@ class Profile extends Component {
                   <br/>
                   <button ref="btnEdit" type="button" className="my-4 btn-edit-photo">Ubah Foto</button>
                   <br/>
+                  <span className="txtFile" ref="txtFile">{this.state.txtFile}</span>
                   <input ref="fileEdit" className="edit-photo" type="file" />
                 </div>
               </div>
