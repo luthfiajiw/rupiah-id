@@ -5,7 +5,8 @@ class Purchases extends Component {
 
   render() {
     return (
-      <div>
+      <div className="purchases">
+        <Navbar headerApp="Pembelian"/>
         <h1 className="">Purchases</h1>
       </div>
     );

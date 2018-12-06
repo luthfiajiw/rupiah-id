@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Landing from './pages/Landing';
 import SignIn from './pages/Sign-in.js';
@@ -14,7 +13,7 @@ import Stuffs from './pages/datas/Stuffs';
 import Supplier from './pages/datas/Supplier';
 import Purchases from './pages/Purchases';
 import Sales from './pages/Sales';
-import Store from './pages/Store';
+import Profile from './pages/Profile';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -37,7 +36,7 @@ class App extends Component {
             <Route path="/supplier" component={Supplier}/>
             <Route path="/purchases" component={Purchases}/>
             <Route path="/sales" component={Sales}/>
-            <Route path="/store" component={Store}/>
+            <Route path="/profile" component={Profile}/>
           </Switch>
         </div>
       </BrowserRouter>

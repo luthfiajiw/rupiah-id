@@ -1,0 +1,77 @@
+.profile {
+  min-height: 100vh;
+  background: url('../../assets/dashboard-background.svg');
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.btn-edit-photo {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: #ff9906;
+  font-size: 1.6em;
+  text-shadow: 3px 3px 3px #ddd;
+}
+
+.btn-edit-photo:hover {
+  text-decoration: underline;
+  color: #ffb817;
+  cursor: pointer;
+}
+
+.edit-photo {
+  display: none;
+}
+
+.profileInput {
+  width: 50%;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.inputBox {
+  margin: 15px auto;
+}
+
+.inputBox label {
+  text-align: left;
+  color: #757575;
+  font-size: 17px;
+}
+
+.inputBox input, .inputBox textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #757575;
+  background-color: transparent;
+  transition: .5s;
+  -ms-transition: .5s;
+  -webkit-transition: .5s;
+  -o-transition: .5s;
+  -moz-transition: .5s;
+}
+
+.inputBox input:focus, .inputBox textarea:focus {
+  border-bottom: 1px solid #ff9906;
+}
+
+.profileSubmit {
+  padding: 10px;
+  width: 50%;
+  color: #fff;
+  background-color: #ffb817;
+  transition: .5s;
+}
+
+.profileSubmit:hover {
+  background-color: #ff9906;
+}

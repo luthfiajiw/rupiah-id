@@ -5,7 +5,8 @@ class Sales extends Component {
 
   render() {
     return (
-      <div>
+      <div className="sales">
+        <Navbar headerApp="Penjualan"/>
         <h1 className="">Sales</h1>
       </div>
     );

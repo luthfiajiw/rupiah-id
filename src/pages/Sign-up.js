@@ -3,13 +3,12 @@ import './css/signin.css';
 import { css } from 'react-emotion';
 import Ink from 'react-ink';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {BounceLoader} from 'react-spinners';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
@@ -72,7 +71,7 @@ class SignUp extends Component {
     })
 
     const emailReg = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/
-    const {disabled, username, email, password} = this.state
+    const {username, email, password} = this.state
 
     if (username.length > 1 && username.length <= 10) {
       if (emailReg.test(email)) {
@@ -81,6 +80,7 @@ class SignUp extends Component {
             disabled: true
           })
         }else {
+
           this.setState({
             disabled: false
           })
@@ -104,9 +104,9 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log(this.state);
 
-    if (this.state.data == "loading") {
+    // Processing signup
+    if (this.state.data === "loading") {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
@@ -121,6 +121,8 @@ class SignUp extends Component {
         </div>
         </div>
       )
+
+      // If success
     } else if (this.state.data !== "loading" && this.state.data !== undefined) {
       return(
         <div className="loading-wrapper">
@@ -181,8 +183,9 @@ class SignUp extends Component {
               <label data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter">Password</label>
             </div>
             {/* <Link to={`/${this.state.data === null ? "sign-up" : "sign-in"}`}> */}
-            <button type="button" className="btn btn-form" onClick={this.postData} disabled={!this.state.disabled}>
+            <button type="button" className="btn btn-form" data-toggle="tooltip" data-placement="bottom" title="Lengkapi data di atas" onClick={this.postData} disabled={!this.state.disabled}>
               Daftar
+              <Ink/>
             </button>
           {/* </Link> */}
           <br/>

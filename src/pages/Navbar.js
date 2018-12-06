@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import './css/navbar.css';
-import {Link} from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 
 class Navbar extends Component {
 
+  signOut = (e) => {
+    sessionStorage.clear();
+  }
+
   render() {
+    if (!sessionStorage.getItem("token")) {
+      return(
+        <Redirect to="/" />
+      )
+    }
     return (
       <div>
         <div className="header-app">
@@ -17,7 +26,7 @@ class Navbar extends Component {
           </div>
         </div>
         <nav className="navbar navbar-dashboard navbar-expand-lg">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand">
             <img className="logo d-inline-block align-top" src={require('../assets/rupiah-id.svg')} alt="logo-rupoah"/>
              &nbsp; <span className="logo-text">UPIAH.ID</span>
           </a>
@@ -46,9 +55,9 @@ class Navbar extends Component {
                 <a className="nav-link setting dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Pengaturan
                 </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="#">Toko</a>
-                  <Link to="/" className="dropdown-item" href="#">Keluar</Link>
+                <div className="dropdown-menu text-left" aria-labelledby="navbarDropdown">
+                  <Link to="/profile" className="dropdown-item store"><i className="far fa-user-circle px-2"></i>&nbsp;Profil</Link>
+                  <Link to="/" className="dropdown-item logout" onClick={this.signOut}><i className="fas fa-sign-out-alt px-2"></i> Keluar</Link>
                 </div>
               </li>
             </ul>

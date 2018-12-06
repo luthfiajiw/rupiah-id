@@ -3,15 +3,15 @@ import './css/dashboard.css';
 import Navbar from './Navbar';
 import Daily from './dashboard/Daily';
 import Monthly from './dashboard/Monthly';
+import { Redirect } from 'react-router-dom';
 
 import Ink from 'react-ink';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 
 class Dashboard extends Component {
 
-  componentDidMount() {
-    let oren = document.getElementsByClassName('btn-daily');
-
+  componentWillMount() {
+    sessionStorage.getItem("token")
   }
 
   render() {
