@@ -3,7 +3,7 @@ import './css/signin.css';
 import { css } from 'react-emotion';
 import Ink from 'react-ink';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import {BounceLoader} from 'react-spinners';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -97,11 +97,7 @@ class SignUp extends Component {
     }
   }
 
-  signUp = () => {
-    this.setState({
-      data: "loading"
-    })
-  }
+
 
   render() {
 
@@ -121,9 +117,12 @@ class SignUp extends Component {
         </div>
         </div>
       )
-
       // If success
-    } else if (this.state.data !== "loading" && this.state.data !== undefined) {
+    }else if (sessionStorage.getItem('token')) {
+      return(
+        <Redirect to="/dashboard/daily" />
+      )
+    }else if (this.state.data !== "loading" && this.state.data !== undefined) {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>

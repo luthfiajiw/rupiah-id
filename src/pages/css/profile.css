@@ -31,10 +31,16 @@
 }
 
 .profileInput {
-  width: 50%;
+  width: 100%;
   background-color: #fff;
   padding: 25px;
   border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+  .profileInput {
+    width: 50%;
+  }
 }
 
 .inputBox {

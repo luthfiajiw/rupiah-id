@@ -31,6 +31,7 @@ class SignIn extends Component {
     token: undefined,
     user: undefined,
     redirect: false,
+    disabled: false,
     username: "",
     password: "",
     error: undefined,
@@ -63,7 +64,8 @@ class SignIn extends Component {
         this.setState({
           token: res.data.data.token,
           user: res.data.user,
-          redirect: true
+          redirect: true,
+          disabled: false
         })
       }).catch(err => {
         console.error(err);
@@ -78,7 +80,25 @@ class SignIn extends Component {
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value,
-    })
+    });
+
+    const {username, password} = this.state
+
+    if (username.length > 0 && username.length < 10) {
+      if (password.length > 4) {
+        this.setState({
+          disabled: true
+        })
+      } else {
+        this.setState({
+          disabled: false
+        })
+      }
+    } else {
+      this.setState({
+        disabled: false
+      })
+    }
   }
 
   render() {
@@ -99,7 +119,7 @@ class SignIn extends Component {
         </div>
         </div>
       )
-    // If success
+    // If failed
     }else if (this.state.error !== undefined && this.state.token === "error") {
       return(
         <div className="loading-wrapper">
@@ -146,7 +166,7 @@ class SignIn extends Component {
       return(
         <Redirect to="/dashboard/daily"/>
       )
-    // Abandoned entering signin page
+    // Abandoned to entering signin page
     }else if (this.state.token !== undefined && this.state.token !== "loading") {
       return (
         <Redirect to="/dashboard/daily" />
@@ -171,7 +191,7 @@ class SignIn extends Component {
             <a className="forget-pass text-left" href="">Lupa password?</a>
             <br/>
             {/* <Link to="/dashboard/daily"> */}
-            <button type="submit" className="btn btn-form" onClick={this.signIn}>
+            <button type="submit" className="btn btn-form" onClick={this.signIn} disabled={!this.state.disabled}>
               Masuk
               <Ink/>
             </button>
