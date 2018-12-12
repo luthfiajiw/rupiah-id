@@ -58,7 +58,7 @@ class SignIn extends Component {
     formData.append("password", this.state.password);
 
     if (this.state.username && this.state.password) {
-      axios.post('http://10.10.10.240:8000/api/v1/login', formData).then(res => {
+      axios.post('https://api-penjualanapp.herokuapp.com/api/v1/login', formData).then(res => {
         console.log(res);
         sessionStorage.setItem('token', res.data.data.token)
         this.setState({

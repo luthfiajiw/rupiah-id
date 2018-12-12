@@ -11,12 +11,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Create from '@material-ui/icons/Create';
 
 const override = css`
     border-color: red;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 100%;
     transform: translate(-50%, 30%);
 `;
 
@@ -31,7 +33,7 @@ class Profile extends Component {
     avatar: "",
     loading: false,
     open: false,
-    txtFile: "Belum ada file yang dipilih",
+    txtFile: "",
     username: null,
     email: "",
     fullname: "",
@@ -43,12 +45,13 @@ class Profile extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      message: ""
+      message: "",
+      loading: false
      });
   };
 
   getProfile = () => {
-    axios.get("http://10.10.10.240:8000/api/v1/account/profile?token="+this.state.token).then(res => {
+    axios.get("https://api-penjualanapp.herokuapp.com/api/v1/account/profile?token="+this.state.token).then(res => {
       console.log(res.data);
       this.setState({
         avatar: res.data.data.photo,
@@ -67,7 +70,7 @@ class Profile extends Component {
       loading: true
     })
 
-    axios.patch('http://10.10.10.240:8000/api/v1/account/profile/update?token='+this.state.token, {
+    axios.patch('https://api-penjualanapp.herokuapp.com/api/v1/account/profile/update?token='+this.state.token, {
       username: this.state.username,
       address: this.state.address,
       phone_number: this.state.phone_number,
@@ -79,9 +82,26 @@ class Profile extends Component {
     }).catch(err => console.log(err))
   }
 
+  postPhoto = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('photo', this.state.avatar)
+    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/account/uploadphoto?token='+this.state.token,
+      formData).then(res => {
+      console.log(res.data);
+    }).catch(err => console.log(err))
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value
+    })
+  }
+
+  fileHandler = (e) => {
+    this.setState({
+      avatar: e.target.files[0]
     })
   }
 
@@ -90,7 +110,7 @@ class Profile extends Component {
       token: sessionStorage.getItem("token")
     })
   }
-  
+
   componentDidMount() {
     this.getProfile();
 
@@ -130,8 +150,9 @@ class Profile extends Component {
     return (
       <div className="profile">
         <Navbar headerApp="Profil"/>
+
         <Dialog
-          open={this.state.open}
+          open={this.state.message === "Profile updated successfully." ? true : false}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -154,17 +175,23 @@ class Profile extends Component {
               </Button>
           </DialogActions>
         </Dialog>
+
         <div className="container text-center my-5">
           <div className="row">
             <div className="container">
               <div className="row">
                 <div className="col-md-12">
-                  <img src={this.state.avatar} className="avatar" alt=""/>
-                  <br/>
-                  <button ref="btnEdit" type="button" className="my-4 btn-edit-photo">Ubah Foto</button>
+                  <div className="img-avatar">
+                    <img src={this.state.avatar} className="avatar" alt=""/>
+                    <button ref="btnEdit" type="button" className="my-4 btn-edit-photo">
+                      <Create />
+                    </button>
+                  </div>
                   <br/>
                   <span className="txtFile" ref="txtFile">{this.state.txtFile}</span>
-                  <input ref="fileEdit" className="edit-photo" type="file" />
+                  <input ref="fileEdit" className="edit-photo" type="file" onChange={this.fileHandler}/>
+                  <br />
+                  <button type="button" className="my-4 btn-postPhoto" onClick={this.postPhoto}>Ubah Foto</button>
                 </div>
               </div>
               <div className="row">
@@ -194,7 +221,7 @@ class Profile extends Component {
                     <button type="submit" className="btn my-3 profileSubmit" onClick={this.updateProfile}>Ubah</button>
                   </div>
 
-                  <div className="loading-wrapper">
+                  <div className="loading-wrapper w-100">
                     <div className='text-center'>
                     <BarLoader
                       className={override}

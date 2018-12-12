@@ -56,13 +56,13 @@ class SignUp extends Component {
     formData.append('username', this.state.username);
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
-    axios.post('http://10.10.10.240:8000/api/v1/register', formData).then(res => {
+    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/register', formData).then(res => {
       console.log(res.data);
       this.setState({
         data: res.data,
         redirect: true
       })
-    })
+    }).catch(err => console.log(err))
   }
 
   handleChange = (e) => {
