@@ -48,12 +48,15 @@ class Profile extends Component {
       message: "",
       loading: false
      });
+
+     window.location.reload(true);
   };
 
   getProfile = () => {
     axios.get("https://api-penjualanapp.herokuapp.com/api/v1/account/profile?token="+this.state.token).then(res => {
       console.log(res.data);
       this.setState({
+        data: res.data,
         avatar: res.data.data.photo,
         username: res.data.data.username,
         email: res.data.data.email,
@@ -123,11 +126,10 @@ class Profile extends Component {
       )
     }
 
-    let btnEdit = this.refs.btnEdit;
-    let fileEdit = this.refs.fileEdit;
-    let txtFile = this.refs.txtFile;
+    const buttonEdit = this.refs.btnEdit
+    const fileEdit = this.refs.fileEdit;
 
-    btnEdit.addEventListener("click", () => {
+    buttonEdit.addEventListener("click", () => {
       fileEdit.click();
     })
 
@@ -146,11 +148,11 @@ class Profile extends Component {
 
   render() {
     console.log(this.state);
-
     return (
       <div className="profile">
         <Navbar headerApp="Profil"/>
 
+        {/* Succes update */}
         <Dialog
           open={this.state.message === "Profile updated successfully." ? true : false}
           TransitionComponent={Transition}
@@ -171,9 +173,36 @@ class Profile extends Component {
           </DialogContent>
           <DialogActions className="mx-auto">
               <Button onClick={this.handleClose} color="primary">
-                Kembali
+                OK
               </Button>
           </DialogActions>
+        </Dialog>
+
+        {/* Loading data */}
+        <Dialog
+          open={this.state.data === undefined ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"LOADING"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <BarLoader
+                className={override}
+                sizeUnit={"px"}
+                size={150}
+                color={'#ff9906'}
+                loading= {this.state.data === undefined ? true : false}
+              />
+            </div>
+          </DialogContent>
         </Dialog>
 
         <div className="container text-center my-5">

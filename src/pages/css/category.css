@@ -1,0 +1,20 @@
+.category {
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.btn-addCategory {
+  padding: 7px;
+  background-color: #ffc136;
+  color: #333;
+}
+
+.btn-postCategory {
+  background-color: #333;
+  color: #fff;
+  font-size: 20px;
+  padding-top: 0;
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+}
