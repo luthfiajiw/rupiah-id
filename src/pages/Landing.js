@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './css/landing.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect} from 'react-router-dom';
 import Ink from 'react-ink';
 import WOW from 'wowjs';
 
@@ -10,6 +10,11 @@ class Landing extends Component {
   }
 
   render() {
+    if (localStorage.getItem('token') !== null) {
+      return(
+        <Redirect to="/dashboard/daily" />
+      )
+    } else {
     return (
         <div className="bg-landing">
           <nav className="navbar navbar-expand-lg navbar-light">
@@ -56,7 +61,7 @@ class Landing extends Component {
         </div>
     );
   }
-
+}
 }
 
 export default Landing;

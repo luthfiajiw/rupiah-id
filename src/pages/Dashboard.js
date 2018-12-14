@@ -11,10 +11,11 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 class Dashboard extends Component {
 
   componentWillMount() {
-    sessionStorage.getItem("token")
+    localStorage.getItem("token")
   }
 
   render() {
+    if(localStorage.getItem('token') !== null) {
     return (
           <div className="dashboard">
             <Navbar headerApp="Dashboard"/>
@@ -42,8 +43,11 @@ class Dashboard extends Component {
             </Switch>
           </div>
     );
-  }
-
+  } else {
+    return(
+      <Redirect to='/' />
+    )}
+}
 }
 
 export default Dashboard;

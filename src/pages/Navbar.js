@@ -5,11 +5,11 @@ import { Link, Redirect} from 'react-router-dom';
 class Navbar extends Component {
 
   signOut = (e) => {
-    sessionStorage.clear();
+    localStorage.clear();
   }
 
   render() {
-    if (!sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token") === null) {
       return(
         <Redirect to="/" />
       )
@@ -36,15 +36,15 @@ class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item ">
-                <Link to="/dashboard/daily" className="nav-link dashboard-icon">Dashboard</Link>
+              <li className="nav-item">
+                <Link to="/dashboard/daily" className="nav-link"><li className="fas fa-chart-bar"></li>Dashboard</Link>
               </li>
               <li className="nav-item">
-                <Link to="/datas" className="nav-link datas" href="#">Data-data</Link>
+                <Link to="/datas" className="nav-link datas" href="#"><li className="fas fa-database"></li>Data-data</Link>
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link transaction dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Transaksi
+                  <li className="fas fa-balance-scale"></li>Transaksi
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a className="dropdown-item" href="#">Penjualan</a>
@@ -53,7 +53,7 @@ class Navbar extends Component {
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link setting dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Pengaturan
+                  <li className="fas fa-cog"></li>Pengaturan
                 </a>
                 <div className="dropdown-menu text-left" aria-labelledby="navbarDropdown">
                   <Link to="/profile" className="dropdown-item store"><i className="far fa-user-circle px-2"></i>&nbsp;Profil</Link>

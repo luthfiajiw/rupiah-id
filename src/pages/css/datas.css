@@ -4,6 +4,10 @@
   background-repeat: repeat;
 }
 
+.datas-menu li {
+  margin: 0 10px;
+}
+
 .datas-box {
   padding: 80px;
   position: relative;

@@ -152,30 +152,3 @@
 .forget-pass:hover {
   color: #ddd;
 }
-
-
-.email:before {
-  content: "\f0e0";
-  font-family: FontAwesome;
-  padding: 0px 10px 0px 10px;
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-}
-.user:before {
-  content: "\f007";
-  font-family: FontAwesome;
-  padding: 0px 10px 0px 10px;
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-}
-
-.password:before {
-  content: "\f023";
-  font-family: FontAwesome;
-  padding: 0px 10px 0px 10px;
-  font-size: 20px;
-  color: #fff;
-  font-weight: bold;
-}

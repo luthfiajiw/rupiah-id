@@ -53,7 +53,7 @@ class Category extends Component {
   };
 
   getCategory = () => {
-    axios.get('https://api-penjualanapp.herokuapp.com/api/v1/category?token='+sessionStorage.getItem('token')).then(
+    axios.get('https://api-penjualanapp.herokuapp.com/api/v1/category?token='+localStorage.getItem('token')).then(
       res => {
         console.log(res.data.data);
         this.setState({
@@ -68,7 +68,7 @@ class Category extends Component {
       loadingCreate: true
     })
 
-    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/category/create?token='+sessionStorage.getItem('token'),
+    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/category?token='+localStorage.getItem('token'),
     {
       name: this.state.name
     }).then(res => {
@@ -111,7 +111,7 @@ class Category extends Component {
       <div className="category">
         <Navbar headerApp="Kategori Barang" />
 
-        {/* Succes update */}
+        {/* Success update */}
         <Dialog
           open={this.state.message === "The resource is created successfully" ? true : false}
           TransitionComponent={Transition}
@@ -168,7 +168,7 @@ class Category extends Component {
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="table-responsive">
-                <table class="table shadow">
+                <table class="table border shadow">
                   <thead>
                     <tr>
                       <th scope="col">No.</th>

@@ -170,14 +170,17 @@ class SignUp extends Component {
           <img className="logo-rupiah" src={require('../assets/logo-r.png')} alt="rupiah-id"/>
           <form className="form-signin">
             <div className="InputBox user">
+              <li className="fas fa-user-circle"></li>
               <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter"/>
               <label data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter">Username</label>
             </div>
             <div className="InputBox email">
+              <li className="fas fa-envelope"></li>
               <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required='required'/>
               <label>Email</label>
             </div>
             <div className="InputBox password">
+              <li className="fas fa-lock"></li>
               <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter"/>
               <label data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter">Password</label>
             </div>

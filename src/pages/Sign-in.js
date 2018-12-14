@@ -60,7 +60,7 @@ class SignIn extends Component {
     if (this.state.username && this.state.password) {
       axios.post('https://api-penjualanapp.herokuapp.com/api/v1/login', formData).then(res => {
         console.log(res);
-        sessionStorage.setItem('token', res.data.data.token)
+        localStorage.setItem('token', res.data.data.token)
         this.setState({
           token: res.data.data.token,
           user: res.data.user,
@@ -162,7 +162,7 @@ class SignIn extends Component {
         </div>
       )
     // If success
-    }else if (sessionStorage.getItem('token')) {
+  }else if (localStorage.getItem('token') !== null) {
       return(
         <Redirect to="/dashboard/daily"/>
       )
@@ -181,14 +181,15 @@ class SignIn extends Component {
           </div>
           <form className="form-signin">
             <div className="InputBox user">
+              <li className="fas fa-user-circle"></li>
               <input type="text" name="username" required='required' onChange={this.handleChange}/>
               <label>Username</label>
             </div>
             <div className="InputBox password">
+              <li className="fas fa-lock"></li>
               <input type="password" name="password" required='required' onChange={this.handleChange}/>
               <label>Password</label>
             </div>
-            <a className="forget-pass text-left" href="">Lupa password?</a>
             <br/>
             {/* <Link to="/dashboard/daily"> */}
             <button type="submit" className="btn btn-form" onClick={this.signIn} disabled={!this.state.disabled}>

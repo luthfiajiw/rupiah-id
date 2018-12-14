@@ -33,6 +33,7 @@ class Profile extends Component {
     avatar: "",
     loading: false,
     open: false,
+    openPhoto: false,
     txtFile: "",
     username: null,
     email: "",
@@ -88,11 +89,19 @@ class Profile extends Component {
   postPhoto = (e) => {
     e.preventDefault();
 
+    this.setState({
+      openPhoto: true
+    })
+
     const formData = new FormData();
     formData.append('photo', this.state.avatar)
     axios.post('https://api-penjualanapp.herokuapp.com/api/v1/account/uploadphoto?token='+this.state.token,
       formData).then(res => {
       console.log(res.data);
+      this.setState({
+        message: res.data.message,
+        openPhoto: false
+      })
     }).catch(err => console.log(err))
   }
 
@@ -110,7 +119,7 @@ class Profile extends Component {
 
   componentWillMount() {
     this.setState({
-      token: sessionStorage.getItem("token")
+      token: localStorage.getItem("token")
     })
   }
 
@@ -154,7 +163,7 @@ class Profile extends Component {
 
         {/* Succes update */}
         <Dialog
-          open={this.state.message === "Profile updated successfully." ? true : false}
+          open={this.state.message === "Profile updated successfully." || this.state.message === "photo uploaded" ? true : false}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -200,6 +209,33 @@ class Profile extends Component {
                 size={150}
                 color={'#ff9906'}
                 loading= {this.state.data === undefined ? true : false}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Loading update photo */}
+        <Dialog
+          open={this.state.openPhoto}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"UPLOADING"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <BarLoader
+                className={override}
+                sizeUnit={"px"}
+                size={150}
+                color={'#ff9906'}
+                loading= "true"
               />
             </div>
           </DialogContent>

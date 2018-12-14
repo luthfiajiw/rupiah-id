@@ -1,0 +1,9 @@
+.stuffs {
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.stuffs li {
+  margin: 0 10px;
+}
