@@ -8,6 +8,10 @@
   margin: 0 10px;
 }
 
+.inputCategory input {
+  padding: 7px;
+}
+
 .btn-addCategory {
   padding: 7px;
   background-color: #ffc136;
@@ -25,4 +29,12 @@
 
 .border-light {
   border: 1px solid #333;
+}
+
+.btn-postProducts {
+  padding: 7px;
+  background-color: #333;
+  color: #fff;
+  margin: 10px 0;
+  width: 8%;
 }

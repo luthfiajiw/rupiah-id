@@ -62,6 +62,12 @@ thead {
   color: #fff;
 }
 
-th, td {
-  border-color: #fff!important;
+th {
+  margin: auto auto!important;
+  vertical-align: middle!important;
+}
+
+td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px!important;
 }

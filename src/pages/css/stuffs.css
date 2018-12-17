@@ -7,3 +7,20 @@
 .stuffs li {
   margin: 0 10px;
 }
+
+.inputDataBox{
+  padding: 5px;
+}
+
+.inputDataBox input{
+  padding: 7px;
+  width: 50%;
+}
+
+.inputDataBox select {
+  width: 50%;
+}
+
+.btn-postProducts:disabled {
+  cursor: not-allowed;
+}

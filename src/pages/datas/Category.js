@@ -168,7 +168,7 @@ class Category extends Component {
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="table-responsive">
-                <table class="table border shadow">
+                <table className="table border shadow">
                   <thead>
                     <tr>
                       <th scope="col">No.</th>
