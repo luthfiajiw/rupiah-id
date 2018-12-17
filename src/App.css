@@ -5,3 +5,10 @@ body, html {
   background-color: #f4f4f4;
   font-family: 'Bree Serif', serif;
 }
+
+.btn-addDatas {
+  padding: 7px;
+  background-color: #ffc136;
+  color: #333;
+  box-shadow: 0 2px 5px #ddd;
+}

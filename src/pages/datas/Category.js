@@ -141,7 +141,7 @@ class Category extends Component {
           <div className="row my-4">
             <div className="col-md-6"></div>
             <div className="col-md-6 text-right">
-              <button type="button" className="btn btn-addCategory" data-toggle="collapse" data-target="#collapseInput"
+              <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Kategori
               </button>
@@ -173,7 +173,7 @@ class Category extends Component {
                     <tr>
                       <th scope="col">No.</th>
                       <th scope="col">Kategori barang</th>
-
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -182,29 +182,15 @@ class Category extends Component {
                         <tr>
                           <td>{data.category_id}</td>
                           <td>{data.name}</td>
+                          <td>
+                            <button type="button" className="btn btn-danger">
+                              Hapus
+                            </button>
+                          </td>
                         </tr>
                       )
                     })}
                   </tbody>
-                  {/* <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td colspan="2">Larry the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody> */}
                 </table>
               </div>
             </div>

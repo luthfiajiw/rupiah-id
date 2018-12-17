@@ -60,6 +60,7 @@ class Profile extends Component {
         data: res.data,
         avatar: res.data.data.photo,
         username: res.data.data.username,
+        fullname: res.data.data.name,
         email: res.data.data.email,
         phone_number: res.data.data.phone_number,
         address: res.data.data.address
@@ -78,6 +79,7 @@ class Profile extends Component {
       username: this.state.username,
       address: this.state.address,
       phone_number: this.state.phone_number,
+      name: this.state.fullname
     }).then(res => {
       this.setState({
         message: res.data.message
@@ -261,10 +263,10 @@ class Profile extends Component {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="profileInput mx-auto align-items-center">
+                  <div className="profileInput mx-auto align-items-center shadow">
                     <div className="inputBox">
                       <label className="d-block">Nama</label>
-                      <input className="profilName" type="text" name="nama" value={this.state.fullname}/>
+                      <input className="profilName" type="text" name="fullname" value={this.state.fullname} onChange={this.handleChange} /> 
                     </div>
                     <div className="inputBox">
                       <label className="d-block">Nama Pengguna (Username)</label>

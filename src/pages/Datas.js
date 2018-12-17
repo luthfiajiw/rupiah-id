@@ -25,14 +25,6 @@ class Datas extends Component {
             </div>
 
             <div className="row">
-              <Link to="/stock" className="col-md-12 datas-box datas-box-oren">
-                <img className="py-3" src={require('../assets/stok-barang.svg')} alt="stok-barang"/>
-                <h3>Stok Barang</h3>
-                <Ink/>
-              </Link>
-            </div>
-
-            <div className="row">
               <Link to="/supplier" className="col-md-6 datas-box datas-box-cream">
                 <img className="py-3" src={require('../assets/pemasok-icon.svg')} alt="pemasok-icon"/>
                 <h3>Pemasok</h3>

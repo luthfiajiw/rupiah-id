@@ -21,6 +21,34 @@
   width: 50%;
 }
 
+.inputUpdateBox {
+  text-align: justify;
+  padding-top: 5px;
+}
+
+.inputUpdateBox input {
+  padding: 7px;
+  width: 100%;
+}
+
+.inputUpdateBox select {
+  width: 100%;
+}
+
 .btn-postProducts:disabled {
   cursor: not-allowed;
+}
+
+.btn-detailProducts {
+  background-color: #ffc136;
+  box-shadow: 0 2px 5px #ddd;
+}
+
+.btn-success {
+  background-color: #ffc136!important;
+}
+
+.btn-danger {
+  background-color: rgb(249, 48, 48)!important;
+  color: #fff!important;
 }
