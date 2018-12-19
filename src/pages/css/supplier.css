@@ -1,0 +1,27 @@
+.supplier {
+  min-height: 100vh;
+}
+
+.supplier li {
+  margin: 0 10px;
+}
+
+.btn-addSuppliers {
+  padding: 7px;
+  background-color: #ffc136;
+  color: #333;
+  box-shadow: 0 2px 5px #ddd;
+}
+
+.btn-detailSuppliers {
+  background-color: #ffc136;
+  box-shadow: 0 2px 5px #ddd;
+  transition: .5s ease-in-out;
+  position: relative;
+  color: #333;
+}
+
+.btn-detailSuppliers:hover {
+  box-shadow: 0 3px 7px #ddd;
+  background-color: #ffc84d;
+}

@@ -34,7 +34,8 @@ class SignUp extends Component {
     disabled: false,
     username: "",
     email: "",
-    password: ""
+    password: "",
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1"
   }
 
   handleClickOpen = () => {
@@ -56,7 +57,7 @@ class SignUp extends Component {
     formData.append('username', this.state.username);
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
-    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/register', formData).then(res => {
+    axios.post(`${this.state.baseUrl}/auth/register`, formData).then(res => {
       console.log(res.data);
       this.setState({
         data: res.data,
@@ -128,7 +129,7 @@ class SignUp extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
+            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
           <BounceLoader
             className={override}
             sizeUnit={"px"}

@@ -56,18 +56,3 @@
 .items-sold {
   padding: 30px;
 }
-
-thead {
-  background-color: #ff9906;
-  color: #fff;
-}
-
-th {
-  margin: auto auto!important;
-  vertical-align: middle!important;
-}
-
-td {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 20px!important;
-}

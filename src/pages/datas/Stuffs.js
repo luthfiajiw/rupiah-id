@@ -36,7 +36,7 @@ class Stuffs extends Component {
     message: "",
     categories: null,
     product_code: "",
-    name: "",
+    product_name: "",
     category_id: "0",
     category_name: "",
     buy_price: "",
@@ -45,7 +45,7 @@ class Stuffs extends Component {
     unit: "",
     disabled: true,
     token: "",
-    baseUrl: "https://api-penjualanapp.herokuapp.com/api/v1/"
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/"
   }
 
   handleClose = () => {
@@ -61,6 +61,8 @@ class Stuffs extends Component {
     this.setState({
       detailOpen: false
     })
+
+    this.getProduct();
   }
 
   handleUpdate = (e) => {
@@ -76,7 +78,7 @@ class Stuffs extends Component {
     const formItems2 = document.forms['items2']
 
     const product_code = formItems1.elements['product_code'].value
-    const name = formItems1.elements['name'].value
+    const name = formItems1.elements['product_name'].value
 
     const buy_price = formItems2.elements['buy_price'].value
     const sell_price = formItems2.elements['sell_price'].value
@@ -92,30 +94,10 @@ class Stuffs extends Component {
                 this.setState({
                   disabled: false
                 })
-              } else {
-                this.setState({
-                  disabled: true
-                })
               }
-            } else {
-              this.setState({
-                disabled: true
-              })
             }
-          } else {
-            this.setState({
-              disabled: true
-            })
           }
-        } else {
-          this.setState({
-            disabled: true
-          })
         }
-      } else {
-        this.setState({
-          disabled: true
-        })
       }
     } else {
       this.setState({
@@ -132,7 +114,7 @@ class Stuffs extends Component {
     let category = i.target.value
 
     this.setState({
-      category_id: category
+      category_id: parseInt(category)
     })
   }
 
@@ -169,7 +151,7 @@ class Stuffs extends Component {
     const {baseUrl,token} = this.state
     axios.post(`${baseUrl}product?token=${token}`, {
       product_code: this.state.product_code,
-      name: this.state.name,
+      product_name: this.state.product_name,
       category_id: this.state.category_id,
       buy_price: this.state.buy_price,
       sell_price: this.state.sell_price,
@@ -179,7 +161,7 @@ class Stuffs extends Component {
         message: res.request.statusText,
         uploadOpen: false
       })
-    })
+    }).catch(err => console.log(err))
   }
 
   detailProduct = (id) => {
@@ -193,9 +175,9 @@ class Stuffs extends Component {
       console.log(res.data)
       this.setState({
         product_code: res.data.data.product_code,
-        name: res.data.data.name,
-        category_id: res.data.data.categories.data.category_id,
-        category_name: res.data.data.categories.data.name,
+        product_name: res.data.data.product_name,
+        category_id: res.data.data.categories.category_id,
+        category_name: res.data.data.categories.category_name,
         buy_price: res.data.data.buy_price,
         sell_price: res.data.data.sell_price,
         stock: res.data.data.stock,
@@ -244,7 +226,7 @@ class Stuffs extends Component {
 
     axios.patch(`${baseUrl}product/${id}?token=${token}`, {
       product_code: this.state.product_code,
-      name: this.state.name,
+      product_name: this.state.product_name,
       category_id: this.state.category_id,
       buy_price: this.state.buy_price,
       sell_price: this.state.sell_price,
@@ -254,7 +236,7 @@ class Stuffs extends Component {
       this.setState({
         message: "Updated",
         uploadOpen: false
-      })      
+      })
     }).catch(err => console.log(err))
   }
 
@@ -277,7 +259,7 @@ class Stuffs extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
+            <img className="logo-r" src={require('../../assets/rupiah-id.svg')} alt="rupiah-id"/>
             <BounceLoader
               className={override}
               sizeUnit={"px"}
@@ -403,7 +385,7 @@ class Stuffs extends Component {
           open={this.state.detailOpen}
           TransitionComponent={Transition}
           keepMounted
-          onClose={this.handleClose}
+          onClose={this.closeDetail}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
@@ -417,12 +399,12 @@ class Stuffs extends Component {
               <form name="updateItems" className="updateItems">
                 <div className="inputUpdateBox">
                   <label className="px-2">Kode :</label>
-                  <input type="number" name="product_code" placeholder="Kode Barang" value={this.state.product_code}/>
+                  <input type="text" name="product_code" placeholder="Kode Barang" value={this.state.product_code}/>
                 </div>
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Nama :</label>
-                  <input type="text" name="name" placeholder="Nama Barang" onChange={this.handleUpdate} value={this.state.name}/>
+                  <input type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleUpdate} value={this.state.product_name}/>
                 </div>
 
                 <div className="inputUpdateBox">
@@ -431,7 +413,7 @@ class Stuffs extends Component {
                     <option value={this.state.category_id} onClick={this.handleOption}>{this.state.category_name}</option>
                     {this.state.categories.map((category,i) => {
                       return(
-                        <option value={category.category_id} onClick={this.handleOption}>{category.name}</option>
+                        <option value={category.category_id} onClick={this.handleOption}>{category.category_name}</option>
                       )
                     })}
                   </select>
@@ -485,12 +467,12 @@ class Stuffs extends Component {
                   <form className="pt-4" name="items1">
                     <div className="inputDataBox">
                       <label className="px-2">Kode :</label>
-                      <input type="number" name="product_code" placeholder="Kode Barang" onChange={this.handleChange}/>
+                      <input type="text" name="product_code" placeholder="Kode Barang" onChange={this.handleChange}/>
                     </div>
 
                     <div className="inputDataBox">
                       <label className="px-2">Nama :</label>
-                      <input type="text" name="name" placeholder="Nama Barang" onChange={this.handleChange}/>
+                      <input type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleChange}/>
                     </div>
 
                     <div className="inputDataBox">
@@ -499,7 +481,7 @@ class Stuffs extends Component {
                         <option value="0" onClick={this.handleOption}>Pilih</option>
                         {this.state.categories.map((category,i) => {
                           return(
-                            <option value={category.category_id} onClick={this.handleOption}>{category.name}</option>
+                            <option value={category.category_id} onClick={this.handleOption}>{category.category_name}</option>
                           )
                         })}
                       </select>
@@ -523,7 +505,7 @@ class Stuffs extends Component {
                     </div>
                   </form>
 
-                  <button type="submit" className="btn btn-postProducts" disabled={this.state.disabled} onClick={this.postProduct}> + </button>
+                  <button type="submit" className="btn btn-postProducts" disabled={this.state.disabled} onClick={this.postProduct}><i className="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -551,8 +533,8 @@ class Stuffs extends Component {
                         <tr>
                           <td>{i+1}</td>
                           <td>{data.product_code}</td>
-                          <td>{data.name}</td>
-                          <td>{data.categories.data.name}</td>
+                          <td>{data.product_name}</td>
+                          <td>{data.categories.category_name}</td>
                           <td>{data.buy_price}</td>
                           <td>{data.sell_price}</td>
                           <td>{data.unit}</td>

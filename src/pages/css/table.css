@@ -1,0 +1,18 @@
+thead {
+  background-color: #ff9906;
+  color: #fff;
+}
+
+th {
+  margin: auto auto!important;
+  vertical-align: middle!important;
+}
+
+tr {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px!important;
+}

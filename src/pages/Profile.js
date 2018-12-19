@@ -29,6 +29,7 @@ function Transition(props) {
 class Profile extends Component {
   state = {
     token: undefined,
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
     data: undefined,
     avatar: "",
     loading: false,
@@ -54,7 +55,9 @@ class Profile extends Component {
   };
 
   getProfile = () => {
-    axios.get("https://api-penjualanapp.herokuapp.com/api/v1/account/profile?token="+this.state.token).then(res => {
+    const { baseUrl, token } = this.state
+
+    axios.get(`${baseUrl}/account/profile?token=${token}`).then(res => {
       console.log(res.data);
       this.setState({
         data: res.data,
@@ -71,11 +74,13 @@ class Profile extends Component {
   updateProfile = (e) => {
     e.preventDefault();
 
+    const { baseUrl, token } = this.state
+
     this.setState({
       loading: true
     })
 
-    axios.patch('https://api-penjualanapp.herokuapp.com/api/v1/account/profile/update?token='+this.state.token, {
+    axios.patch(`${baseUrl}/account/profile/update?token=${token}`, {
       username: this.state.username,
       address: this.state.address,
       phone_number: this.state.phone_number,
@@ -92,13 +97,15 @@ class Profile extends Component {
   postPhoto = (e) => {
     e.preventDefault();
 
+    const { baseUrl, token } = this.state
+
     this.setState({
       openPhoto: true
     })
 
     const formData = new FormData();
     formData.append('photo', this.state.avatar)
-    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/account/uploadphoto?token='+this.state.token,
+    axios.post(`${baseUrl}/account/profile/uploadpoto?token=${token}`,
       formData).then(res => {
       console.log(res.data);
       this.setState({
@@ -267,7 +274,7 @@ class Profile extends Component {
                   <div className="profileInput mx-auto align-items-center shadow">
                     <div className="inputBox">
                       <label className="d-block">Nama</label>
-                      <input className="profilName" type="text" name="fullname" value={this.state.fullname} onChange={this.handleChange} /> 
+                      <input className="profilName" type="text" name="fullname" value={this.state.fullname} onChange={this.handleChange} />
                     </div>
                     <div className="inputBox">
                       <label className="d-block">Nama Pengguna (Username)</label>
@@ -287,7 +294,7 @@ class Profile extends Component {
                     </div>
 
                     <button type="submit" className="btn my-3 profileSubmit" onClick={this.updateProfile}>Ubah</button>
-                  
+
                     <div className="loading-wrapper w-100">
                       <div className='text-center'>
                         <BarLoader

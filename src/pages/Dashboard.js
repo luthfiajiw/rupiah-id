@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/dashboard.css';
+import './css/table.css';
 import Navbar from './Navbar';
 import Daily from './dashboard/Daily';
 import Monthly from './dashboard/Monthly';

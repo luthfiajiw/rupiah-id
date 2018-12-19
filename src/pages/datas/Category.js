@@ -34,14 +34,14 @@ class Category extends Component {
 
   state = {
     datas: null,
-    name:  "",
+    category_name:  "",
     loadingData: true,
     loadingCreate: false,
     open: false,
     uploadOpen: false,
     message: "",
     consfirmDelete: false,
-    baseUrl: "https://api-penjualanapp.herokuapp.com/api/v1/",
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/",
     token: ""
   }
 
@@ -77,7 +77,7 @@ class Category extends Component {
 
     axios.post(`${baseUrl}category?token=${token}`,
     {
-      name: this.state.name
+      category_name: this.state.category_name
     }).then(res => {
       console.log(res.data);
       this.setState({
@@ -111,9 +111,9 @@ class Category extends Component {
     }
   }
 
-  handleChange = () => {
+  handleChange = (e) => {
     this.setState({
-      name: this.refs.name.value
+      [e.target.name]: e.target.value
     })
   }
 
@@ -133,7 +133,7 @@ class Category extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
+            <img className="logo-r" src={require('../../assets/rupiah-id.svg')} alt="rupiah-id"/>
             <BounceLoader
               className={override}
               sizeUnit={"px"}
@@ -239,8 +239,8 @@ class Category extends Component {
               <div className="collapse mt-3" id="collapseInput">
                 <div className="inputCategory align-items-center">
                   <label className="px-2">Nama Kategori :</label>
-                  <input className="py-1" ref="name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
-                  <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}>+</button>
+                  <input className="py-1" name="category_name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
+                  <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}><i className="fas fa-plus"></i></button>
                 </div>
                 <div className="text-right pt-3">
                   <div className="ml-auto">
@@ -272,7 +272,7 @@ class Category extends Component {
                       return(
                         <tr>
                           <td>{i+1}</td>
-                          <td>{data.name}</td>
+                          <td>{data.category_name}</td>
                           <td>
                             <button type="button" className="btn btn-danger" onClick={()=>{this.deleteCategory(data.category_id)}}>
                               Hapus
@@ -284,7 +284,7 @@ class Category extends Component {
                   </tbody>
                 </table>
 
-                <p className="category-warning">* Kategori yang dihapus akan menyebabkan data pada stok barang 
+                <p className="category-warning">* Kategori yang dihapus akan menyebabkan data pada stok barang
                 dengan kategori yang sama akan ikut terhapus.
                 </p>
               </div>
