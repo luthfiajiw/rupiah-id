@@ -18,7 +18,7 @@ class Landing extends Component {
         <div className="bg-landing">
           <nav className="navbar navbar-expand-lg navbar-light">
             <a className="navbar-brand ml-auto" href="#">
-              <img className="nav-brand-landing" src={require('../assets/rupiah-id.svg')} alt="logo rupiah"/>
+            <img className="nav-brand-landing" src={'https://svgshare.com/i/9zU.svg'} alt="logo rupiah"/>
             </a>
           </nav>
 
@@ -27,7 +27,7 @@ class Landing extends Component {
               <div className="col-md-6 text-center text-md-left text-lg-left landing-text">
                 <h1 className="fadeIn">RUPIAH.ID</h1>
                   <p className="fadeIn lead py-5 text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
-                    transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah merupakan aplikasi kasir berbasis web & mobile
+                    transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web & mobile
                     sebagai pengganti peran aplikasi kasir di desktop. Dengan begitu kamu bisa melakukan transaksi & pembukuan melalui ponselmu
                     dimana pun kamu berada.
                   </p>

@@ -32,3 +32,8 @@
   margin: 10px 0;
   width: 8%;
 }
+
+.category-warning {
+  color: rgb(255, 40, 40);
+  text-align: left!important;
+}

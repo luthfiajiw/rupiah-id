@@ -38,7 +38,11 @@ class Category extends Component {
     loadingData: true,
     loadingCreate: false,
     open: false,
-    message: ""
+    uploadOpen: false,
+    message: "",
+    consfirmDelete: false,
+    baseUrl: "https://api-penjualanapp.herokuapp.com/api/v1/",
+    token: ""
   }
 
   handleClose = () => {
@@ -48,12 +52,13 @@ class Category extends Component {
       loading: false
      });
 
-     window.location.reload(true);
-
+     this.getCategory();
   };
 
   getCategory = () => {
-    axios.get('https://api-penjualanapp.herokuapp.com/api/v1/category?token='+localStorage.getItem('token')).then(
+    const { baseUrl, token } = this.state
+
+    axios.get(`${baseUrl}category?token=${token}`).then(
       res => {
         console.log(res.data.data);
         this.setState({
@@ -64,24 +69,57 @@ class Category extends Component {
   }
 
   postCategory = () => {
+    const { baseUrl, token } = this.state
+
     this.setState({
       loadingCreate: true
     })
 
-    axios.post('https://api-penjualanapp.herokuapp.com/api/v1/category?token='+localStorage.getItem('token'),
+    axios.post(`${baseUrl}category?token=${token}`,
     {
       name: this.state.name
     }).then(res => {
       console.log(res.data);
       this.setState({
-        message: res.data.message
+        message: res.data.message,
+        loadingCreate: false
       })
     }).catch(err => console.log(err))
+  }
+
+  deleteCategory = (id) => {
+    const { baseUrl, token } = this.state
+
+    const confirmDelete = window.confirm('Anda Yakin Ingin Mengapus Ini?')
+    this.setState({
+      confirmDelete: confirmDelete,
+       uploadOpen: true
+    })
+
+    if (confirmDelete) {
+      axios.delete(`${baseUrl}category/${id}?token=${token}`).then(res => {
+        this.setState({
+          message: "delete success",
+          uploadOpen: false
+        })
+      }).catch(err => console.log(err))
+    } else {
+      alert('OK')
+      this.setState({
+        uploadOpen: false
+      })
+    }
   }
 
   handleChange = () => {
     this.setState({
       name: this.refs.name.value
+    })
+  }
+
+  componentWillMount() {
+    this.setState({
+      token: localStorage.getItem('token')
     })
   }
 
@@ -95,7 +133,7 @@ class Category extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
             <BounceLoader
               className={override}
               sizeUnit={"px"}
@@ -123,6 +161,59 @@ class Category extends Component {
           <DialogTitle id="alert-dialog-slide-title"
             className="mx-auto text-center">
               {"Kategori Telah Ditambahkan"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <DoneAll style={{fontSize: "100px", color: "rgb(112, 204, 74)"}}/>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Loading while sending data */}
+        <Dialog
+          open={this.state.uploadOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"LOADING ..."}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn pb-5">
+              <BounceLoader
+                className={override}
+                sizeUnit={"px"}
+                size={70}
+                color={'#ff9906'}
+                loading={this.state.loadingData}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Success Delete */}
+        <Dialog
+          open={this.state.message === "delete success" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Barang Telah Dihapus"}
           </DialogTitle>
 
           <DialogContent>
@@ -168,7 +259,7 @@ class Category extends Component {
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="table-responsive">
-                <table className="table border shadow">
+                <table className="table shadow">
                   <thead>
                     <tr>
                       <th scope="col">No.</th>
@@ -177,13 +268,13 @@ class Category extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.datas.map(data => {
+                    {this.state.datas.map((data, i) => {
                       return(
                         <tr>
-                          <td>{data.category_id}</td>
+                          <td>{i+1}</td>
                           <td>{data.name}</td>
                           <td>
-                            <button type="button" className="btn btn-danger">
+                            <button type="button" className="btn btn-danger" onClick={()=>{this.deleteCategory(data.category_id)}}>
                               Hapus
                             </button>
                           </td>
@@ -192,6 +283,10 @@ class Category extends Component {
                     })}
                   </tbody>
                 </table>
+
+                <p className="category-warning">* Kategori yang dihapus akan menyebabkan data pada stok barang 
+                dengan kategori yang sama akan ikut terhapus.
+                </p>
               </div>
             </div>
           </div>

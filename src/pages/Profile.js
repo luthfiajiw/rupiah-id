@@ -50,7 +50,7 @@ class Profile extends Component {
       loading: false
      });
 
-     window.location.reload(true);
+     this.getProfile();
   };
 
   getProfile = () => {
@@ -82,7 +82,8 @@ class Profile extends Component {
       name: this.state.fullname
     }).then(res => {
       this.setState({
-        message: res.data.message
+        message: res.data.message,
+        loading: false
       })
       console.log(res.data);
     }).catch(err => console.log(err))
@@ -286,17 +287,17 @@ class Profile extends Component {
                     </div>
 
                     <button type="submit" className="btn my-3 profileSubmit" onClick={this.updateProfile}>Ubah</button>
-                  </div>
-
-                  <div className="loading-wrapper w-100">
-                    <div className='text-center'>
-                    <BarLoader
-                      className={override}
-                      sizeUnit={"px"}
-                      size={150}
-                      color={'#ff9906'}
-                      loading={this.state.loading}
-                    />
+                  
+                    <div className="loading-wrapper w-100">
+                      <div className='text-center'>
+                        <BarLoader
+                          className={override}
+                          sizeUnit={"px"}
+                          size={150}
+                          color={'#ff9906'}
+                          loading={this.state.loading}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

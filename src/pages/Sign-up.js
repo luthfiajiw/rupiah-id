@@ -97,6 +97,28 @@ class SignUp extends Component {
     }
   }
 
+  componentDidMount() {
+    const labelUsr = document.getElementById('label-usr');
+    const labelEmail = document.getElementById('label-email');
+    const labelPass = document.getElementById('label-pass');
+
+    const inptUsr = document.getElementById('inp-usr');
+    const inptEmail = document.getElementById('inp-email');
+    const inptPass = document.getElementById('inp-pass');
+
+    labelUsr.addEventListener('click', function() {
+      inptUsr.focus();
+    })
+
+    labelEmail.addEventListener('click', function() {
+      inptEmail.focus();
+    })
+
+    labelPass.addEventListener('click', function() {
+      inptPass.focus();
+    })
+  }
+
 
 
   render() {
@@ -106,7 +128,7 @@ class SignUp extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
           <BounceLoader
             className={override}
             sizeUnit={"px"}
@@ -126,7 +148,7 @@ class SignUp extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
           <BounceLoader
             className={override}
             sizeUnit={"px"}
@@ -171,18 +193,18 @@ class SignUp extends Component {
           <form className="form-signin">
             <div className="InputBox user">
               <li className="fas fa-user-circle"></li>
-              <input type="text" name="username" value={this.state.username} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter"/>
-              <label data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter">Username</label>
+              <input id="inp-usr" type="text" name="username" value={this.state.username} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter"/>
+              <label id="label-usr" data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter">Username</label>
             </div>
             <div className="InputBox email">
               <li className="fas fa-envelope"></li>
-              <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required='required'/>
-              <label>Email</label>
+              <input id="inp-email" type="email" name="email" value={this.state.email} onChange={this.handleChange} required='required'/>
+              <label id="label-email">Email</label>
             </div>
             <div className="InputBox password">
               <li className="fas fa-lock"></li>
-              <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter"/>
-              <label data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter">Password</label>
+              <input id="inp-pass" type="password" name="password" value={this.state.password} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter"/>
+              <label id="label-pass" data-toggle="tooltip" data-placement="bottom" title="Minimal 6 karakter">Password</label>
             </div>
             {/* <Link to={`/${this.state.data === null ? "sign-up" : "sign-in"}`}> */}
             <button type="button" className="btn btn-form" data-toggle="tooltip" data-placement="bottom" title="Lengkapi data di atas" onClick={this.postData} disabled={!this.state.disabled}>

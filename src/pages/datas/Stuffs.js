@@ -38,10 +38,12 @@ class Stuffs extends Component {
     product_code: "",
     name: "",
     category_id: "0",
+    category_name: "",
     buy_price: "",
     sell_price: "",
-    disabled: true,
+    stock: "",
     unit: "",
+    disabled: true,
     token: "",
     baseUrl: "https://api-penjualanapp.herokuapp.com/api/v1/"
   }
@@ -52,13 +54,20 @@ class Stuffs extends Component {
       message: ""
      });
 
-     window.location.reload(true);
-
+    window.location.reload(true)
   };
 
   closeDetail = () => {
     this.setState({
       detailOpen: false
+    })
+  }
+
+  handleUpdate = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      [e.target.name] : e.target.value
     })
   }
 
@@ -181,9 +190,16 @@ class Stuffs extends Component {
     const {baseUrl, token} = this.state
 
     axios.get(`${baseUrl}product/${id}?token=${token}`).then(res => {
-      console.log('success')
+      console.log(res.data)
       this.setState({
-        dataDetail: res.data.data
+        product_code: res.data.data.product_code,
+        name: res.data.data.name,
+        category_id: res.data.data.categories.data.category_id,
+        category_name: res.data.data.categories.data.name,
+        buy_price: res.data.data.buy_price,
+        sell_price: res.data.data.sell_price,
+        stock: res.data.data.stock,
+        unit: res.data.data.unit,
       })
     })
   }
@@ -212,11 +228,35 @@ class Stuffs extends Component {
       })
     } else {
       alert("OK")
+      this.setState({
+        uploadOpen: false
+      })
     }
+  }
 
-    
+  updateProduct = (id) => {
+    const { baseUrl, token } = this.state
 
-  } 
+    this.setState({
+      uploadOpen: true,
+      detailOpen: false
+    })
+
+    axios.patch(`${baseUrl}product/${id}?token=${token}`, {
+      product_code: this.state.product_code,
+      name: this.state.name,
+      category_id: this.state.category_id,
+      buy_price: this.state.buy_price,
+      sell_price: this.state.sell_price,
+      stock: this.state.stock,
+      unit: this.state.unit
+    }).then(res => {
+      this.setState({
+        message: "Updated",
+        uploadOpen: false
+      })      
+    }).catch(err => console.log(err))
+  }
 
   componentWillMount() {
     this.setState({
@@ -237,7 +277,7 @@ class Stuffs extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
             <BounceLoader
               className={override}
               sizeUnit={"px"}
@@ -253,7 +293,7 @@ class Stuffs extends Component {
       <div className="stuffs">
         <Navbar headerApp="Barang"/>
 
-        {/* Success update */}
+        {/* Success Add */}
         <Dialog
           open={this.state.message === "Created" ? true : false}
           TransitionComponent={Transition}
@@ -265,6 +305,32 @@ class Stuffs extends Component {
           <DialogTitle id="alert-dialog-slide-title"
             className="mx-auto text-center">
               {"Barang Telah Ditambahkan"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <DoneAll style={{fontSize: "100px", color: "rgb(112, 204, 74)"}}/>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Success Update */}
+        <Dialog
+          open={this.state.message === "Updated" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Barang Telah DiUbah"}
           </DialogTitle>
 
           <DialogContent>
@@ -351,18 +417,18 @@ class Stuffs extends Component {
               <form name="updateItems" className="updateItems">
                 <div className="inputUpdateBox">
                   <label className="px-2">Kode :</label>
-                  <input type="number" name="product_code" placeholder="Kode Barang" onChange={this.handleChange} value={this.state.dataDetail.product_code}/>
+                  <input type="number" name="product_code" placeholder="Kode Barang" value={this.state.product_code}/>
                 </div>
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Nama :</label>
-                  <input type="text" name="name" placeholder="Nama Barang" onChange={this.handleChange} value={this.state.dataDetail.name}/>
+                  <input type="text" name="name" placeholder="Nama Barang" onChange={this.handleUpdate} value={this.state.name}/>
                 </div>
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Kategori :</label>
                   <select id="categories" name="categories">
-                    <option value={this.state.dataDetail === "" ? "" : this.state.dataDetail.categories.data.category_id} onClick={this.handleOption}>{this.state.dataDetail === "" ? "" : this.state.dataDetail.categories.data.name}</option>
+                    <option value={this.state.category_id} onClick={this.handleOption}>{this.state.category_name}</option>
                     {this.state.categories.map((category,i) => {
                       return(
                         <option value={category.category_id} onClick={this.handleOption}>{category.name}</option>
@@ -373,31 +439,31 @@ class Stuffs extends Component {
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Harga Beli :</label>
-                  <input type="number" name="buy_price" placeholder="IDR" onChange={this.handleChange} value={this.state.dataDetail.buy_price} />
+                  <input type="number" name="buy_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.buy_price} />
                 </div>
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Harga Jual</label>
-                  <input type="number" name="sell_price" placeholder="IDR" onChange={this.handleChange} value={this.state.dataDetail.sell_price}/>
+                  <input type="number" name="sell_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.sell_price}/>
                 </div>
-                
+
                 <div className="inputUpdateBox">
                   <label className="px-2">Stok</label>
-                  <input type="number" name="stock" value={this.state.dataDetail.stock}/>
+                  <input type="number" name="stock" value={this.state.stock}/>
                 </div>
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Unit</label>
-                  <input type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleChange} value={this.state.dataDetail.unit}/>
+                  <input type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleUpdate} value={this.state.unit}/>
                 </div>
               </form>
             </div>
           </DialogContent>
           <DialogActions className="mx-auto">
-              <Button onClick={this.closeDetail} className="btn btn-success">
+              <Button onClick={()=>{this.updateProduct(this.state.product_code)}} className="btn btn-success">
                 Ubah
               </Button>
-              <Button onClick={()=>{this.deleteProduct(this.state.dataDetail.product_code)}} className="btn btn-danger">
+              <Button onClick={()=>{this.deleteProduct(this.state.product_code)}} className="btn btn-danger">
                 Hapus
               </Button>
               <Button onClick={this.closeDetail} color="primary">
@@ -464,8 +530,8 @@ class Stuffs extends Component {
           </div>
           <div className="row">
             <div className="col-md-12 text-center">
-              <div className="table-responsive shadow">
-                <table className="table border">
+              <div className="table-responsive">
+                <table className="table shadow">
                   <thead>
                     <tr>
                       <th scope="col">No.</th>

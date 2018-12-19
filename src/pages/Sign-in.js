@@ -101,6 +101,22 @@ class SignIn extends Component {
     }
   }
 
+  componentDidMount() {
+    const labelUsr = document.getElementById('label-usr');
+    const labelPass = document.getElementById('label-pass');
+
+    const inptUsr = document.getElementById('inp-usr');
+    const inptPass = document.getElementById('inp-pass');
+
+    labelUsr.addEventListener('click', function () {
+      inptUsr.focus();
+    })
+
+    labelPass.addEventListener('click', function () {
+      inptPass.focus();
+    })
+  }
+
   render() {
 
     // Processing signin
@@ -108,7 +124,7 @@ class SignIn extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
           <BounceLoader
             className={override}
             sizeUnit={"px"}
@@ -124,7 +140,7 @@ class SignIn extends Component {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
           <BounceLoader
             className={override}
             sizeUnit={"px"}
@@ -182,13 +198,13 @@ class SignIn extends Component {
           <form className="form-signin">
             <div className="InputBox user">
               <li className="fas fa-user-circle"></li>
-              <input type="text" name="username" required='required' onChange={this.handleChange}/>
-              <label>Username</label>
+              <input id="inp-usr" type="text" name="username" required='required' onChange={this.handleChange}/>
+              <label id="label-usr">Username</label>
             </div>
             <div className="InputBox password">
               <li className="fas fa-lock"></li>
-              <input type="password" name="password" required='required' onChange={this.handleChange}/>
-              <label>Password</label>
+              <input id="inp-pass" type="password" name="password" required='required' onChange={this.handleChange}/>
+              <label id="label-pass">Password</label>
             </div>
             <br/>
             {/* <Link to="/dashboard/daily"> */}

@@ -27,7 +27,7 @@ class Navbar extends Component {
         </div>
         <nav className="navbar navbar-dashboard navbar-expand-lg">
           <a className="navbar-brand">
-            <img className="logo d-inline-block align-top" src={require('../assets/rupiah-id.svg')} alt="logo-rupoah"/>
+            <img className="logo d-inline-block align-top" src={'https://svgshare.com/i/9zU.svg'} alt="logo-rupoah"/>
              &nbsp; <span className="logo-text">UPIAH.ID</span>
           </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -13,12 +13,12 @@ class Datas extends Component {
           <div className="container text-center my-5">
             <div className="row ">
               <Link to="/stuffs" className="col-md-6 datas-box datas-box-cream1">
-                <img className="py-3" src={require('../assets/barang.svg')} alt="barang"/>
-                <h3>Barang</h3>
+              <img className="py-3" src={'https://svgshare.com/i/A1_.svg'} alt="stok-barang"/>
+                <h3>Stok Barang</h3>
                 <Ink/>
               </Link>
               <Link to="/category" className="col-md-6 datas-box datas-box-cream">
-                <img className="py-3" src={require('../assets/kategori-barang.svg')} alt="kateofi-barang"/>
+              <img className="py-3" src={'https://svgshare.com/i/A1D.svg'} alt="kategori-barang"/>
                 <h3>Kategori Barang</h3>
                 <Ink/>
               </Link>
@@ -26,12 +26,12 @@ class Datas extends Component {
 
             <div className="row">
               <Link to="/supplier" className="col-md-6 datas-box datas-box-cream">
-                <img className="py-3" src={require('../assets/pemasok-icon.svg')} alt="pemasok-icon"/>
+              <img className="py-3" src={'https://svgshare.com/i/A08.svg'} alt="pemasok-icon"/>
                 <h3>Pemasok</h3>
                 <Ink/>
               </Link>
               <Link to="/customer" className="col-md-6 datas-box datas-box-cream1">
-                <img className="py-3" src={require('../assets/pelanggan-icon.svg')} alt="pelangan-icon"/>
+              <img className="py-3" src={'https://svgshare.com/i/9zc.svg'} alt="pelangan-icon"/>
                 <h3>Pelanggan</h3>
                 <Ink/>
               </Link>
