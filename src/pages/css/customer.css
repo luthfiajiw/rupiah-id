@@ -1,0 +1,7 @@
+.customer {
+  min-height: 100vh;
+}
+
+.customer li {
+  margin: 0 10px;
+}

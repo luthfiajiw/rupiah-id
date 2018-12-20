@@ -105,7 +105,7 @@ class Profile extends Component {
 
     const formData = new FormData();
     formData.append('photo', this.state.avatar)
-    axios.post(`${baseUrl}/account/profile/uploadpoto?token=${token}`,
+    axios.post(`${baseUrl}/account/uploadphoto?token=${token}`,
       formData).then(res => {
       console.log(res.data);
       this.setState({

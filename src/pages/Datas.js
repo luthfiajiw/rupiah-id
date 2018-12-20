@@ -49,7 +49,7 @@ class Datas extends Component {
                 <Ink/>
               <div className="overlay-2">
                 <div className="caption">
-                  <p className="lead">Data Barang</p>
+                  <p className="lead">Data Pemasok</p>
                   <hr className="w-50 hr-caption" />
                   <div>
                   <p className="data-caption">Untuk menambah, mencatat,<br />dan menyimpan data pemasok barang anda</p>

@@ -32,28 +32,46 @@ class Supplier extends Component {
       token: "",
       baseUrl:"https://penjualanapp-api.herokuapp.com/api/v1/supplier",
       datas: null,
-      supplier_id: "",
+      disabled: false,
+      loading: true,
+      uploadOpen: false,
+      detailOpen: false,
+      message: "",
+      cities: null,
       city_id: "",
       city_name: "",
       name: "",
       address: "",
-      phone_number: "",
-      disabled: false
+      phone_number: ""
     };
   }
 
+  handleOption = (e) => {
+    let city = e.target.value
+
+    this.setState({
+      city_id: parseInt(city)
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false,
+      message: ""
+     });
+
+    window.location.reload(true)
+  };
+
   handleChange = (e) => {
     const formSupp1 = document.forms['supps1'];
-    const formSupp2 = document.forms['supps2'];
 
-    const supplier_id = formSupp1.elements['supplier_id'].value;
     const name = formSupp1.elements['name'].value;
+    const phone_number = formSupp1.elements['phone_number'].value;
+    const address = formSupp1.elements['address'].value;
 
-    const phone_number = formSupp2.elements['phone_number'].value;
-    const address = formSupp2.elements['address'].value;
-
-    if (supplier_id.length !== 0) {
-      if (name.length !== 0) {
+    if (name.length !== 0) {
+      if (this.state.city_id > 0) {
         if (phone_number.length !== 0) {
           if (address.length !== 0) {
             this.setState({
@@ -73,6 +91,30 @@ class Supplier extends Component {
     })
   }
 
+  closeDetail = () => {
+    this.setState({
+      detailOpen: false
+    })
+  }
+
+  openDetail = (id) => {
+    this.setState({
+      detailOpen: true
+    })
+
+    const { baseUrl, token } = this.state
+
+    axios.get(`${baseUrl}/${id}?token=${token}`).then(res => {
+      this.setState({
+        city_id: res.data.data.city.id,
+        city_name: res.data.data.city.name,
+        name: res.data.data.name,
+        address: res.data.data.address,
+        phone_number: res.data.data.phone_number
+      })
+    }).catch(err => console.log(err))
+  }
+
   getSuppliers = () => {
     const { baseUrl, token } = this.state
 
@@ -83,6 +125,40 @@ class Supplier extends Component {
     }).catch(err => console.log(err))
   }
 
+  getCity = () => {
+    const { token } = this.state
+
+    axios.get(`http://penjualanapp-api.herokuapp.com/api/v1/city?token=${token}`).then(res => {
+        this.setState({
+          cities: res.data.data
+        })
+      }
+    ).catch(err => console.log(err))
+  }
+
+  postSupplier = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      uploadOpen: true
+    })
+
+    const { baseUrl, token } = this.state
+
+    axios.post(`${baseUrl}?token=${token}`, {
+      city_id: this.state.city_id,
+      name: this.state.name,
+      address: this.state.address,
+      phone_number: this.state.phone_number
+    }).then(res => {
+      this.setState({
+        message: "Created",
+        uploadOpen: false
+      })
+    }).catch(err => console.log(err))
+
+  }
+
   componentWillMount() {
     this.setState({
       token: localStorage.getItem('token')
@@ -91,14 +167,14 @@ class Supplier extends Component {
 
   componentDidMount() {
     this.getSuppliers();
-
+    this.getCity();
   }
 
   render() {
     console.log(this.state);
 
     // Loading while getting data
-    if (this.state.datas === null) {
+    if (this.state.datas === null || this.state.cities === null) {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
@@ -118,49 +194,217 @@ class Supplier extends Component {
       <div className="supplier">
         <Navbar headerApp="Pemasok" />
 
+        {/* Success Add Supplier*/}
+        <Dialog
+          open={this.state.message === "Created" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Pemasok Telah Ditambahkan"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <DoneAll style={{fontSize: "100px", color: "rgb(112, 204, 74)"}}/>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Success Update Supplier*/}
+        <Dialog
+          open={this.state.message === "Updated" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Data Pemasok Telah Diubah"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <DoneAll style={{fontSize: "100px", color: "rgb(112, 204, 74)"}}/>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Success Delete Supplier*/}
+        <Dialog
+          open={this.state.message === "delete success" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Pemasok Telah Dihapus"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <DoneAll style={{fontSize: "100px", color: "rgb(112, 204, 74)"}}/>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button onClick={this.handleClose} color="primary">
+                OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Loading while sending data */}
+        <Dialog
+          open={this.state.uploadOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"LOADING ..."}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn pb-5">
+              <BounceLoader
+                className={override}
+                sizeUnit={"px"}
+                size={70}
+                color={'#ff9906'}
+                loading={this.state.loading}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Update and Delete Data */}
+        <Dialog
+          open={this.state.detailOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.closeDetail}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"Detail Pemasok"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <form name="updateItems" className="updateItems">
+                <div className="inputUpdateBox">
+                  <label className="px-2">Nama :</label>
+                  <input type="text" name="name" placeholder="Nama Pemasok" value={this.state.name} onChange={this.handleChange}/>
+                </div>
+
+                <div className="inputUpdateBox">
+                  <label className="px-2">Asal Kota :</label>
+                  <select id="categories" name="categories">
+                    <option value={this.state.city_id} onClick={this.handleOption}>{this.state.city_name}</option>
+                    {this.state.cities.map(city => {
+                      return(
+                        <option value={city.id} onClick={this.handleOption}>{city.name}</option>
+                      )
+                    })}
+                  </select>
+                </div>
+
+                <div className="inputUpdateBox">
+                  <label className="px-2">No. Hp :</label>
+                  <input type="number" name="phone_number" placeholder="No. Handphone" value={this.state.phone_number} onChange={this.handleChange}/>
+                </div>
+
+                <div className="inputUpdateBox">
+                  <label className="px-2">Alamat :</label>
+                  <textarea rows="4" className="w-100 address" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
+                  </textarea>
+                </div>
+
+              </form>
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+              <Button className="btn btn-success">
+                Ubah
+              </Button>
+              <Button className="btn btn-danger">
+                Hapus
+              </Button>
+              <Button onClick={this.closeDetail} color="primary">
+                Kembali
+              </Button>
+          </DialogActions>
+        </Dialog>
+
         <div className="container py-5">
           <div className="row">
             <div className="col-md-12 py-5 text-right">
-              <button type="button" className="btn btn-addSuppliers" data-toggle="collapse" data-target="#collapseInput"
+              <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Pemasok
               </button>
 
               <div className="row">
-                <div className="collapse col-md-6 mt-3" id="collapseInput">
-                  <form className="pt-4" name="supps1">
+                <div className="col-md-12 collapse mt-3" id="collapseInput">
+                  <form className="pt-md-4 pt-lg-4" name="supps1">
                     <div className="inputDataBox">
-                      <label className="px-2">ID Pemasok :</label>
-                      <input type="number" name="supplier_id" placeholder="ID Pemasok" onChange={this.handleChange}/>
-                    </div>
+                      <div className="inputDataBox">
+                        <label className="px-2">Nama :</label>
+                        <input type="text" name="name" placeholder="Nama Pemasok" onChange={this.handleChange}/>
+                      </div>
 
-                    <div className="inputDataBox">
-                      <label className="px-2">Nama :</label>
-                      <input type="text" name="name" placeholder="Nama Pemasok" onChange={this.handleChange}/>
-                    </div>
+                      <div className="inputDataBox">
+                        <label className="px-2">Asal Kota :</label>
+                        <select name="city_id">
+                          <option value="0" onClick={this.handleOption}>Pilih</option>
+                          {this.state.cities.map((city,i) => {
+                            return(
+                              <option value={city.id} onClick={this.handleOption}>{city.name}</option>
+                            )
+                          })}
+                        </select>
+                      </div>
 
+                      <div className="inputDataBox">
+                        <label className="px-2">No. HP :</label>
+                        <input type="text" name="phone_number" placeholder="No. Handphone" onChange={this.handleChange}/>
+                      </div>
+
+                      <div className="inputDataBox">
+                        <label className="px-2">Alamat :</label>
+                        <textarea rows="4" className="w-50 address" name="address" onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
+
+                        </textarea>
+                      </div>
+                    </div>
                     <div className="inputDataBox">
-                      <label className="px-2">Asal Kota:</label>
-                      <select name="city_id">
-                        <option value="0">Pilih</option>
-                      </select>
+                      <button type="submit" className="btn btn-postSuppliers" disabled={!this.state.disabled} onClick={this.postSupplier}><i className="fas fa-plus"></i></button>
                     </div>
                   </form>
-                </div>
-
-                <div className="col-md-6 collapse mt-3" id="collapseInput">
-                  <form className="pt-md-4 pt-lg-4" name="supps2">
-                    <div className="inputDataBox">
-                      <label className="px-2">No. HP</label>
-                      <input type="text" name="phone_number" placeholder="Nomor Handphone" onChange={this.handleChange}/>
-                    </div>
-                    <div className="inputDataBox">
-                      <label className="px-2">Alamat</label>
-                      <input type="text" name="address" placeholder="Jl. Semanggi" onChange={this.handleChange}/>
-                    </div>
-                  </form>
-
-                  <button type="submit" className="btn btn-postProducts" disabled={!this.state.disabled}><i className="fas fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -173,11 +417,10 @@ class Supplier extends Component {
                   <thead>
                     <tr>
                       <th scope="col">No.</th>
-                      <th scope="col">ID Pemasok</th>
-                      <th scope="col">Asal Kota</th>
                       <th scope="col">Nama Pemasok</th>
-                      <th scope="col">Alamat Pemasok</th>
+                      <th scope="col">Asal Kota</th>
                       <th scope="col">No. HP</th>
+                      <th scope="col">Alamat Pemasok</th>
                       <th scope="col">Ket</th>
                     </tr>
                   </thead>
@@ -186,13 +429,12 @@ class Supplier extends Component {
                       return(
                         <tr>
                           <td>{i+1}</td>
-                          <td>{data.supplier_id}</td>
-                          <td>{data.city.name}</td>
                           <td>{data.name}</td>
-                          <td>{data.address}</td>
+                          <td>{data.city.name}</td>
                           <td>{data.phone_number}</td>
+                          <td>{data.address}</td>
                           <td>
-                            <button type="button" className="btn btn-detailSuppliers">
+                            <button type="button" className="btn btn-detailSuppliers" onClick={()=>{this.openDetail(data.supplier_id)}}>
                               Detail
                               <Ink/>
                             </button>

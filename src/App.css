@@ -10,5 +10,10 @@ body, html {
   padding: 7px;
   background-color: #ffc136;
   color: #333;
-  box-shadow: 0 2px 5px #ddd;
+  box-shadow: 0 5px 5px #ccc;
+  transition: .5s;
+}
+
+.btn-addDatas:hover {
+  background-color: #fbc650;
 }

@@ -172,7 +172,6 @@ class Stuffs extends Component {
     const {baseUrl, token} = this.state
 
     axios.get(`${baseUrl}product/${id}?token=${token}`).then(res => {
-      console.log(res.data)
       this.setState({
         product_code: res.data.data.product_code,
         product_name: res.data.data.product_name,
@@ -312,7 +311,7 @@ class Stuffs extends Component {
         >
           <DialogTitle id="alert-dialog-slide-title"
             className="mx-auto text-center">
-              {"Barang Telah DiUbah"}
+              {"Data Barang Telah Diubah"}
           </DialogTitle>
 
           <DialogContent>
@@ -399,7 +398,7 @@ class Stuffs extends Component {
               <form name="updateItems" className="updateItems">
                 <div className="inputUpdateBox">
                   <label className="px-2">Kode :</label>
-                  <input type="text" name="product_code" placeholder="Kode Barang" value={this.state.product_code}/>
+                  <input type="text" name="product_code" placeholder="Kode Barang" value={this.state.product_code} disabled/>
                 </div>
 
                 <div className="inputUpdateBox">
