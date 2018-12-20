@@ -38,6 +38,7 @@ class Customer extends Component {
       disabled: false,
       message: "",
       cities: null,
+      customer_id: "",
       city_id: "",
       city_name: "",
       name: "",
@@ -91,6 +92,15 @@ class Customer extends Component {
     window.location.reload(true);
   }
 
+  closeUpdate = () => {
+    this.setState({
+      open: false,
+      message: ""
+    })
+
+    this.getCustomers();
+  }
+
   openDetail = (id) => {
     this.setState({
       detailOpen: true
@@ -100,6 +110,7 @@ class Customer extends Component {
 
     axios.get(`${baseUrl}/${id}?token=${token}`).then(res => {
       this.setState({
+        customer_id: res.data.data.customer_id,
         city_id: res.data.data.city.id,
         city_name: res.data.data.city.name,
         name: res.data.data.name,
@@ -155,6 +166,56 @@ class Customer extends Component {
         uploadOpen: false
       })
     }).catch(err => console.log(err))
+  }
+
+  updateCustomer = (id) => {
+    const { baseUrl, token } = this.state
+
+    this.setState({
+      uploadOpen: true,
+      detailOpen: false
+    })
+
+    axios.patch(`${baseUrl}/${id}?token=${token}`, {
+      name: this.state.name,
+      address: this.state.address,
+      phone_number: this.state.phone_number,
+      city_id: this.state.city_id
+    }).then(res => {
+      this.setState({
+        message: "Updated",
+        uploadOpen: false
+      })
+    }).catch(err => console.log(err))
+  }
+
+  deleteCustomer = (id) => {
+    const {baseUrl, token} = this.state
+
+    const confirmDelete = window.confirm('Anda Yakin Ingin Menghapus Ini ?')
+    this.setState({
+      uploadOpen: true
+    })
+
+    if (confirmDelete) {
+      axios.delete(`${baseUrl}/${id}?token=${token}`).then(
+        res => {
+          this.setState({
+            message: "delete success",
+            uploadOpen: false
+          })
+        }
+      ).catch(err => console.error(err))
+
+      this.setState({
+        detailOpen: false
+      })
+    } else {
+      alert("OK")
+      this.setState({
+        uploadOpen: false
+      })
+    }
   }
 
   componentWillMount() {
@@ -238,7 +299,7 @@ class Customer extends Component {
             </div>
           </DialogContent>
           <DialogActions className="mx-auto">
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.closeUpdate} color="primary">
                 OK
               </Button>
           </DialogActions>
@@ -264,7 +325,7 @@ class Customer extends Component {
             </div>
           </DialogContent>
           <DialogActions className="mx-auto">
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.closeUpdate} color="primary">
                 OK
               </Button>
           </DialogActions>
@@ -346,10 +407,10 @@ class Customer extends Component {
             </div>
           </DialogContent>
           <DialogActions className="mx-auto">
-              <Button className="btn btn-success">
+              <Button className="btn btn-success" onClick={()=>{this.updateCustomer(this.state.customer_id)}}>
                 Ubah
               </Button>
-              <Button className="btn btn-danger">
+              <Button className="btn btn-danger" onClick={()=>{this.deleteCustomer(this.state.customer_id)}}>
                 Hapus
               </Button>
               <Button onClick={this.closeDetail} color="primary">

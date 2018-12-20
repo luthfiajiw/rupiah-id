@@ -38,6 +38,7 @@ class Supplier extends Component {
       detailOpen: false,
       message: "",
       cities: null,
+      supplier_id: "",
       city_id: "",
       city_name: "",
       name: "",
@@ -106,6 +107,7 @@ class Supplier extends Component {
 
     axios.get(`${baseUrl}/${id}?token=${token}`).then(res => {
       this.setState({
+        supplier_id: res.data.data.supplier_id,
         city_id: res.data.data.city.id,
         city_name: res.data.data.city.name,
         name: res.data.data.name,
@@ -157,6 +159,56 @@ class Supplier extends Component {
       })
     }).catch(err => console.log(err))
 
+  }
+
+  updateSupplier = (id) => {
+    const { baseUrl, token } = this.state
+
+    this.setState({
+      uploadOpen: true,
+      detailOpen: false
+    })
+
+    axios.patch(`${baseUrl}/${id}?token=${token}`, {
+      name: this.state.name,
+      address: this.state.address,
+      phone_number: this.state.phone_number,
+      city_id: this.state.city_id
+    }).then(res => {
+      this.setState({
+        message: "Updated",
+        uploadOpen: false
+      })
+    }).catch(err => console.log(err))
+  }
+
+  deleteSupplier = (id) => {
+    const {baseUrl, token} = this.state
+
+    const confirmDelete = window.confirm('Anda Yakin Ingin Menghapus Ini ?');
+    this.setState({
+      uploadOpen: true
+    })
+
+    if (confirmDelete) {
+      axios.delete(`${baseUrl}/${id}?token=${token}`).then(
+        res => {
+          this.setState({
+            message: "delete success",
+            uploadOpen: false
+          })
+        }
+      ).catch(err => console.error(err))
+
+      this.setState({
+        detailOpen: false
+      })
+    } else {
+      alert("OK")
+      this.setState({
+        uploadOpen: false
+      })
+    }
   }
 
   componentWillMount() {
@@ -348,10 +400,10 @@ class Supplier extends Component {
             </div>
           </DialogContent>
           <DialogActions className="mx-auto">
-              <Button className="btn btn-success">
+              <Button className="btn btn-success" onClick={()=>{this.updateSupplier(this.state.supplier_id)}}>
                 Ubah
               </Button>
-              <Button className="btn btn-danger">
+              <Button className="btn btn-danger" onClick={()=>{this.deleteSupplier(this.state.supplier_id)}}>
                 Hapus
               </Button>
               <Button onClick={this.closeDetail} color="primary">
