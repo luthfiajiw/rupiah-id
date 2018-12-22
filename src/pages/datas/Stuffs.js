@@ -41,7 +41,7 @@ class Stuffs extends Component {
     category_name: "",
     buy_price: "",
     sell_price: "",
-    stock: "",
+    first_stock: "",
     unit: "",
     disabled: true,
     token: "",
@@ -79,6 +79,7 @@ class Stuffs extends Component {
 
     const product_code = formItems1.elements['product_code'].value
     const name = formItems1.elements['product_name'].value
+    const stock = formItems1.elements['first_stock'].value
 
     const buy_price = formItems2.elements['buy_price'].value
     const sell_price = formItems2.elements['sell_price'].value
@@ -88,16 +89,42 @@ class Stuffs extends Component {
     if (product_code.length !== 0) {
       if (name.length !== 0) {
         if (this.state.category_id !== "0") {
-          if (buy_price.length !== 0) {
-            if (sell_price.length !== 0) {
-              if (unit.length > 2) {
+          if (stock.length !== 0) {
+            if (buy_price.length !== 0) {
+              if (sell_price.length !== 0) {
+                if (unit.length > 2) {
+                  this.setState({
+                    disabled: false
+                  })
+                }else {
+                  this.setState({
+                    disabled: true
+                  })
+                }
+              }else {
                 this.setState({
-                  disabled: false
+                  disabled: true
                 })
               }
+            }else {
+              this.setState({
+                disabled: true
+              })
             }
+          } else {
+            this.setState({
+              disabled: true
+            })
           }
+        }else {
+          this.setState({
+            disabled: true
+          })
         }
+      } else {
+        this.setState({
+          disabled: true
+        })
       }
     } else {
       this.setState({
@@ -155,8 +182,10 @@ class Stuffs extends Component {
       category_id: this.state.category_id,
       buy_price: this.state.buy_price,
       sell_price: this.state.sell_price,
-      unit: this.state.unit
+      unit: this.state.unit,
+      first_stock: parseInt(this.state.first_stock)
     }).then(res => {
+      console.log(res.data);
       this.setState({
         message: res.request.statusText,
         uploadOpen: false
@@ -179,7 +208,7 @@ class Stuffs extends Component {
         category_name: res.data.data.categories.category_name,
         buy_price: res.data.data.buy_price,
         sell_price: res.data.data.sell_price,
-        stock: res.data.data.stock,
+        first_stock: res.data.data.first_stock,
         unit: res.data.data.unit,
       })
     })
@@ -229,7 +258,7 @@ class Stuffs extends Component {
       category_id: this.state.category_id,
       buy_price: this.state.buy_price,
       sell_price: this.state.sell_price,
-      stock: this.state.stock,
+      first_stock: this.state.first_stock,
       unit: this.state.unit
     }).then(res => {
       this.setState({
@@ -430,7 +459,7 @@ class Stuffs extends Component {
 
                 <div className="inputUpdateBox">
                   <label className="px-2">Stok</label>
-                  <input type="number" name="stock" value={this.state.stock}/>
+                  <input type="number" name="first_stock" value={this.state.first_stock} disabled/>
                 </div>
 
                 <div className="inputUpdateBox">
@@ -485,6 +514,11 @@ class Stuffs extends Component {
                         })}
                       </select>
                     </div>
+
+                    <div className="inputDataBox">
+                      <label className="px-2">Stok :</label>
+                      <input type="text" name="first_stock" placeholder="Stok Awal" onChange={this.handleChange}/>
+                    </div>
                   </form>
                 </div>
 
@@ -537,7 +571,7 @@ class Stuffs extends Component {
                           <td>{data.buy_price}</td>
                           <td>{data.sell_price}</td>
                           <td>{data.unit}</td>
-                          <td>{data.stock}</td>
+                          <td>{data.total_stock}</td>
                           <td>
                             <button type="button" className="btn btn-detailProducts" onClick={()=>{this.detailProduct(data.product_code)}}>Detail</button>
                           </td>

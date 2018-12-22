@@ -40,15 +40,15 @@ class Navbar extends Component {
                 <Link to="/dashboard/daily" className="nav-link"><li className="fas fa-chart-bar"></li>Dashboard</Link>
               </li>
               <li className="nav-item">
-                <Link to="/datas" className="nav-link datas" href="#"><li className="fas fa-database"></li>Data-data</Link>
+                <Link to="/datas" className="nav-link datas"><li className="fas fa-database"></li>Data-data</Link>
               </li>
               <li className="nav-item dropdown">
                 <a className="nav-link transaction dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <li className="fas fa-balance-scale"></li>Transaksi
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="#">Penjualan</a>
-                  <a className="dropdown-item" href="#">Pembelian</a>
+                  <Link to="/purchases" className="nav-link purchases"><li className="fas fa-cart-plus"></li>Pembelian</Link>
+                  <Link to="/sales" className="nav-link sales"><li className="fas fa-shipping-fast"></li>Penjualan</Link>
                 </div>
               </li>
               <li className="nav-item dropdown">

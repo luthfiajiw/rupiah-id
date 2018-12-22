@@ -1,6 +1,7 @@
 thead {
   background-color: #ff9906;
   color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 th {
@@ -15,4 +16,9 @@ tr {
 td {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 15px!important;
+}
+
+.thead-purchases {
+  background-color: transparent!important;
+  color: #333;
 }

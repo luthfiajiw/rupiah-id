@@ -50,9 +50,7 @@ class Supplier extends Component {
   handleOption = (e) => {
     let city = e.target.value
 
-    this.setState({
-      city_id: parseInt(city)
-    })
+    this.setState({ city_id: parseInt(city) })
   }
 
   handleClose = () => {
@@ -61,7 +59,11 @@ class Supplier extends Component {
       message: ""
      });
 
-    window.location.reload(true)
+     const formSupp1 = document.forms['supps1'];
+
+    this.getSuppliers();
+
+    formSupp1.reset();
   };
 
   handleChange = (e) => {

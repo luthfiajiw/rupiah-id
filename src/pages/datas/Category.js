@@ -34,6 +34,7 @@ class Category extends Component {
 
   state = {
     datas: null,
+    pagination: "",
     category_name:  "",
     loadingData: true,
     loadingCreate: false,
@@ -41,8 +42,15 @@ class Category extends Component {
     uploadOpen: false,
     message: "",
     consfirmDelete: false,
-    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/",
+    nextUrl: "",
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/category",
     token: ""
+  }
+
+  nextPage = () => {
+    this.setState({
+      baseUrl: this.state.pagination.links.next+"&"
+    })
   }
 
   handleClose = () => {
@@ -58,11 +66,12 @@ class Category extends Component {
   getCategory = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}category?token=${token}`).then(
+    axios.get(`${baseUrl}?token=${token}`).then(
       res => {
         console.log(res.data.data);
         this.setState({
-          datas: res.data.data
+          datas: res.data.data,
+          pagination: res.data.meta.pagination
         })
       }
     )
@@ -75,7 +84,7 @@ class Category extends Component {
       loadingCreate: true
     })
 
-    axios.post(`${baseUrl}category?token=${token}`,
+    axios.post(`${baseUrl}?token=${token}`,
     {
       category_name: this.state.category_name
     }).then(res => {
@@ -97,7 +106,7 @@ class Category extends Component {
     })
 
     if (confirmDelete) {
-      axios.delete(`${baseUrl}category/${id}?token=${token}`).then(res => {
+      axios.delete(`${baseUrl}/${id}?token=${token}`).then(res => {
         this.setState({
           message: "delete success",
           uploadOpen: false
@@ -288,6 +297,25 @@ class Category extends Component {
                 dengan kategori yang sama akan ikut terhapus.
                 </p>
               </div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" onClick={this.nextPage} aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
             </div>
           </div>
         </div>

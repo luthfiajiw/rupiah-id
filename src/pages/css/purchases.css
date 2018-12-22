@@ -1,0 +1,41 @@
+.purchases-menu {
+  min-height: 100vh;
+}
+
+.purchases-menu li {
+  margin: 0 10px;
+}
+
+.purchases-menu h4 {
+  color: #333;
+}
+
+.inputPurchases {
+  margin: 10px 0;
+}
+
+.inputPurchases label {
+  display: block;
+  color: #333;
+}
+
+.inputPurchases input {
+  padding: 7px;
+  width: 50%;
+}
+
+.inputPurchases select {
+  -ms-padding: 5px;
+  width: 50%;
+}
+
+@media screen and (max-width: 780px) {
+  .inputPurchases input, .inputPurchases select {
+    width: 100%;
+  }
+}
+
+.btn-addItemPurchase {
+  background-color: #ffc136;
+  box-shadow: 0 5px 5px #ccc;
+}

@@ -19,8 +19,12 @@
   font-size: 3em;
 }
 
+.fas .fa-sign-out-alt {
+  margin: 0 10px !important;
+}
+
 .logo {
-  width: 40px;
+  width: 30px;
 }
 
 .navbar-toggler-icon {
@@ -37,12 +41,10 @@
 
 .logo-text {
   text-indent: 20px;
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: bolder;
   text-shadow: 2px 5px 15px rgba(255, 123, 0, 0.5);
 }
-
-
 
 .navbar-dashboard {
   box-shadow: 0 5px 5px #ddd;
