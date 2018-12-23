@@ -33,9 +33,37 @@
   .inputPurchases input, .inputPurchases select {
     width: 100%;
   }
+
+  .purchases-menu h4 {
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
 }
 
 .btn-addItemPurchase {
   background-color: #ffc136;
   box-shadow: 0 5px 5px #ccc;
+}
+
+.product_amount {
+  font-size: 20px;
+}
+
+.btn-deleteBuyItem{
+  background-color: rgb(244, 47, 47);
+  color: #fff;
+  padding: 5px;
+  margin: auto 10px;
+}
+
+.btn-buyItems {
+  background-color: rgb(0, 255, 0);
+  letter-spacing: 1px;
+  color: #fff;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

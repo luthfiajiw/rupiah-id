@@ -31,11 +31,13 @@ class Purchases extends Component {
     this.state = {
       token: "",
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/",
+      disabled: true,
+      disabledBuy: true,
       dataProducts: null,
       dataSuppliers: null,
-      supplier_id: "",
+      supplier_id: "0",
       item_code: "",
-      item_amount: "",
+      item_amount: 0,
       item_name: "",
       buyItems: []
     };
@@ -56,6 +58,24 @@ handleSupplier = (e) => {
   }
 
   handleProductAmount = (e) => {
+    const form1 = document.forms['form1']
+    const item_amount = form1.elements["item_amount"].value
+    const { supplier_id, item_code } = this.state
+
+    if (supplier_id !== 0) {
+      if (item_code.length !== 0) {
+        if (item_amount.length !== 0) {
+          this.setState({ disabled: false })
+        } else {
+          this.setState({ disabled: true })
+        }
+      } else {
+        this.setState({ disabled: true })
+      }
+    } else {
+      this.setState({ disabled: true })
+    }
+
     this.setState({
       item_amount: parseInt(e.target.value)
     })
@@ -76,8 +96,43 @@ handleSupplier = (e) => {
     buyItems.push(product)
 
     this.setState({
+      buyItems: buyItems,
+    })
+
+
+
+  }
+
+  removeItem = (i) => {
+    let buyItems = this.state.buyItems
+    buyItems.splice(i, 1)
+    this.setState({
       buyItems: buyItems
     })
+  }
+
+  buyProducts = () => {
+    const {baseUrl, token, buyItems } = this.state
+
+    let product_code = new Array
+
+      for (var i = 0; i < buyItems.length; i++) {
+        product_code.push(buyItems[i].product_code)
+      }
+
+    let product_amount = new Array
+
+    for (var i = 0; i < buyItems.length; i++) {
+      product_amount.push(buyItems[i].product_amount)
+    }
+
+    axios.post(`${baseUrl}pembelian?token=${token}`, {
+      supplier_id: this.state.supplier_id,
+      product_code: product_code,
+      product_amount: product_amount
+    }).then(res => {
+      console.log(res);
+    }).catch(err => console.log(err))
   }
 
   getProduct = () => {
@@ -114,7 +169,7 @@ handleSupplier = (e) => {
   }
 
   render() {
-    console.log(this.state);
+    console.log(this.state.buyItems);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataSuppliers === null) {
       return(
@@ -145,35 +200,37 @@ handleSupplier = (e) => {
 
                 <div className="row">
                   <div className="col-md-6">
-                    <div className="inputPurchases">
-                      <label>Nama Pemasok :</label>
-                      <select name="supplier">
-                        <option value="0" onClick={this.handleSupplier}>Pilih</option>
-                        {this.state.dataSuppliers.map(data => {
-                          return(
-                            <option value={data.supplier_id} onClick={this.handleSupplier}>{data.name}</option>
-                          )
-                        })}
-                      </select>
-                    </div>
+                    <form name="form1">
+                      <div className="inputPurchases">
+                        <label>Nama Pemasok :</label>
+                        <select name="supplier">
+                          <option value="0" onClick={this.handleSupplier}>Pilih</option>
+                          {this.state.dataSuppliers.map(data => {
+                            return(
+                              <option value={data.supplier_id} onClick={this.handleSupplier}>{data.name}</option>
+                            )
+                          })}
+                        </select>
+                      </div>
 
-                    <div className="inputPurchases">
-                      <label>Barang yang mau dibeli :</label>
-                      <select name="items">
-                        <option value="0" onClick={this.handleProductCode}>Pilih</option>
-                        {this.state.dataProducts.map(data => {
-                          return(
-                            <option value={data.product_code} onClick={this.handleProductCode}>{data.product_name}</option>
-                          )
-                        })}
-                      </select>
-                    </div>
+                      <div className="inputPurchases">
+                        <label>Barang yang mau dibeli :</label>
+                        <select name="items">
+                          <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
+                          {this.state.dataProducts.map(data => {
+                            return(
+                              <option value={data.product_code} onClick={this.handleProductCode}>{data.product_name}</option>
+                            )
+                          })}
+                        </select>
+                      </div>
 
-                    <div className="inputPurchases">
-                      <label>Jumlah :</label>
-                      <input type="number" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
-                    </div>
-                    <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToanArray}>Tambah</button>
+                      <div className="inputPurchases">
+                        <label>Jumlah :</label>
+                        <input type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
+                      </div>
+                      <button type="submit" className="btn btn-addItemPurchase my-2" disabled={this.state.disabled} onClick={this.addProductToanArray}>Tambah</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -183,7 +240,7 @@ handleSupplier = (e) => {
           <div className="row mt-3">
             <div className="col-md-12">
               <div className="text-center">
-                <h4>List Barang Yang Akan Dibeli</h4>
+                <h4>Daftar Barang Yang Akan Dibeli</h4>
                 <hr className="w-50"/>
               </div>
               <div className="table-responsive text-center">
@@ -192,6 +249,7 @@ handleSupplier = (e) => {
                     <th>No.</th>
                     <th>Barang</th>
                     <th>Jumlah</th>
+                    <th>Aksi</th>
                   </thead>
                   <tbody>
                       {this.state.buyItems.map((item,i) => {
@@ -199,12 +257,20 @@ handleSupplier = (e) => {
                           <tr className="bounceIn">
                             <td>{i+1}</td>
                             <td>{item.product_name}</td>
-                            <td>{item.product_amount}</td>
+                            <td>
+                              <span className="product_amount">{item.product_amount}</span>
+                            </td>
+                            <td>
+                              <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeItem}><li className="fas fa-trash"></li></button>
+                            </td>
                           </tr>
                         )
                       })}
                   </tbody>
                 </table>
+              </div>
+              <div className="text-right mb-5">
+                <button type="button" className="btn btn-buyItems" onClick={this.buyProducts}>Beli</button>
               </div>
             </div>
           </div>
