@@ -67,3 +67,25 @@
 button:disabled {
   cursor: not-allowed;
 }
+
+.total_price {
+  padding: 7px;
+  width: 25%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.invoice {
+  text-align: left !important;
+}
+
+.received {
+  background-color: rgb(0, 160, 21);
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 0;
+  border-radius: 50px;
+  color: #fff;
+}

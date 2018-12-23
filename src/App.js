@@ -8,7 +8,6 @@ import Home from './pages/Home';
 import Datas from './pages/Datas';
 import Category from './pages/datas/Category';
 import Customer from './pages/datas/Customer';
-import Stock from './pages/datas/Stock';
 import Stuffs from './pages/datas/Stuffs';
 import Supplier from './pages/datas/Supplier';
 import Purchases from './pages/Purchases';
@@ -31,7 +30,6 @@ class App extends Component {
             <Route path="/datas" component={Datas}/>
             <Route path="/category" component={Category}/>
             <Route path="/customer" component={Customer}/>
-            <Route path="/stock" component={Stock}/>
             <Route path="/stuffs" component={Stuffs}/>
             <Route path="/supplier" component={Supplier}/>
             <Route path="/purchases" component={Purchases}/>

@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Clear from '@material-ui/icons/Clear';
 
 const override = css`
     border-color: red;
@@ -33,27 +34,44 @@ class Purchases extends Component {
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/",
       disabled: true,
       disabledBuy: true,
+      message: "",
+      open: false,
+      openUpload: false,
+      loading: true,
       dataProducts: null,
       dataSuppliers: null,
       supplier_id: "0",
       item_code: "",
       item_amount: 0,
       item_name: "",
+      sell_price: "",
+      total_price: "",
       buyItems: []
     };
   }
 
-handleSupplier = (e) => {
-  this.setState({
-    supplier_id: parseInt(e.target.value)
-  })
-}
+  handleSupplier = (e) => {
+    this.setState({
+      supplier_id: parseInt(e.target.value)
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false,
+      message: "",
+      buyItems: []
+    })
+
+    document.forms['form1'].reset()
+  }
 
 
   handleProductCode = (e) => {
     this.setState({
       item_code: e.target.value,
-      item_name: e.target.innerHTML
+      item_name: e.target.innerHTML,
+      sell_price: e.target.getAttribute('name')
     })
   }
 
@@ -88,9 +106,10 @@ handleSupplier = (e) => {
     let product_code = this.state.item_code
     let product_amount = this.state.item_amount
     let product_name = this.state.item_name
+    let sell_price = this.state.sell_price
 
     let product = {
-      product_amount, product_code, product_name
+      product_amount, product_code, product_name, sell_price
     }
 
     buyItems.push(product)
@@ -114,6 +133,10 @@ handleSupplier = (e) => {
   buyProducts = () => {
     const {baseUrl, token, buyItems } = this.state
 
+    this.setState({
+      uploadOpen: true
+    })
+
     let product_code = new Array
 
       for (var i = 0; i < buyItems.length; i++) {
@@ -131,8 +154,17 @@ handleSupplier = (e) => {
       product_code: product_code,
       product_amount: product_amount
     }).then(res => {
-      console.log(res);
-    }).catch(err => console.log(err))
+      console.log(res.data)
+      this.setState({
+        message: "Purchase succeed",
+        uploadOpen: false
+      })
+    }).catch(err => {
+      this.setState({
+        message: "Failed",
+        uploadOpen: false
+      })
+    })
   }
 
   getProduct = () => {
@@ -169,7 +201,7 @@ handleSupplier = (e) => {
   }
 
   render() {
-    console.log(this.state.buyItems);
+    console.log(this.state);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataSuppliers === null) {
       return(
@@ -190,6 +222,126 @@ handleSupplier = (e) => {
     return (
       <div className="purchases-menu">
         <Navbar headerApp="Pembelian"/>
+
+        {/* Loading while sending data */}
+        <Dialog
+          open={this.state.uploadOpen}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"LOADING ..."}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn pb-5">
+              <BounceLoader
+                className={override}
+                sizeUnit={"px"}
+                size={70}
+                color={'#ff9906'}
+                loading={this.state.loading}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Purchase failed */}
+        <Dialog
+          open={this.state.message === "Failed" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"Pembelian Gagal"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <Clear style={{ fontSize: "100px", color: "rgb(205, 32, 63)" }} />
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+            <Button onClick={this.handleClose} color="primary">
+              OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Purchase Succeed */}
+        <Dialog
+          // open={this.state.message === "Purchase succeed" ? true : false}
+          open="true"
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"Pembelian Berhasil"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div>
+              <div className="invoice text-center">
+                <p>Tanggal :</p>
+                <p>Supplier :</p>
+                <p>Status : <span className="received">Diterima</span></p>
+                <p>Keterangan :</p>
+              </div>
+              <div className="table-responsive text-center">
+                <table className="table">
+                  <thead className="thead-purchases">
+                    <th>No.</th>
+                    <th>Barang</th>
+                    <th>Jumlah</th>
+                    <th>Harga Satuan</th>
+                    <th>Subtotal</th>
+                    <th>Aksi</th>
+                  </thead>
+                  <tbody>
+                    {this.state.buyItems.map((item, i) => {
+                      return (
+                        <tr className="bounceIn">
+                          <td>{i + 1}</td>
+                          <td>{item.product_name}</td>
+                          <td>
+                            <span className="product_amount">{item.product_amount}</span>
+                          </td>
+                          <td>Rp. {item.sell_price}</td>
+                          <td>Rp. {+item.sell_price * +item.product_amount}</td>
+                          <td>
+                            <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeItem}><li className="fas fa-trash"></li></button>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div className="text-right">
+                <label className="d-block">Total Harga</label>
+                <input className="total_price" type="text" value={this.state.total_price} disabled/>
+              </div>
+            </div>
+          </DialogContent>
+
+          <DialogActions className="mx-auto">
+            <Button onClick={this.handleClose} color="primary">
+              OK
+              </Button>
+          </DialogActions>
+        </Dialog>
 
         <div className="container my-5">
           <div className="row">
@@ -219,7 +371,7 @@ handleSupplier = (e) => {
                           <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
                           {this.state.dataProducts.map(data => {
                             return(
-                              <option value={data.product_code} onClick={this.handleProductCode}>{data.product_name}</option>
+                              <option value={data.product_code} name={data.sell_price} onClick={this.handleProductCode}>{data.product_name}</option>
                             )
                           })}
                         </select>
@@ -249,6 +401,8 @@ handleSupplier = (e) => {
                     <th>No.</th>
                     <th>Barang</th>
                     <th>Jumlah</th>
+                    <th>Harga Satuan</th>
+                    <th>Total Harga</th>
                     <th>Aksi</th>
                   </thead>
                   <tbody>
@@ -260,6 +414,8 @@ handleSupplier = (e) => {
                             <td>
                               <span className="product_amount">{item.product_amount}</span>
                             </td>
+                            <td>Rp. {item.sell_price}</td>
+                            <td>Rp. {+item.sell_price * +item.product_amount}</td>
                             <td>
                               <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeItem}><li className="fas fa-trash"></li></button>
                             </td>
