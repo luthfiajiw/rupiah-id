@@ -25,7 +25,7 @@
 }
 
 .inputPurchases select {
-  -ms-padding: 5px;
+  -webkit-padding: 5px;
   width: 50%;
 }
 
@@ -70,18 +70,23 @@ button:disabled {
 
 .total_price {
   padding: 7px;
-  width: 25%;
+  width: 50%;
   background-color: transparent;
-  border: none;
   border-bottom: 1px solid #ddd;
+  text-align: right!important;
 }
 
 .invoice {
   text-align: left !important;
 }
 
+.invoice p {
+  margin-right: 15px!important;
+}
+
 .received {
   background-color: rgb(0, 160, 21);
+  font-size: 14px;
   padding-bottom: 3px;
   padding-left: 10px;
   padding-right: 10px;

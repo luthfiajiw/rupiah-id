@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
-import FlipMove from 'react-flip-move';
 import './css/purchases.css';
 import axios from 'axios';
 import { css } from 'react-emotion';
@@ -46,13 +45,15 @@ class Purchases extends Component {
       item_name: "",
       sell_price: "",
       total_price: "",
+      created_at: "",
       buyItems: []
     };
   }
 
   handleSupplier = (e) => {
     this.setState({
-      supplier_id: parseInt(e.target.value)
+      supplier_id: parseInt(e.target.value),
+      supplier_name: e.target.innerHTML
     })
   }
 
@@ -157,7 +158,8 @@ class Purchases extends Component {
       console.log(res.data)
       this.setState({
         message: "Purchase succeed",
-        uploadOpen: false
+        uploadOpen: false,
+        created_at: res.data.data[0].created_at
       })
     }).catch(err => {
       this.setState({
@@ -278,8 +280,7 @@ class Purchases extends Component {
 
         {/* Purchase Succeed */}
         <Dialog
-          // open={this.state.message === "Purchase succeed" ? true : false}
-          open="true"
+          open={this.state.message === "Purchase succeed" ? true : false}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -294,12 +295,12 @@ class Purchases extends Component {
           <DialogContent>
             <div>
               <div className="invoice text-center">
-                <p>Tanggal :</p>
-                <p>Supplier :</p>
+                <p>Tanggal : {this.state.created_at}</p>
+                <p>Supplier : {this.state.supplier_name}</p>
                 <p>Status : <span className="received">Diterima</span></p>
                 <p>Keterangan :</p>
               </div>
-              <div className="table-responsive text-center">
+              <div className="table-responsive text-center mb-5">
                 <table className="table">
                   <thead className="thead-purchases">
                     <th>No.</th>
@@ -307,7 +308,6 @@ class Purchases extends Component {
                     <th>Jumlah</th>
                     <th>Harga Satuan</th>
                     <th>Subtotal</th>
-                    <th>Aksi</th>
                   </thead>
                   <tbody>
                     {this.state.buyItems.map((item, i) => {
@@ -320,18 +320,11 @@ class Purchases extends Component {
                           </td>
                           <td>Rp. {item.sell_price}</td>
                           <td>Rp. {+item.sell_price * +item.product_amount}</td>
-                          <td>
-                            <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeItem}><li className="fas fa-trash"></li></button>
-                          </td>
                         </tr>
                       )
                     })}
                   </tbody>
                 </table>
-              </div>
-              <div className="text-right">
-                <label className="d-block">Total Harga</label>
-                <input className="total_price" type="text" value={this.state.total_price} disabled/>
               </div>
             </div>
           </DialogContent>
