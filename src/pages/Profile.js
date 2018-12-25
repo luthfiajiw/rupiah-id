@@ -58,7 +58,6 @@ class Profile extends Component {
     const { baseUrl, token } = this.state
 
     axios.get(`${baseUrl}/account/profile?token=${token}`).then(res => {
-      console.log(res.data);
       this.setState({
         data: res.data,
         avatar: res.data.data.photo,
@@ -107,7 +106,6 @@ class Profile extends Component {
     formData.append('photo', this.state.avatar)
     axios.post(`${baseUrl}/account/uploadphoto?token=${token}`,
       formData).then(res => {
-      console.log(res.data);
       this.setState({
         message: res.data.message,
         openPhoto: false
@@ -166,7 +164,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="profile">
         <Navbar headerApp="Profil"/>
