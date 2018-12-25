@@ -44,7 +44,7 @@ class Purchases extends Component {
       item_amount: 0,
       item_name: "",
       sell_price: "",
-      total_price: "",
+      total_price: [],
       created_at: "",
       buyItems: []
     };
@@ -341,14 +341,14 @@ class Purchases extends Component {
             <div className="col-md-12">
               <div className="container">
                 <h4>Beli Barang :</h4>
-                <hr className="w-25 ml-0 my-4"></hr>
+                <hr className="text-left w-25 ml-0 my-4"></hr>
 
                 <div className="row">
                   <div className="col-md-6">
                     <form name="form1">
-                      <div className="inputPurchases">
+                      <div className="form-group inputPurchases mb-5">
                         <label>Nama Pemasok :</label>
-                        <select name="supplier">
+                        <select className="form-control" name="supplier">
                           <option value="0" onClick={this.handleSupplier}>Pilih</option>
                           {this.state.dataSuppliers.map(data => {
                             return(
@@ -356,11 +356,12 @@ class Purchases extends Component {
                             )
                           })}
                         </select>
+                        <hr className="text-left w-25 my-5"/>
                       </div>
 
-                      <div className="inputPurchases">
+                      <div className="form-group inputPurchases">
                         <label>Barang yang mau dibeli :</label>
-                        <select name="items">
+                        <select className="form-control" name="items">
                           <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
                           {this.state.dataProducts.map(data => {
                             return(
@@ -370,11 +371,11 @@ class Purchases extends Component {
                         </select>
                       </div>
 
-                      <div className="inputPurchases">
+                      <div className="form-group inputPurchases">
                         <label>Jumlah :</label>
-                        <input type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
+                        <input className="form-control" type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
                       </div>
-                      <button type="submit" className="btn btn-addItemPurchase my-2" disabled={this.state.disabled} onClick={this.addProductToanArray}>Tambah</button>
+                      <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToanArray}>Tambah</button>
                     </form>
                   </div>
                 </div>

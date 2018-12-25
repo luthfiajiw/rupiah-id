@@ -10,6 +10,7 @@
 
 .inputCategory input {
   padding: 7px;
+  width: 50%;
 }
 
 .btn-postCategory {

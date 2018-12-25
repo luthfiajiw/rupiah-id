@@ -246,9 +246,9 @@ class Category extends Component {
                 + Tambah Kategori
               </button>
               <div className="collapse mt-3" id="collapseInput">
-                <div className="inputCategory align-items-center">
+                <div className="form-group inputCategory align-items-center">
                   <label className="px-2">Nama Kategori :</label>
-                  <input className="py-1" name="category_name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
+                  <input className="form-control py-1" name="category_name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
                   <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}><i className="fas fa-plus"></i></button>
                 </div>
                 <div className="text-right pt-3">
@@ -279,7 +279,7 @@ class Category extends Component {
                   <tbody>
                     {this.state.datas.map((data, i) => {
                       return(
-                        <tr>
+                        <tr className="bounceIn">
                           <td>{i+1}</td>
                           <td>{data.category_name}</td>
                           <td>
@@ -297,25 +297,6 @@ class Category extends Component {
                 dengan kategori yang sama akan ikut terhapus.
                 </p>
               </div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" onClick={this.nextPage} aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
             </div>
           </div>
         </div>

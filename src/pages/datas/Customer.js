@@ -89,7 +89,8 @@ class Customer extends Component {
       message: ""
     })
 
-    window.location.reload(true);
+    document.forms['supps1'].reset();
+    this.getCustomers();
   }
 
   closeUpdate = () => {
@@ -375,14 +376,14 @@ class Customer extends Component {
           <DialogContent>
             <div className="text-center wow bounceIn">
               <form name="updateItems" className="updateItems">
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Nama :</label>
-                  <input type="text" name="name" placeholder="Nama Pemasok" value={this.state.name} onChange={this.handleChange}/>
+                  <input className="form-control" type="text" name="name" placeholder="Nama Pemasok" value={this.state.name} onChange={this.handleChange}/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Asal Kota :</label>
-                  <select id="categories" name="categories">
+                  <select className="form-control" id="categories" name="categories">
                     <option value={this.state.city_id} onClick={this.handleOption}>{this.state.city_name}</option>
                     {this.state.cities.map(city => {
                       return(
@@ -392,14 +393,14 @@ class Customer extends Component {
                   </select>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">No. Hp :</label>
-                  <input type="number" name="phone_number" placeholder="No. Handphone" value={this.state.phone_number} onChange={this.handleChange}/>
+                  <input className="form-control" type="number" name="phone_number" placeholder="No. Handphone" value={this.state.phone_number} onChange={this.handleChange}/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Alamat :</label>
-                  <textarea rows="4" className="w-100 address" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
+                  <textarea rows="4" className="w-100 address form-control" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
                   </textarea>
                 </div>
 
@@ -432,14 +433,14 @@ class Customer extends Component {
                 <div className="col-md-12 collapse mt-3" id="collapseInput">
                   <form className="pt-md-4 pt-lg-4" name="supps1">
                     <div className="inputDataBox">
-                      <div className="inputDataBox">
+                      <div className="form-group inputDataBox">
                         <label className="px-2">Nama :</label>
-                        <input type="text" name="name" placeholder="Nama Pelanggan" onChange={this.handleChange}/>
+                        <input className="form-control" type="text" name="name" placeholder="Nama Pelanggan" onChange={this.handleChange}/>
                       </div>
 
-                      <div className="inputDataBox">
+                      <div className="form-group inputDataBox">
                         <label className="px-2">Asal Kota :</label>
-                        <select name="city_id">
+                        <select className="form-control" name="city_id">
                           <option value="0" onClick={this.handleOption}>Pilih</option>
                           {this.state.cities.map((city,i) => {
                             return(
@@ -449,15 +450,14 @@ class Customer extends Component {
                         </select>
                       </div>
 
-                      <div className="inputDataBox">
+                      <div className="form-group inputDataBox">
                         <label className="px-2">No. HP :</label>
-                        <input type="text" name="phone_number" placeholder="No. Handphone" onChange={this.handleChange}/>
+                        <input className="form-control" type="text" name="phone_number" placeholder="No. Handphone" onChange={this.handleChange}/>
                       </div>
 
-                      <div className="inputDataBox">
+                      <div className="form-group inputDataBox">
                         <label className="px-2">Alamat :</label>
-                        <textarea rows="4" className="w-50 address" name="address" onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
-
+                        <textarea rows="4" className="w-50 address form-control" name="address" onChange={this.handleChange} placeholder="Jl. Semanggi Raya ....">
                         </textarea>
                       </div>
                     </div>
@@ -488,7 +488,7 @@ class Customer extends Component {
                   <tbody>
                     {this.state.datas.map((data, i) => {
                       return(
-                        <tr>
+                        <tr className="bounceIn">
                           <td>{i+1}</td>
                           <td>{data.name}</td>
                           <td>{data.city.name}</td>

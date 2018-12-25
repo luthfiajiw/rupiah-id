@@ -42,6 +42,7 @@ class Stuffs extends Component {
     buy_price: "",
     sell_price: "",
     first_stock: "",
+    total_stock: "",
     unit: "",
     disabled: true,
     token: "",
@@ -54,7 +55,13 @@ class Stuffs extends Component {
       message: ""
      });
 
-    window.location.reload(true)
+     const formItems1 = document.forms['items1']
+     const formItems2 = document.forms['items2']
+
+     formItems1.reset()
+     formItems2.reset()
+
+    this.getProduct();
   };
 
   closeDetail = () => {
@@ -208,7 +215,7 @@ class Stuffs extends Component {
         category_name: res.data.data.categories.category_name,
         buy_price: res.data.data.buy_price,
         sell_price: res.data.data.sell_price,
-        first_stock: res.data.data.first_stock,
+        total_stock: res.data.data.total_stock,
         unit: res.data.data.unit,
       })
     })
@@ -425,19 +432,19 @@ class Stuffs extends Component {
           <DialogContent>
             <div className="text-center wow bounceIn">
               <form name="updateItems" className="updateItems">
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Kode :</label>
-                  <input type="text" name="product_code" placeholder="Kode Barang" value={this.state.product_code} disabled/>
+                  <input className="form-control" type="text" name="product_code" placeholder="Kode Barang" value={this.state.product_code} disabled/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Nama :</label>
-                  <input type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleUpdate} value={this.state.product_name}/>
+                  <input className="form-control" type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleUpdate} value={this.state.product_name}/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Kategori :</label>
-                  <select id="categories" name="categories">
+                  <select className="form-control" id="categories" name="categories">
                     <option value={this.state.category_id} onClick={this.handleOption}>{this.state.category_name}</option>
                     {this.state.categories.map((category,i) => {
                       return(
@@ -447,24 +454,24 @@ class Stuffs extends Component {
                   </select>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Harga Beli :</label>
-                  <input type="number" name="buy_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.buy_price} />
+                  <input className="form-control" type="number" name="buy_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.buy_price} />
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Harga Jual</label>
-                  <input type="number" name="sell_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.sell_price}/>
+                  <input className="form-control" type="number" name="sell_price" placeholder="IDR" onChange={this.handleUpdate} value={this.state.sell_price}/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Stok</label>
-                  <input type="number" name="first_stock" value={this.state.first_stock} disabled/>
+                  <input className="form-control" type="number" name="first_stock" value={this.state.total_stock} disabled/>
                 </div>
 
-                <div className="inputUpdateBox">
+                <div className="form-group inputUpdateBox">
                   <label className="px-2">Unit</label>
-                  <input type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleUpdate} value={this.state.unit}/>
+                  <input className="form-control" type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleUpdate} value={this.state.unit}/>
                 </div>
               </form>
             </div>
@@ -495,17 +502,17 @@ class Stuffs extends Component {
                   <form className="pt-4" name="items1">
                     <div className="inputDataBox">
                       <label className="px-2">Kode :</label>
-                      <input type="text" name="product_code" placeholder="Kode Barang" onChange={this.handleChange}/>
+                      <input className="form-control" type="text" name="product_code" placeholder="Kode Barang" onChange={this.handleChange}/>
                     </div>
 
                     <div className="inputDataBox">
                       <label className="px-2">Nama :</label>
-                      <input type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleChange}/>
+                      <input className="form-control" type="text" name="product_name" placeholder="Nama Barang" onChange={this.handleChange}/>
                     </div>
 
                     <div className="inputDataBox">
                       <label className="px-2">Kategori :</label>
-                      <select id="categories" name="categories">
+                      <select className="form-control" id="categories" name="categories">
                         <option value="0" onClick={this.handleOption}>Pilih</option>
                         {this.state.categories.map((category,i) => {
                           return(
@@ -517,7 +524,7 @@ class Stuffs extends Component {
 
                     <div className="inputDataBox">
                       <label className="px-2">Stok :</label>
-                      <input type="text" name="first_stock" placeholder="Stok Awal" onChange={this.handleChange}/>
+                      <input className="form-control" type="text" name="first_stock" placeholder="Stok Awal" onChange={this.handleChange}/>
                     </div>
                   </form>
                 </div>
@@ -526,15 +533,15 @@ class Stuffs extends Component {
                   <form className="pt-md-4 pt-lg-4" name="items2">
                     <div className="inputDataBox">
                       <label className="px-2">Harga Beli :</label>
-                      <input type="number" name="buy_price" placeholder="IDR" onChange={this.handleChange}/>
+                      <input className="form-control" type="number" name="buy_price" placeholder="IDR" onChange={this.handleChange}/>
                     </div>
                     <div className="inputDataBox">
                       <label className="px-2">Harga Jual</label>
-                      <input type="number" name="sell_price" placeholder="IDR" onChange={this.handleChange}/>
+                      <input className="form-control" type="number" name="sell_price" placeholder="IDR" onChange={this.handleChange}/>
                     </div>
                     <div className="inputDataBox">
                       <label className="px-2">Unit</label>
-                      <input type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleChange}/>
+                      <input className="form-control" type="text" name="unit" placeholder="pcs, pack dll" onChange={this.handleChange}/>
                     </div>
                   </form>
 
@@ -563,7 +570,7 @@ class Stuffs extends Component {
                   <tbody>
                     {this.state.datas.map((data,i) => {
                       return (
-                        <tr>
+                        <tr className="bounceIn">
                           <td>{i+1}</td>
                           <td>{data.product_code}</td>
                           <td>{data.product_name}</td>

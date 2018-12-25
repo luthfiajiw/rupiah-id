@@ -12,9 +12,13 @@
   padding: 5px;
 }
 
+.form-control {
+  display: inline!important;
+}
+
 .inputDataBox input{
-  padding: 7px;
   width: 50%;
+  display: inline!important;
 }
 
 .inputUpdateBox input:disabled {
@@ -26,6 +30,7 @@
 .inputDataBox select {
   width: 50%;
   -ms-padding: 7px;
+  display: inline!important;
 }
 
 .inputUpdateBox {
