@@ -43,8 +43,8 @@ class Purchases extends Component {
       item_code: "",
       item_amount: 0,
       item_name: "",
-      sell_price: "",
-      total_price: [],
+      buy_price: "",
+      total_price: "",
       created_at: "",
       buyItems: []
     };
@@ -72,45 +72,30 @@ class Purchases extends Component {
     this.setState({
       item_code: e.target.value,
       item_name: e.target.innerHTML,
-      sell_price: e.target.getAttribute('name')
+      buy_price: e.target.getAttribute('name')
     })
   }
 
   handleProductAmount = (e) => {
     const form1 = document.forms['form1']
     const item_amount = form1.elements["item_amount"].value
-    const { supplier_id, item_code } = this.state
-
-    if (supplier_id !== 0) {
-      if (item_code.length !== 0) {
-        if (item_amount.length !== 0) {
-          this.setState({ disabled: false })
-        } else {
-          this.setState({ disabled: true })
-        }
-      } else {
-        this.setState({ disabled: true })
-      }
-    } else {
-      this.setState({ disabled: true })
-    }
 
     this.setState({
       item_amount: parseInt(e.target.value)
     })
   }
 
-  addProductToanArray = (e) => {
+  addProductToList = (e) => {
     e.preventDefault();
 
     let buyItems = this.state.buyItems
     let product_code = this.state.item_code
     let product_amount = this.state.item_amount
     let product_name = this.state.item_name
-    let sell_price = this.state.sell_price
+    let buy_price = this.state.buy_price
 
     let product = {
-      product_amount, product_code, product_name, sell_price
+      product_amount, product_code, product_name, buy_price
     }
 
     buyItems.push(product)
@@ -123,7 +108,7 @@ class Purchases extends Component {
 
   }
 
-  removeItem = (i) => {
+  removeProductFromList = (i) => {
     let buyItems = this.state.buyItems
     buyItems.splice(i, 1)
     this.setState({
@@ -155,7 +140,7 @@ class Purchases extends Component {
       product_code: product_code,
       product_amount: product_amount
     }).then(res => {
-      console.log(res.data)
+      this.getPurchasesInvoice();
       this.setState({
         message: "Purchase succeed",
         uploadOpen: false,
@@ -165,6 +150,16 @@ class Purchases extends Component {
       this.setState({
         message: "Failed",
         uploadOpen: false
+      })
+    })
+  }
+
+  getPurchasesInvoice = () => {
+    const { baseUrl, token } = this.state
+
+    axios.get(`${baseUrl}pembelian?token=${token}`).then(res => {
+      this.setState({
+        total_price: res.data.data[0].total_price
       })
     })
   }
@@ -296,11 +291,10 @@ class Purchases extends Component {
             <div>
               <div className="invoice text-center">
                 <p>Tanggal : {this.state.created_at}</p>
-                <p>Supplier : {this.state.supplier_name}</p>
-                <p>Status : <span className="received">Diterima</span></p>
+                <p>Pemasok : {this.state.supplier_name}</p>
                 <p>Keterangan :</p>
               </div>
-              <div className="table-responsive text-center mb-5">
+              <div className="table-responsive text-center mb-3">
                 <table className="table">
                   <thead className="thead-purchases">
                     <th>No.</th>
@@ -318,13 +312,17 @@ class Purchases extends Component {
                           <td>
                             <span className="product_amount">{item.product_amount}</span>
                           </td>
-                          <td>Rp. {item.sell_price}</td>
-                          <td>Rp. {+item.sell_price * +item.product_amount}</td>
+                          <td>Rp. {item.buy_price}</td>
+                          <td>Rp. {+item.buy_price * +item.product_amount}</td>
                         </tr>
                       )
                     })}
                   </tbody>
                 </table>
+              </div>
+              <div className="invoice ml-auto">
+                <h5>Total Harga</h5>
+                <p className="total_price">{this.state.total_price}</p>
               </div>
             </div>
           </DialogContent>
@@ -356,7 +354,6 @@ class Purchases extends Component {
                             )
                           })}
                         </select>
-                        <hr className="text-left w-25 my-5"/>
                       </div>
 
                       <div className="form-group inputPurchases">
@@ -365,7 +362,7 @@ class Purchases extends Component {
                           <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
                           {this.state.dataProducts.map(data => {
                             return(
-                              <option value={data.product_code} name={data.sell_price} onClick={this.handleProductCode}>{data.product_name}</option>
+                              <option value={data.product_code} name={data.buy_price} onClick={this.handleProductCode}>{data.product_name}</option>
                             )
                           })}
                         </select>
@@ -375,7 +372,7 @@ class Purchases extends Component {
                         <label>Jumlah :</label>
                         <input className="form-control" type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
                       </div>
-                      <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToanArray}>Tambah</button>
+                      <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToList}>Tambah</button>
                     </form>
                   </div>
                 </div>
@@ -408,10 +405,10 @@ class Purchases extends Component {
                             <td>
                               <span className="product_amount">{item.product_amount}</span>
                             </td>
-                            <td>Rp. {item.sell_price}</td>
-                            <td>Rp. {+item.sell_price * +item.product_amount}</td>
+                            <td>Rp. {item.buy_price}</td>
+                            <td>Rp. {+item.buy_price * +item.product_amount}</td>
                             <td>
-                              <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeItem}><li className="fas fa-trash"></li></button>
+                              <button type="button" className="btn btn-deleteBuyItem" onClick={this.removeProductFromList}><li className="fas fa-trash"></li></button>
                             </td>
                           </tr>
                         )
