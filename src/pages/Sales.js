@@ -129,7 +129,7 @@ class Sales extends Component {
       product_amount.push(sellItems[i].product_amount)
     }
 
-    axios.post(`${baseUrl}penjualan?token=${token}`, {
+    axios.post(`${baseUrl}sales?token=${token}`, {
       customer_id: this.state.customer_id,
       product_code: product_code,
       product_amount: product_amount
@@ -152,7 +152,7 @@ class Sales extends Component {
   getSalesInvoice = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}penjualan?token=${token}`).then(res => {
+    axios.get(`${baseUrl}sales?token=${token}`).then(res => {
       this.setState({
         total_price: res.data.data[0].total_price
       })
@@ -161,7 +161,7 @@ class Sales extends Component {
 
   getProduct = () => {
     const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}product?token=${token}`).then(
+    axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
         console.log(res.data);
         this.setState({
@@ -174,7 +174,7 @@ class Sales extends Component {
   getCustomers = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}customer?token=${token}`).then(res => {
+    axios.get(`${baseUrl}customers?token=${token}`).then(res => {
       this.setState({
         dataCustomers: res.data.data
       })

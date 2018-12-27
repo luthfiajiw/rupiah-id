@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
 
 class Monthly extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: "",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
+      month: ""
+    };
+  }
+
+  componentWillMount(){
+    this.setState({
+      token: localStorage.getItem('token')
+    })
+  }
+
+  componentDidMount() {
+    const months = ["Januari", "Februari", "Maret", "April", "Maret",
+                    "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
+                    "November", "Desember"]
+    const date = new Date();
+    const month = months[date.getMonth()+1] + " " + date.getFullYear()
+
+    this.setState({
+      month: month
+    })
+  }
 
   render() {
     return (
@@ -15,7 +41,7 @@ class Monthly extends Component {
                 <h1>0</h1>
               </div>
               <div class="card-footer text-muted">
-                <p>Bulan ini : November</p>
+                <p>Bulan ini : {this.state.month}</p>
               </div>
             </div>
           </div>
@@ -27,7 +53,7 @@ class Monthly extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terjual</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Bulan ini <br/> November</p>
+                      <p className="my-auto">Bulan ini <br/> {this.state.month}</p>
                     </div>
                   </div>
                 </div>
@@ -40,7 +66,7 @@ class Monthly extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terbeli</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Bulan ini <br/> November</p>
+                      <p className="my-auto">Bulan ini <br/> {this.state.month}</p>
                     </div>
                   </div>
                 </div>
@@ -53,7 +79,7 @@ class Monthly extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Penjualan</h1>
-              <p>Bulan ini : November</p>
+              <p>Bulan ini : {this.state.month}</p>
             </div>
             <div className="table-responsive">
               <table class="table table-bordered">
@@ -95,7 +121,7 @@ class Monthly extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Pembelian</h1>
-              <p>Bulan ini : November</p>
+              <p>Bulan ini : {this.state.month}</p>
             </div>
             <div className="table-responsive">
               <table class="table table-bordered">
@@ -137,7 +163,7 @@ class Monthly extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Stok Barang</h1>
-              <p>Bulan ini : November</p>
+              <p>Bulan ini : {this.state.month}</p>
             </div>
 
             <div className="table-responsive">
@@ -162,7 +188,7 @@ class Monthly extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Mutasi Barang</h1>
-              <p>Bulan ini : November</p>
+              <p>Bulan ini : {this.state.month}</p>
             </div>
 
             <div className="table-responsive">

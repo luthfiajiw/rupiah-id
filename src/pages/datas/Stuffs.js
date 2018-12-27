@@ -154,7 +154,7 @@ class Stuffs extends Component {
 
   getProduct = () => {
     const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}product?token=${token}`).then(
+    axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
         console.log(res.data);
         this.setState({
@@ -183,7 +183,7 @@ class Stuffs extends Component {
     })
 
     const {baseUrl,token} = this.state
-    axios.post(`${baseUrl}product?token=${token}`, {
+    axios.post(`${baseUrl}products?token=${token}`, {
       product_code: this.state.product_code,
       product_name: this.state.product_name,
       category_id: this.state.category_id,
@@ -207,7 +207,7 @@ class Stuffs extends Component {
 
     const {baseUrl, token} = this.state
 
-    axios.get(`${baseUrl}product/${id}?token=${token}`).then(res => {
+    axios.get(`${baseUrl}products/${id}?token=${token}`).then(res => {
       this.setState({
         product_code: res.data.data.product_code,
         product_name: res.data.data.product_name,
@@ -231,7 +231,7 @@ class Stuffs extends Component {
     })
 
     if (confirmDelete) {
-      axios.delete(`${baseUrl}product/${id}?token=${token}`).then(
+      axios.delete(`${baseUrl}products/${id}?token=${token}`).then(
         res => {
           this.setState({
             message: "delete success",
@@ -259,7 +259,7 @@ class Stuffs extends Component {
       detailOpen: false
     })
 
-    axios.patch(`${baseUrl}product/${id}?token=${token}`, {
+    axios.patch(`${baseUrl}products/${id}?token=${token}`, {
       product_code: this.state.product_code,
       product_name: this.state.product_name,
       category_id: this.state.category_id,
@@ -481,9 +481,9 @@ class Stuffs extends Component {
                 Ubah
               </Button>
               <Button onClick={()=>{this.deleteProduct(this.state.product_code)}} className="btn btn-danger">
-                Hapus
+                <li className="fas fa-trash"></li>
               </Button>
-              <Button onClick={this.closeDetail} color="primary">
+              <Button onClick={this.closeDetail} className="btn btn-cancel">
                 Kembali
               </Button>
           </DialogActions>

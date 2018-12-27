@@ -11,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Clear from '@material-ui/icons/Clear';
 import Create from '@material-ui/icons/Create';
 
 const override = css`
@@ -90,7 +91,12 @@ class Profile extends Component {
         loading: false
       })
       console.log(res.data);
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      this.setState({
+        message: "Failed",
+        loading: false
+      })
+    })
   }
 
   postPhoto = (e) => {
@@ -110,7 +116,12 @@ class Profile extends Component {
         message: res.data.message,
         openPhoto: false
       })
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      this.setState({
+        message: "Failed",
+        openPhoto: false
+      })
+    })
   }
 
   handleChange = (e) => {
@@ -190,6 +201,32 @@ class Profile extends Component {
           <DialogActions className="mx-auto">
               <Button onClick={this.handleClose} color="primary">
                 OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Update failed */}
+        <Dialog
+          open={this.state.message === "Failed" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"Update Profil Gagal"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <Clear style={{ fontSize: "100px", color: "rgb(205, 32, 63)" }} />
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+            <Button onClick={this.handleClose} color="primary">
+              OK
               </Button>
           </DialogActions>
         </Dialog>

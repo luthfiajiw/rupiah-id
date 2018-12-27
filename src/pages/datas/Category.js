@@ -60,6 +60,8 @@ class Category extends Component {
       loading: false
      });
 
+     document.forms['form1'].reset();
+
      this.getCategory();
   };
 
@@ -77,7 +79,9 @@ class Category extends Component {
     )
   }
 
-  postCategory = () => {
+  postCategory = (e) => {
+    e.preventDefault();
+
     const { baseUrl, token } = this.state
 
     this.setState({
@@ -246,11 +250,13 @@ class Category extends Component {
                 + Tambah Kategori
               </button>
               <div className="collapse mt-3" id="collapseInput">
-                <div className="form-group inputCategory align-items-center">
-                  <label className="px-2">Nama Kategori :</label>
-                  <input className="form-control py-1" name="category_name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
-                  <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}><i className="fas fa-plus"></i></button>
-                </div>
+                <form name="form1">
+                  <div className="form-group inputCategory align-items-center">
+                    <label className="px-2">Nama Kategori :</label>
+                    <input className="form-control py-1" name="category_name" type="text" placeholder="kategori barang" onChange={this.handleChange}/>
+                    <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}><i className="fas fa-plus"></i></button>
+                  </div>
+                </form>
                 <div className="text-right pt-3">
                   <div className="ml-auto">
                     <BarLoader
@@ -284,7 +290,7 @@ class Category extends Component {
                           <td>{data.category_name}</td>
                           <td>
                             <button type="button" className="btn btn-danger" onClick={()=>{this.deleteCategory(data.category_id)}}>
-                              Hapus
+                              <li className="fas fa-trash"></li>
                             </button>
                           </td>
                         </tr>

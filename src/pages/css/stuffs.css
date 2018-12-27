@@ -59,9 +59,15 @@
 
 .btn-success {
   background-color: #ffc136!important;
+  color: #fff!important;
+  font-weight: 500!important;
 }
 
 .btn-danger {
   background-color: rgb(249, 48, 48)!important;
   color: #fff!important;
+}
+
+.btn-cancel{
+  
 }

@@ -30,7 +30,7 @@ class Customer extends Component {
     super(props);
     this.state = {
       token: "",
-      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/customer",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/customers",
       datas: null,
       loading: true,
       uploadOpen: false,
@@ -138,9 +138,10 @@ class Customer extends Component {
   }
 
   getCity = () => {
-    const { baseUrl, token } = this.state
+    const { token } = this.state
 
     axios.get(`http://penjualanapp-api.herokuapp.com/api/v1/city?token=${token}`).then(res => {
+      console.log(res);
       this.setState({
         cities: res.data.data
       })
@@ -491,7 +492,7 @@ class Customer extends Component {
                         <tr className="bounceIn">
                           <td>{i+1}</td>
                           <td>{data.name}</td>
-                          <td>{data.city.name}</td>
+                          <td>{data.cities.data.name}</td>
                           <td>{data.phone_number}</td>
                           <td>{data.address}</td>
                           <td>

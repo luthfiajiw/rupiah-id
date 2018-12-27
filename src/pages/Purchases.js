@@ -135,7 +135,7 @@ class Purchases extends Component {
       product_amount.push(buyItems[i].product_amount)
     }
 
-    axios.post(`${baseUrl}pembelian?token=${token}`, {
+    axios.post(`${baseUrl}purchases?token=${token}`, {
       supplier_id: this.state.supplier_id,
       product_code: product_code,
       product_amount: product_amount
@@ -157,7 +157,7 @@ class Purchases extends Component {
   getPurchasesInvoice = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}pembelian?token=${token}`).then(res => {
+    axios.get(`${baseUrl}purchases?token=${token}`).then(res => {
       this.setState({
         total_price: res.data.data[0].total_price
       })
@@ -166,7 +166,7 @@ class Purchases extends Component {
 
   getProduct = () => {
     const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}product?token=${token}`).then(
+    axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
         console.log(res.data);
         this.setState({
@@ -179,7 +179,7 @@ class Purchases extends Component {
   getSuppliers = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}supplier?token=${token}`).then(res => {
+    axios.get(`${baseUrl}suppliers?token=${token}`).then(res => {
       this.setState({
         dataSuppliers: res.data.data
       })

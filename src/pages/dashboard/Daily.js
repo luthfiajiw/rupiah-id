@@ -1,8 +1,72 @@
 import React, { Component } from 'react';
+import '../css/table.css';
+import axios from 'axios';
+import { css } from 'react-emotion';
+import { BounceLoader, BarLoader } from 'react-spinners';
+
+const override = css`
+    border-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 30%);
+`;
 
 class Daily extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: "",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
+      dates: "",
+      purschaseDailyReport: null
+    };
+  }
+
+  getPurchaseDailyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
+      this.setState({
+        purschaseDailyReport: res.data.data
+      })
+    }).catch(err => console.log(err))
+  }
+
+  componentWillMount() {
+    this.setState({
+      token: localStorage.getItem('token')
+    })
+  }
+
+  componentDidMount(){
+    let date = new Date()
+    let dateString = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear()
+
+    this.setState({
+      dates: dateString
+    })
+
+    this.getPurchaseDailyReport();
+  }
 
   render() {
+    console.log(this.state);
+    // Loading while getting data
+    if (this.state.purschaseDailyReport === null) {
+      return(
+        <div className="loading-wrapper">
+          <div className='text-center'>
+            <BounceLoader
+              className={override}
+              sizeUnit={"px"}
+              size={150}
+              color={'#ff9906'}
+              loading={this.state.loadingData}
+            />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="container">
         <div className="row mb-5">
@@ -15,7 +79,7 @@ class Daily extends Component {
                 <h1>0</h1>
               </div>
               <div class="card-footer text-muted">
-                <p>Hari ini : 29/11/2018</p>
+                <p>Hari ini : {this.state.dates}</p>
               </div>
             </div>
           </div>
@@ -27,7 +91,7 @@ class Daily extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terjual</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Hari ini <br/> 29/11/2018</p>
+                      <p className="my-auto">Hari ini <br/> {this.state.dates}</p>
                     </div>
                   </div>
                 </div>
@@ -40,7 +104,7 @@ class Daily extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terbeli</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Hari ini <br/> 29/11/2018</p>
+                      <p className="my-auto">Hari ini <br/> {this.state.dates}</p>
                     </div>
                   </div>
                 </div>
@@ -53,7 +117,7 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Penjualan</h1>
-              <p>Hari ini : 29/11/2018</p>
+              <p>Hari ini : {this.state.dates}</p>
             </div>
             <div className="table-responsive">
               <table class="table table-bordered">
@@ -68,25 +132,21 @@ class Daily extends Component {
                     <th scope="col">Jumlah Harga</th>
                   </tr>
                 </thead>
-                {/* <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody> */}
+                <tbody>
+                  {this.state.purschaseDailyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.supplier_name}</td>
+                        <td>{data.product_amount}</td>
+                        <td>{data.buy_price}</td>
+                        <td>{data.subtotal_price}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
               </table>
             </div>
           </div>
@@ -96,7 +156,7 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Pembelian</h1>
-              <p>Hari ini : 29/11/2018</p>
+              <p>Hari ini : {this.state.dates}</p>
             </div>
             <div className="table-responsive">
               <table class="table table-bordered">
@@ -139,7 +199,7 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Stok Barang</h1>
-              <p>Hari ini : 29/11/2018</p>
+              <p>Hari ini : {this.state.dates}</p>
             </div>
 
             <div className="table-responsive">
@@ -164,7 +224,7 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Mutasi Barang</h1>
-              <p>Hari ini : 29/11/2018</p>
+              <p>Hari ini : {this.state.dates}</p>
             </div>
 
             <div className="table-responsive">

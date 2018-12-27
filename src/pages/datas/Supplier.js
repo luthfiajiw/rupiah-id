@@ -30,7 +30,7 @@ class Supplier extends Component {
     super(props);
     this.state = {
       token: "",
-      baseUrl:"https://penjualanapp-api.herokuapp.com/api/v1/supplier",
+      baseUrl:"https://penjualanapp-api.herokuapp.com/api/v1/suppliers",
       datas: null,
       disabled: false,
       loading: true,
@@ -406,7 +406,7 @@ class Supplier extends Component {
                 Ubah
               </Button>
               <Button className="btn btn-danger" onClick={()=>{this.deleteSupplier(this.state.supplier_id)}}>
-                Hapus
+                <li className="fas fa-trash"></li>
               </Button>
               <Button onClick={this.closeDetail} color="primary">
                 Kembali
@@ -481,10 +481,10 @@ class Supplier extends Component {
                   <tbody>
                     {this.state.datas.map((data, i) => {
                       return(
-                        <tr className="bounceIn">
+                        <tr className="bounceInDown">
                           <td>{i+1}</td>
                           <td>{data.name}</td>
-                          <td>{data.city.name}</td>
+                          <td>{data.cities.data.name}</td>
                           <td>{data.phone_number}</td>
                           <td>{data.address}</td>
                           <td>
