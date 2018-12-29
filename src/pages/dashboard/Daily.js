@@ -23,6 +23,10 @@ class Daily extends Component {
       salesDailyReport: [],
       stockDailyReport: [],
       mutationDailyReport: [],
+      totalPurchasesItem: [],
+      totalItemsPurchased: "",
+      totalSalesItem: [],
+      totalItemsSold: ""
     };
   }
 
@@ -32,6 +36,17 @@ class Daily extends Component {
       this.setState({
         purschaseDailyReport: res.data.data
       })
+
+      for (var i = 0; i < this.state.purschaseDailyReport.length; i++) {
+        this.state.totalPurchasesItem.push(this.state.purschaseDailyReport[i].product_amount)
+      }
+
+
+      let sum = this.state.totalPurchasesItem.reduce((a, b) => a+b, 0)
+      this.setState({
+        totalItemsPurchased: sum
+      })
+
     }).catch(err => {
       localStorage.clear()
       this.forceUpdate();
@@ -44,6 +59,17 @@ class Daily extends Component {
       this.setState({
         salesDailyReport: res.data.data
       })
+
+      for (var i = 0; i < this.state.salesDailyReport.length; i++) {
+        this.state.totalSalesItem.push(this.state.salesDailyReport[i].product_amount)
+      }
+
+
+      let sum = this.state.totalSalesItem.reduce((a, b) => a+b, 0)
+      this.setState({
+        totalItemsSold: sum
+      })
+
     }).catch(err => {
       console.log(err);
     })
@@ -89,6 +115,7 @@ class Daily extends Component {
     this.getSalesDailyReport();
     this.getStockDailyReport();
     this.getMutationDailyReport();
+
   }
 
   render() {
@@ -118,7 +145,7 @@ class Daily extends Component {
                 <h3>Jumlah Transaksi</h3>
               </div>
               <div class="card-body">
-                <h1>0</h1>
+                <h1>{this.state.totalItemsSold + this.state.totalItemsPurchased}</h1>
               </div>
               <div class="card-footer text-muted">
                 <p>Tanggal : {this.state.dates}</p>
@@ -132,7 +159,7 @@ class Daily extends Component {
                   <div className="card-header items-sold">
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terjual</h3>
-                      <h1 className="my-auto">0</h1>
+                      <h1 className="my-auto">{this.state.totalItemsSold}</h1>
                       <p className="my-auto">Tanggal <br/> {this.state.dates}</p>
                     </div>
                   </div>
@@ -145,7 +172,7 @@ class Daily extends Component {
                   <div className="card-header items-sold">
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terbeli</h3>
-                      <h1 className="my-auto">0</h1>
+                      <h1 className="my-auto">{this.state.totalItemsPurchased}</h1>
                       <p className="my-auto">Tanggal <br/> {this.state.dates}</p>
                     </div>
                   </div>

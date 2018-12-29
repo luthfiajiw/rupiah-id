@@ -95,7 +95,7 @@ class Monthly extends Component {
 
   render() {
     console.log(this.state);
-    if (this.state.purschaseDailyReport === null) {
+    if (this.state.purschaseMonthlyReport === null) {
       return(
         <div className="loading-wrapper py-5">
           <div className='text-center py-5'>
@@ -166,6 +166,7 @@ class Monthly extends Component {
               <table class="table table-bordered">
                 <thead>
                   <tr>
+                    <th scope="col">No.</th>
                     <th scope="col">Kode Barang</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Nama Pelanggan</th>
@@ -174,25 +175,19 @@ class Monthly extends Component {
                     <th scope="col">Jumlah Harga</th>
                   </tr>
                 </thead>
-                {/* <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody> */}
+                {this.state.salesMonthlyReport.map((data, i) => {
+                  return(
+                    <tr>
+                      <td>{i+1}</td>
+                      <td>{data.product_code}</td>
+                      <td>{data.product_name}</td>
+                      <td>{data.customer_name}</td>
+                      <td>{data.product_amount}</td>
+                      <td>{data.sell_price}</td>
+                      <td>{data.subtotal_price}</td>
+                    </tr>
+                  )
+                })}
               </table>
             </div>
           </div>
@@ -208,6 +203,7 @@ class Monthly extends Component {
               <table class="table table-bordered">
                 <thead>
                   <tr>
+                    <th scope="col">No.</th>
                     <th scope="col">Kode Barang</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Nama Pemasok</th>
@@ -216,25 +212,19 @@ class Monthly extends Component {
                     <th scope="col">Jumlah Harga</th>
                   </tr>
                 </thead>
-                {/* <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody> */}
+                {this.state.purschaseMonthlyReport.map((data, i) => {
+                  return(
+                    <tr>
+                      <td>{i+1}</td>
+                      <td>{data.product_code}</td>
+                      <td>{data.product_name}</td>
+                      <td>{data.supplier_name}</td>
+                      <td>{data.product_amount}</td>
+                      <td>{data.buy_price}</td>
+                      <td>{data.subtotal_price}</td>
+                    </tr>
+                  )
+                })}
               </table>
             </div>
           </div>
@@ -260,6 +250,21 @@ class Monthly extends Component {
                     <th scope="col">Stok Tersedia</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {this.state.stockMonthlyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.unit}</td>
+                        <td>{data.buy_price}</td>
+                        <td>{data.sell_price}</td>
+                        <td>{data.total_stock}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
               </table>
             </div>
           </div>
@@ -276,6 +281,7 @@ class Monthly extends Component {
               <table className="table table-bordered">
                 <thead>
                   <tr>
+                    <th scope="col">No.</th>
                     <th scope="col">Kode Barang</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Stok Awal</th>
@@ -288,6 +294,25 @@ class Monthly extends Component {
                     <th scope="col">Saldo Akhir</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {this.state.mutationMonthlyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.first_stock}</td>
+                        <td>{data.stock_in}</td>
+                        <td>{data.stock_out}</td>
+                        <td>{data.total_stock}</td>
+                        <td>{data.first_balance}</td>
+                        <td>{data.value_in}</td>
+                        <td>{data.value_out}</td>
+                        <td>{data.total_balance}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
               </table>
             </div>
           </div>
