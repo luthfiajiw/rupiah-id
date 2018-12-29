@@ -1,0 +1,17 @@
+.categoryModal {
+  position: relative;
+  z-index: 99999;
+}
+
+.thead-modal {
+  background-color: #ffc136;
+}
+
+.selectModal {
+  transition: .3s;
+}
+
+.selectModal:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar';
+import CategoryModal from '../modal/CategoryModal';
 import axios from 'axios';
 import '../css/stuffs.css';
 import { css } from 'react-emotion';
@@ -31,6 +32,7 @@ class Stuffs extends Component {
     loading: true,
     uploadOpen: false,
     open: false,
+    openCategoryModal: false,
     detailOpen: false,
     confirmDelete: false,
     message: "",
@@ -38,7 +40,7 @@ class Stuffs extends Component {
     product_code: "",
     product_name: "",
     category_id: "0",
-    category_name: "",
+    category_name: "Pilih",
     buy_price: "",
     sell_price: "",
     first_stock: "",
@@ -52,7 +54,9 @@ class Stuffs extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      message: ""
+      message: "",
+      category_id: "0",
+      category_name: "",
      });
 
      const formItems1 = document.forms['items1']
@@ -63,6 +67,12 @@ class Stuffs extends Component {
 
     this.getProduct();
   };
+
+  handleCloseCategory = () => {
+    this.setState({
+      openCategoryModal: false
+    })
+  }
 
   closeDetail = () => {
     this.setState({
@@ -145,10 +155,13 @@ class Stuffs extends Component {
   }
 
   handleOption = (i) => {
-    let category = i.target.value
+    let category_id = i.target.id
+    let category_name = i.target.getAttribute('name')
 
     this.setState({
-      category_id: parseInt(category)
+      category_id: parseInt(category_id),
+      category_name: category_name,
+      openCategoryModal: false
     })
   }
 
@@ -209,8 +222,8 @@ class Stuffs extends Component {
       this.setState({
         product_code: res.data.data.product_code,
         product_name: res.data.data.product_name,
-        category_id: res.data.data.categories.category_id,
-        category_name: res.data.data.categories.category_name,
+        category_id: res.data.data.categories.data.category_id,
+        category_name: res.data.data.categories.data.category_name,
         buy_price: res.data.data.buy_price,
         sell_price: res.data.data.sell_price,
         total_stock: res.data.data.total_stock,
@@ -268,6 +281,12 @@ class Stuffs extends Component {
     }).catch(err => console.log(err))
   }
 
+  openCategoryModal = () => {
+    this.setState({
+      openCategoryModal: true
+    })
+  }
+
   componentWillMount() {
     this.setState({
       token: localStorage.getItem('token')
@@ -280,6 +299,7 @@ class Stuffs extends Component {
   }
 
   render() {
+    console.log(this.state);
     // Loading while getting data
     if (this.state.datas === null || this.state.categories === null) {
       return(
@@ -304,6 +324,13 @@ class Stuffs extends Component {
             <h4 className="text-center mt-5">Stok Barang</h4>
             <hr className="w-50"/>
           </div>
+
+          {/* Open Category Modal */}
+          <CategoryModal
+            open={this.state.openCategoryModal}
+            onClose={this.handleCloseCategory}
+            selectCategory={this.handleOption}
+          />
 
         {/* Success Add */}
         <Dialog
@@ -440,10 +467,10 @@ class Stuffs extends Component {
                 <div className="form-group inputUpdateBox">
                   <label className="px-2">Kategori :</label>
                   <select className="form-control" id="categories" name="categories">
-                    <option value={this.state.category_id} onClick={this.handleOption}>{this.state.category_name}</option>
+                    <option id={this.state.category_id} onClick={this.handleOption}>{this.state.category_name}</option>
                     {this.state.categories.map((category,i) => {
                       return(
-                        <option value={category.category_id} onClick={this.handleOption}>{category.category_name}</option>
+                        <option id={category.category_id} onClick={this.handleOption}>{category.category_name}</option>
                       )
                     })}
                   </select>
@@ -507,14 +534,8 @@ class Stuffs extends Component {
 
                     <div className="inputDataBox">
                       <label className="px-2">Kategori :</label>
-                      <select className="form-control" id="categories" name="categories">
-                        <option value="0" onClick={this.handleOption}>Pilih</option>
-                        {this.state.categories.map((category,i) => {
-                          return(
-                            <option value={category.category_id} onClick={this.handleOption}>{category.category_name}</option>
-                          )
-                        })}
-                      </select>
+                      <input type="text" disabled value={this.state.category_name}/>
+                      <button type="button" className="btn btn-Category w-50" onClick={this.openCategoryModal}>Cari</button>
                     </div>
 
                     <div className="inputDataBox">
@@ -569,7 +590,7 @@ class Stuffs extends Component {
                           <td>{i+1}</td>
                           <td>{data.product_code}</td>
                           <td>{data.product_name}</td>
-                          <td>{data.categories.category_name}</td>
+                          <td>{data.categories.data.category_name}</td>
                           <td>{data.buy_price}</td>
                           <td>{data.sell_price}</td>
                           <td>{data.unit}</td>
@@ -583,6 +604,12 @@ class Stuffs extends Component {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 d-flex justify-content-between">
+              <button type="button" className="btn btn-prev">Prev</button>
+              <button type="button" className="btn btn-next">Next</button>
             </div>
           </div>
         </div>

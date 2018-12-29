@@ -21,10 +21,22 @@
   display: inline!important;
 }
 
+.inputDataBox input:disabled{
+  background-color: #fff;
+  outline: none;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 7px;
+  border: 1px solid #ccc;
+  color: #495057;
+}
+
 .inputUpdateBox input:disabled {
   background-color: #fff;
   outline: none;
   border: 1px solid #ccc;
+  color: #495057;
+  border-radius: 5px;
 }
 
 .inputDataBox select {
@@ -57,6 +69,10 @@
   box-shadow: 0 5px 5px #ccc;
 }
 
+.btn-Category {
+  background-color: #ffc136;
+}
+
 .btn-success {
   background-color: #ffc136!important;
   color: #fff!important;
@@ -69,5 +85,5 @@
 }
 
 .btn-cancel{
-  
+
 }

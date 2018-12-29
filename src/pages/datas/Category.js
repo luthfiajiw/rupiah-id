@@ -47,12 +47,6 @@ class Category extends Component {
     token: ""
   }
 
-  nextPage = () => {
-    this.setState({
-      baseUrl: this.state.pagination.links.next+"&"
-    })
-  }
-
   handleClose = () => {
     this.setState({
       open: false,
@@ -245,7 +239,7 @@ class Category extends Component {
         <div className="container my-5">
           <div className="row">
             <div className="col-md-6"></div>
-            <div className="col-md-6 pb-5 text-right">
+            <div className="col-md-6 pb-2 text-right">
               <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Kategori
@@ -258,7 +252,7 @@ class Category extends Component {
                     <button type="submit" className="btn btn-postCategory ml-2" onClick={this.postCategory}><i className="fas fa-plus"></i></button>
                   </div>
                 </form>
-                <div className="text-right pt-3">
+                <div className="text-right pb-3">
                   <div className="ml-auto">
                     <BarLoader
                       className={createCategory}
@@ -304,6 +298,12 @@ class Category extends Component {
                 dengan kategori yang sama akan ikut terhapus.
                 </p>
               </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 d-flex justify-content-between">
+              <button type="button" className="btn btn-prev">Prev</button>
+              <button type="button" className="btn btn-next">Next</button>
             </div>
           </div>
         </div>

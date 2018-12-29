@@ -506,6 +506,12 @@ class Customer extends Component {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-12 d-flex justify-content-between">
+              <button type="button" className="btn btn-prev">Prev</button>
+              <button type="button" className="btn btn-next">Next</button>
+            </div>
+          </div>
         </div>
       </div>
     );

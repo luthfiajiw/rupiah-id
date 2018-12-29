@@ -23,6 +23,15 @@ body, html {
   color: #ff9906;
 }
 
+
+.btn-prev, .btn-next {
+  background-color: #ffbf00;
+  color: #fff;
+  box-shadow: 0 5px 5px #ccc;
+  transition: .5s;
+  font-size: 11px;
+}
+
 .second-header hr {
   border: 0;
   height: 2px;
