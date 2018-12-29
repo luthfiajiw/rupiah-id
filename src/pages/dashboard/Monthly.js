@@ -22,6 +22,10 @@ class Monthly extends Component {
       salesMonthlyReport: [],
       stockMonthlyReport: [],
       mutationMonthlyReport: [],
+      totalPurchasesItem: [],
+      totalItemsPurchased: "",
+      totalSalesItem: [],
+      totalItemsSold: ""
     };
   }
 
@@ -31,6 +35,17 @@ class Monthly extends Component {
       this.setState({
         purschaseMonthlyReport: res.data.data
       })
+
+      for (var i = 0; i < this.state.purschaseMonthlyReport.length; i++) {
+        this.state.totalPurchasesItem.push(this.state.purschaseMonthlyReport[i].product_amount)
+      }
+
+
+      let sum = this.state.totalPurchasesItem.reduce((a, b) => a+b, 0)
+      this.setState({
+        totalItemsPurchased: sum
+      })
+
     }).catch(err => {
       localStorage.clear()
       this.forceUpdate();
@@ -43,6 +58,17 @@ class Monthly extends Component {
       this.setState({
         salesMonthlyReport: res.data.data
       })
+
+      for (var i = 0; i < this.state.salesMonthlyReport.length; i++) {
+        this.state.totalSalesItem.push(this.state.salesMonthlyReport[i].product_amount)
+      }
+
+
+      let sum = this.state.totalSalesItem.reduce((a, b) => a+b, 0)
+      this.setState({
+        totalItemsSold: sum
+      })
+
     }).catch(err => {
       console.log(err);
     })
@@ -119,7 +145,7 @@ class Monthly extends Component {
                 <h3>Jumlah Transaksi</h3>
               </div>
               <div class="card-body">
-                <h1>0</h1>
+                <h1>{this.state.totalPurchasesItem.length + this.state.totalSalesItem.length}</h1>
               </div>
               <div class="card-footer text-muted">
                 <p>Bulan ini : {this.state.month}</p>
@@ -133,7 +159,7 @@ class Monthly extends Component {
                   <div className="card-header items-sold">
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terjual</h3>
-                      <h1 className="my-auto">0</h1>
+                      <h1 className="my-auto">{this.state.totalItemsSold}</h1>
                       <p className="my-auto">Bulan ini <br/> {this.state.month}</p>
                     </div>
                   </div>
@@ -146,7 +172,7 @@ class Monthly extends Component {
                   <div className="card-header items-sold">
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terbeli</h3>
-                      <h1 className="my-auto">0</h1>
+                      <h1 className="my-auto">{this.state.totalItemsPurchased}</h1>
                       <p className="my-auto">Bulan ini <br/> {this.state.month}</p>
                     </div>
                   </div>

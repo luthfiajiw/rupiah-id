@@ -145,7 +145,7 @@ class Daily extends Component {
                 <h3>Jumlah Transaksi</h3>
               </div>
               <div class="card-body">
-                <h1>{this.state.totalItemsSold + this.state.totalItemsPurchased}</h1>
+                <h1>{this.state.totalPurchasesItem.length + this.state.totalSalesItem.length}</h1>
               </div>
               <div class="card-footer text-muted">
                 <p>Tanggal : {this.state.dates}</p>
