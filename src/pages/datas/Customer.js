@@ -140,8 +140,7 @@ class Customer extends Component {
   getCity = () => {
     const { token } = this.state
 
-    axios.get(`http://penjualanapp-api.herokuapp.com/api/v1/city?token=${token}`).then(res => {
-      console.log(res);
+    axios.get(`http://penjualanapp-api.herokuapp.com/api/v1/cities?token=${token}`).then(res => {
       this.setState({
         cities: res.data.data
       })

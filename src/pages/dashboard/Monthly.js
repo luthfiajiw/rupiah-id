@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { css } from 'react-emotion';
+import { BounceLoader, BarLoader } from 'react-spinners';
+
+const override = css`
+    border-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 30%);
+`;
 
 class Monthly extends Component {
   constructor(props) {
@@ -6,8 +17,57 @@ class Monthly extends Component {
     this.state = {
       token: "",
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
-      month: ""
+      month: "",
+      purschaseMonthlyReport: null,
+      salesMonthlyReport: [],
+      stockMonthlyReport: [],
+      mutationMonthlyReport: [],
     };
+  }
+
+  getPurchaseMonthlyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/purchasereport/monthly?token=${token}`).then(res => {
+      this.setState({
+        purschaseMonthlyReport: res.data.data
+      })
+    }).catch(err => {
+      localStorage.clear()
+      this.forceUpdate();
+    })
+  }
+
+  getSalesMonthlyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/salesreport/monthly?token=${token}`).then(res => {
+      this.setState({
+        salesMonthlyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  getStockMonthlyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/stockreport/monthly?token=${token}`).then(res => {
+      this.setState({
+        stockMonthlyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  getMutationMonthlyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/mutationreport/monthly?token=${token}`).then(res => {
+      this.setState({
+        mutationMonthlyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   componentWillMount(){
@@ -26,9 +86,30 @@ class Monthly extends Component {
     this.setState({
       month: month
     })
+
+    this.getPurchaseMonthlyReport();
+    this.getSalesMonthlyReport();
+    this.getStockMonthlyReport();
+    this.getMutationMonthlyReport();
   }
 
   render() {
+    console.log(this.state);
+    if (this.state.purschaseDailyReport === null) {
+      return(
+        <div className="loading-wrapper py-5">
+          <div className='text-center py-5'>
+            <BounceLoader
+              className={override}
+              sizeUnit={"px"}
+              size={150}
+              color={'#ff9906'}
+              loading={this.state.loadingData}
+            />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className="container">
         <div className="row mb-5">

@@ -19,7 +19,10 @@ class Daily extends Component {
       token: "",
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
       dates: "",
-      purschaseDailyReport: null
+      purschaseDailyReport: null,
+      salesDailyReport: [],
+      stockDailyReport: [],
+      mutationDailyReport: [],
     };
   }
 
@@ -29,7 +32,43 @@ class Daily extends Component {
       this.setState({
         purschaseDailyReport: res.data.data
       })
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      localStorage.clear()
+      this.forceUpdate();
+    })
+  }
+
+  getSalesDailyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/salesreport/daily?token=${token}`).then(res => {
+      this.setState({
+        salesDailyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  getStockDailyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/stockreport/daily?token=${token}`).then(res => {
+      this.setState({
+        stockDailyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  getMutationDailyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/mutationreport/daily?token=${token}`).then(res => {
+      this.setState({
+        mutationDailyReport: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   componentWillMount() {
@@ -47,6 +86,9 @@ class Daily extends Component {
     })
 
     this.getPurchaseDailyReport();
+    this.getSalesDailyReport();
+    this.getStockDailyReport();
+    this.getMutationDailyReport();
   }
 
   render() {
@@ -54,8 +96,8 @@ class Daily extends Component {
     // Loading while getting data
     if (this.state.purschaseDailyReport === null) {
       return(
-        <div className="loading-wrapper">
-          <div className='text-center'>
+        <div className="loading-wrapper py-5">
+          <div className='text-center py-5'>
             <BounceLoader
               className={override}
               sizeUnit={"px"}
@@ -79,7 +121,7 @@ class Daily extends Component {
                 <h1>0</h1>
               </div>
               <div class="card-footer text-muted">
-                <p>Hari ini : {this.state.dates}</p>
+                <p>Tanggal : {this.state.dates}</p>
               </div>
             </div>
           </div>
@@ -91,7 +133,7 @@ class Daily extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terjual</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Hari ini <br/> {this.state.dates}</p>
+                      <p className="my-auto">Tanggal <br/> {this.state.dates}</p>
                     </div>
                   </div>
                 </div>
@@ -104,7 +146,7 @@ class Daily extends Component {
                     <div className="d-flex justify-content-between">
                       <h3 className="my-auto">Barang Terbeli</h3>
                       <h1 className="my-auto">0</h1>
-                      <p className="my-auto">Hari ini <br/> {this.state.dates}</p>
+                      <p className="my-auto">Tanggal <br/> {this.state.dates}</p>
                     </div>
                   </div>
                 </div>
@@ -117,7 +159,7 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Penjualan</h1>
-              <p>Hari ini : {this.state.dates}</p>
+              <p>Tanggal : {this.state.dates}</p>
             </div>
             <div className="table-responsive">
               <table class="table table-bordered">
@@ -127,6 +169,45 @@ class Daily extends Component {
                     <th scope="col">Kode Barang</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Nama Pelanggan</th>
+                    <th scope="col">Jumlah Barang</th>
+                    <th scope="col">Harga Satuan</th>
+                    <th scope="col">Jumlah Harga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.salesDailyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.customer_name}</td>
+                        <td>{data.product_amount}</td>
+                        <td>{data.sell_price}</td>
+                        <td>{data.subtotal_price}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="row bg-white shadow mt-5 py-2 ">
+          <div className="col-md-12">
+            <div className="oren">
+              <h1>Laporan Pembelian</h1>
+              <p>Tanggal : {this.state.dates}</p>
+            </div>
+            <div className="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Kode Barang</th>
+                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Nama Pemasok</th>
                     <th scope="col">Jumlah Barang</th>
                     <th scope="col">Harga Satuan</th>
                     <th scope="col">Jumlah Harga</th>
@@ -155,51 +236,8 @@ class Daily extends Component {
         <div className="row bg-white shadow mt-5 py-2 ">
           <div className="col-md-12">
             <div className="oren">
-              <h1>Laporan Pembelian</h1>
-              <p>Hari ini : {this.state.dates}</p>
-            </div>
-            <div className="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Kode Barang</th>
-                    <th scope="col">Nama Barang</th>
-                    <th scope="col">Nama Pemasok</th>
-                    <th scope="col">Jumlah Barang</th>
-                    <th scope="col">Harga Satuan</th>
-                    <th scope="col">Jumlah Harga</th>
-                  </tr>
-                </thead>
-                {/* <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody> */}
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div className="row bg-white shadow mt-5 py-2 ">
-          <div className="col-md-12">
-            <div className="oren">
               <h1>Laporan Stok Barang</h1>
-              <p>Hari ini : {this.state.dates}</p>
+              <p>Tanggal : {this.state.dates}</p>
             </div>
 
             <div className="table-responsive">
@@ -215,6 +253,21 @@ class Daily extends Component {
                     <th scope="col">Jumlah Stok</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {this.state.stockDailyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.unit}</td>
+                        <td>{data.buy_price}</td>
+                        <td>{data.sell_price}</td>
+                        <td>{data.total_stock}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
               </table>
             </div>
           </div>
@@ -224,13 +277,14 @@ class Daily extends Component {
           <div className="col-md-12">
             <div className="oren">
               <h1>Laporan Mutasi Barang</h1>
-              <p>Hari ini : {this.state.dates}</p>
+              <p>Tanggal : {this.state.dates}</p>
             </div>
 
             <div className="table-responsive">
               <table className="table table-bordered">
                 <thead>
                   <tr>
+                    <th scope="col">No.</th>
                     <th scope="col">Kode Barang</th>
                     <th scope="col">Nama Barang</th>
                     <th scope="col">Stok Awal</th>
@@ -243,6 +297,25 @@ class Daily extends Component {
                     <th scope="col">Saldo Akhir</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {this.state.mutationDailyReport.map((data, i) => {
+                    return(
+                      <tr>
+                        <td>{i+1}</td>
+                        <td>{data.product_code}</td>
+                        <td>{data.product_name}</td>
+                        <td>{data.first_stock}</td>
+                        <td>{data.stock_in}</td>
+                        <td>{data.stock_out}</td>
+                        <td>{data.total_stock}</td>
+                        <td>{data.first_balance}</td>
+                        <td>{data.value_in}</td>
+                        <td>{data.value_out}</td>
+                        <td>{data.total_balance}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
               </table>
             </div>
           </div>

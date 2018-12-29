@@ -54,7 +54,7 @@ class Sales extends Component {
     this.setState({
       open: false,
       message: "",
-      buyItems: []
+      sellItems: []
     })
 
     document.forms['form1'].reset()

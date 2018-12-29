@@ -4,15 +4,37 @@ import './css/table.css';
 import Navbar from './Navbar';
 import Daily from './dashboard/Daily';
 import Monthly from './dashboard/Monthly';
-import { Redirect } from 'react-router-dom';
-
+import axios from 'axios';
 import Ink from 'react-ink';
-import { Route, Switch, NavLink } from 'react-router-dom';
+import { Redirect, Route, Switch, NavLink } from 'react-router-dom';
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      datas: null,
+      token: "",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1"
+    };
+  }
+
+  getPurchaseDailyReport = () => {
+    const { baseUrl, token } = this.state
+    axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
+      this.setState({
+        datas: res.data.data
+      })
+    }).catch(err => {
+      console.log(err);
+      localStorage.clear()
+      this.forceUpdate()
+    })
+  }
 
   componentWillMount() {
-    localStorage.getItem("token")
+    this.setState({
+      token: localStorage.getItem("token")
+    })
   }
 
   render() {
@@ -20,7 +42,7 @@ class Dashboard extends Component {
     return (
           <div className="dashboard">
             <Navbar headerApp="Dashboard"/>
-            <div className="container py-5 my-5">
+            <div className="container py-5">
               <div className="row py-3">
                 <div className="col-md-9"></div>
                 <div className="col-md-3 text-center">
