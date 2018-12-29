@@ -70,7 +70,6 @@ class Category extends Component {
 
     axios.get(`${baseUrl}?token=${token}`).then(
       res => {
-        console.log(res.data.data);
         this.setState({
           datas: res.data.data,
           pagination: res.data.meta.pagination
@@ -92,7 +91,6 @@ class Category extends Component {
     {
       category_name: this.state.category_name
     }).then(res => {
-      console.log(res.data);
       this.setState({
         message: res.data.message,
         loadingCreate: false
@@ -141,7 +139,6 @@ class Category extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state.datas == null) {
       return(
         <div className="loading-wrapper">
@@ -161,6 +158,10 @@ class Category extends Component {
     return (
       <div className="category">
         <Navbar headerApp="Kategori Barang" />
+          <div className="second-header">
+            <h4 className="text-center mt-5">Kategori Barang</h4>
+            <hr className="w-50"/>
+          </div>
 
         {/* Success update */}
         <Dialog
@@ -242,9 +243,9 @@ class Category extends Component {
         </Dialog>
 
         <div className="container my-5">
-          <div className="row my-4">
+          <div className="row">
             <div className="col-md-6"></div>
-            <div className="col-md-6 text-right">
+            <div className="col-md-6 pb-5 text-right">
               <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Kategori

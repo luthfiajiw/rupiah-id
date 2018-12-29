@@ -10,6 +10,10 @@ class Datas extends Component {
     return (
         <div className="datas-menu">
           <Navbar headerApp="Data-data"/>
+          <div className="second-header">
+            <h4 className="text-center mt-5">Data-data</h4>
+            <hr className="w-50"/>
+          </div>
           <div className="container text-center my-5">
             <div className="row ">
               <Link to="/stuffs" className="col-md-12 oder-1 order-md-1 order-lg-1 datas-box datas-box-cream1">

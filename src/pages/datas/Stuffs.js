@@ -156,7 +156,6 @@ class Stuffs extends Component {
     const { baseUrl, token } = this.state
     axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
-        console.log(res.data);
         this.setState({
           datas: res.data.data
         })
@@ -192,7 +191,6 @@ class Stuffs extends Component {
       unit: this.state.unit,
       first_stock: parseInt(this.state.first_stock)
     }).then(res => {
-      console.log(res.data);
       this.setState({
         message: res.request.statusText,
         uploadOpen: false
@@ -243,11 +241,6 @@ class Stuffs extends Component {
       this.setState({
         detailOpen: false
       })
-    } else {
-      alert("OK")
-      this.setState({
-        uploadOpen: false
-      })
     }
   }
 
@@ -287,8 +280,6 @@ class Stuffs extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     // Loading while getting data
     if (this.state.datas === null || this.state.categories === null) {
       return(
@@ -309,6 +300,10 @@ class Stuffs extends Component {
     return (
       <div className="stuffs">
         <Navbar headerApp="Barang"/>
+          <div className="second-header">
+            <h4 className="text-center mt-5">Stok Barang</h4>
+            <hr className="w-50"/>
+          </div>
 
         {/* Success Add */}
         <Dialog
@@ -491,7 +486,7 @@ class Stuffs extends Component {
 
         <div className="container my-5">
           <div className="row">
-            <div className="col-md-12 py-5 text-right">
+            <div className="col-md-12 pb-5 text-right">
               <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Barang

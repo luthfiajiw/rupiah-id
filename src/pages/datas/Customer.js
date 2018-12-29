@@ -231,8 +231,6 @@ class Customer extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     // Loading while getting data
     if (this.state.datas === null || this.state.cities === null) {
       return(
@@ -423,7 +421,7 @@ class Customer extends Component {
 
         <div className="container py-5">
           <div className="row">
-            <div className="col-md-12 py-5 text-right">
+            <div className="col-md-12 pb-5 text-right">
               <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Pelanggan

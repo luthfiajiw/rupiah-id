@@ -163,7 +163,6 @@ class Sales extends Component {
     const { baseUrl, token } = this.state
     axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
-        console.log(res.data);
         this.setState({
           dataProducts: res.data.data
         })
@@ -193,7 +192,6 @@ class Sales extends Component {
   }
 
   render() {
-    console.log(this.state);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataCustomers === null) {
       return(

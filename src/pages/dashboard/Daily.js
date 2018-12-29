@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import '../css/table.css';
 import axios from 'axios';
 import { css } from 'react-emotion';
-import { BounceLoader, BarLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
 
 const override = css`
     border-color: red;
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, 30%);
 `;
@@ -119,16 +119,15 @@ class Daily extends Component {
   }
 
   render() {
-    console.log(this.state);
     // Loading while getting data
     if (this.state.purschaseDailyReport === null) {
       return(
         <div className="loading-wrapper py-5">
           <div className='text-center py-5'>
-            <BounceLoader
+            <ScaleLoader
               className={override}
               sizeUnit={"px"}
-              size={150}
+              size={50}
               color={'#ff9906'}
               loading={this.state.loadingData}
             />

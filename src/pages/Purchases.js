@@ -168,7 +168,6 @@ class Purchases extends Component {
     const { baseUrl, token } = this.state
     axios.get(`${baseUrl}products?token=${token}`).then(
       res => {
-        console.log(res.data);
         this.setState({
           dataProducts: res.data.data
         })
@@ -183,7 +182,7 @@ class Purchases extends Component {
       this.setState({
         dataSuppliers: res.data.data
       })
-    }).catch(err => console.log(err))
+    }).catch(err => (err))
   }
 
   componentWillMount() {
@@ -198,7 +197,6 @@ class Purchases extends Component {
   }
 
   render() {
-    console.log(this.state);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataSuppliers === null) {
       return(

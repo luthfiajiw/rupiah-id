@@ -225,8 +225,6 @@ class Supplier extends Component {
   }
 
   render() {
-    console.log(this.state);
-
     // Loading while getting data
     if (this.state.datas === null || this.state.cities === null) {
       return(
@@ -247,6 +245,10 @@ class Supplier extends Component {
     return (
       <div className="supplier">
         <Navbar headerApp="Pemasok" />
+          <div className="second-header">
+            <h4 className="text-center mt-5">Pemasok</h4>
+            <hr className="w-50"/>
+          </div>
 
         {/* Success Add Supplier*/}
         <Dialog
@@ -416,7 +418,7 @@ class Supplier extends Component {
 
         <div className="container py-5">
           <div className="row">
-            <div className="col-md-12 py-5 text-right">
+            <div className="col-md-12 pb-5 text-right">
               <button type="button" className="btn btn-addDatas" data-toggle="collapse" data-target="#collapseInput"
                 aria-expanded="false" aria-controls="collapseInput">
                 + Tambah Pemasok

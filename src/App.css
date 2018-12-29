@@ -17,3 +17,23 @@ body, html {
 .btn-addDatas:hover {
   background-color: #fbc650;
 }
+
+.second-header {
+  display: none;
+  color: #ff9906;
+}
+
+.second-header hr {
+  border: 0;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #ff9906, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #ff9906, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #ff9906, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #ff9906, #f0f0f0);
+}
+
+@media screen and (max-width: 538px) {
+  .second-header {
+    display: block;
+  }
+}

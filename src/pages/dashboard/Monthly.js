@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { css } from 'react-emotion';
-import { BounceLoader, BarLoader } from 'react-spinners';
+import { ScaleLoader} from 'react-spinners';
 
 const override = css`
     border-color: red;
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, 30%);
 `;
@@ -120,12 +120,11 @@ class Monthly extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state.purschaseMonthlyReport === null) {
       return(
         <div className="loading-wrapper py-5">
           <div className='text-center py-5'>
-            <BounceLoader
+            <ScaleLoader
               className={override}
               sizeUnit={"px"}
               size={150}
