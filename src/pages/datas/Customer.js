@@ -131,6 +131,7 @@ class Customer extends Component {
     const { baseUrl, token } = this.state
 
     axios.get(`${baseUrl}?token=${token}`).then(res => {
+      console.log(res.data);
       this.setState({
         datas: res.data.data
       })
@@ -140,7 +141,7 @@ class Customer extends Component {
   getCity = () => {
     const { token } = this.state
 
-    axios.get(`http://penjualanapp-api.herokuapp.com/api/v1/cities?token=${token}`).then(res => {
+    axios.get(`https://penjualanapp-api.herokuapp.com/api/v1/cities?token=${token}`).then(res => {
       this.setState({
         cities: res.data.data
       })
