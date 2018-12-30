@@ -34,5 +34,15 @@
 }
 
 .landing-text p {
-  font-weight: 400;
+  font-weight: 500;
+}
+
+.link-landing {
+  color: #fff!important;
+  background-color: transparent!important;
+}
+
+.link-landing:hover {
+  text-decoration: underline;
+  color: #f4f4f4;
 }

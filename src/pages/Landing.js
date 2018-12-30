@@ -16,40 +16,36 @@ class Landing extends Component {
     } else {
     return (
         <div className="bg-landing">
-          <nav className="navbar navbar-expand-lg navbar-light">
-            <a className="navbar-brand ml-auto" href="#">
+          <nav className="container navbar navbar-expand-lg navbar-light">
+            <NavLink className="navbar-brand my-3" to="/">
             <img className="nav-brand-landing" src={'https://svgshare.com/i/9zU.svg'} alt="logo rupiah"/>
-            </a>
+            </NavLink>
+
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <NavLink to="/sign-in" className="nav-link link-landing">Masuk</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/sign-up" className="nav-link link-landing">Daftar</NavLink>
+                </li>
+              </ul>
+            </div>
           </nav>
 
           <div className="container pt-5">
-            <div className="row">
+            <div className="row my-4">
               <div className="col-md-6 text-center text-md-left text-lg-left landing-text">
                 <h1 className="fadeIn">RUPIAH.ID</h1>
-                  <p className="fadeIn lead py-5 text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
-                    transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web & mobile
-                    sebagai pengganti peran aplikasi kasir di desktop. Dengan begitu kamu bisa melakukan transaksi & pembukuan melalui ponselmu
-                    dimana pun kamu berada.
-                  </p>
-                  {/* <!-- Button trigger modal --> */}
-                  <div className="row">
-                    <div className="col-md-6">
-                      <NavLink to="/sign-in" className="jackInTheBox">
-                        <button type="button" class="btn btn-masuk">
-                          Masuk
-                          <Ink />
-                        </button>
-                      </NavLink>
-                    </div>
-                    <div className="col-md-6">
-                      <NavLink to="/sign-up" className="jackInTheBox">
-                        <button type="button" class="btn btn-daftar">
-                          Gabung
-                          <Ink />
-                        </button>
-                      </NavLink>
-                    </div>
-                  </div>
+                <p className="fadeIn lead py-5 text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
+                  transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web & mobile
+                  sebagai pengganti peran aplikasi kasir di desktop. Dengan begitu kamu bisa melakukan transaksi & pembukuan melalui ponselmu
+                  dimana pun kamu berada.
+                </p>
               </div>
 
               <div className="col-md-6 text-center">
