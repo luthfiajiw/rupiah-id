@@ -99,6 +99,22 @@
   border-bottom: 1px solid #ff9906;
 }
 
+.inputBox p {
+  color: rgb(223, 143, 36);
+  font-size: 13px;
+}
+
+.inputBox a {
+  color: #333!important;
+  font-size: 13px;
+}
+
+.inputBox a:hover {
+  color: rgb(20, 136, 203)!important;
+  text-decoration: underline!important;
+  cursor: pointer;
+}
+
 .profileSubmit {
   padding: 10px;
   width: 50%;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './css/profile.css';
 import Navbar from './Navbar';
+import ChangePassword from './modal/ChangePassword';
 import axios from 'axios';
 import { css } from 'react-emotion';
 import {BarLoader} from 'react-spinners';
@@ -36,6 +37,10 @@ class Profile extends Component {
     loading: false,
     open: false,
     openPhoto: false,
+    openPass: false,
+    oldPass: "",
+    newPass: "",
+    confirmPass: '',
     txtFile: "",
     username: null,
     email: "",
@@ -43,6 +48,25 @@ class Profile extends Component {
     address: null,
     phone_number: null,
     message: ""
+  }
+
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
+  }
+
+  fileHandler = (e) => {
+    this.setState({
+      avatar: e.target.files[0]
+    })
+  }
+
+  componentWillMount() {
+    this.setState({
+      token: localStorage.getItem("token")
+    })
   }
 
   handleClose = () => {
@@ -53,6 +77,31 @@ class Profile extends Component {
      });
 
      this.getProfile();
+  };
+
+  handleClosePass = () => {
+    this.setState({
+      openPass: false
+     });
+
+  };
+
+  openPass = () => {
+    this.setState({
+      openPass: true
+    })
+  }
+
+  handleOldPass = event => {
+    this.setState({ oldPass: event.target.value });
+  };
+
+  handleNewPass = event => {
+    this.setState({ newPass: event.target.value });
+  };
+
+  handleConfirmPass = event => {
+    this.setState({ confirmPass: event.target.value });
   };
 
   getProfile = () => {
@@ -80,7 +129,7 @@ class Profile extends Component {
       loading: true
     })
 
-    axios.patch(`${baseUrl}/account/profile/update?token=${token}`, {
+    axios.patch(`${baseUrl}/account/profile?token=${token}`, {
       username: this.state.username,
       address: this.state.address,
       phone_number: this.state.phone_number,
@@ -113,7 +162,7 @@ class Profile extends Component {
     axios.post(`${baseUrl}/account/uploadphoto?token=${token}`,
       formData).then(res => {
       this.setState({
-        message: res.data.message,
+        message: "Succeed",
         openPhoto: false
       })
     }).catch(err => {
@@ -124,21 +173,29 @@ class Profile extends Component {
     })
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name] : e.target.value
-    })
-  }
+  changePassword = (e) => {
+    e.preventDefault();
+    const { baseUrl, token, oldPass, newPass, confirmPass } = this.state
 
-  fileHandler = (e) => {
     this.setState({
-      avatar: e.target.files[0]
+      openPhoto: true,
+      openPass: false
     })
-  }
 
-  componentWillMount() {
-    this.setState({
-      token: localStorage.getItem("token")
+    axios.patch(`${baseUrl}/account/updatepassword?token=${token}`, {
+      old_password: oldPass,
+      new_password: newPass,
+      confirm_password: confirmPass
+    }).then(res => {
+      this.setState({
+        message: "Succeed",
+        openPhoto: false
+      }).catch(err => {
+        this.setState({
+          message: "Failed",
+          openPhoto: false
+        })
+      })
     })
   }
 
@@ -175,13 +232,14 @@ class Profile extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="profile">
         <Navbar headerApp="Profil"/>
 
         {/* Succes update */}
         <Dialog
-          open={this.state.message === "Profile updated successfully." || this.state.message === "photo uploaded" ? true : false}
+          open={this.state.message === "Profile updated successfully." || this.state.message === "Succeed" ? true : false}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -326,6 +384,21 @@ class Profile extends Component {
                       <label className="d-block">Nomor Telepon</label>
                       <input className="profilPhone" type="tel" name="phone_number" value={this.state.phone_number} onChange={this.handleChange}/>
                     </div>
+                    <div className="inputBox d-flex text-left">
+                      <p className="pr-2">Ingin mengganti password ?</p><a onClick={this.openPass}>Klik Disini</a>
+                    </div>
+
+                    <ChangePassword
+                      open={this.state.openPass}
+                      onClose={this.handleClosePass}
+                      handleOldPass={this.handleOldPass}
+                      oldPass={this.state.oldPass}
+                      handleNewPass={this.handleNewPass}
+                      newPass={this.state.newPass}
+                      handleConfirmPass={this.handleConfirmPass}
+                      confirmPass={this.state.confirmPass}
+                      changePassword={this.changePassword}
+                      />
 
                     <button type="submit" className="btn my-3 profileSubmit" onClick={this.updateProfile}>Ubah</button>
 
