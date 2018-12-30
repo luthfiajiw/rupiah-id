@@ -37,9 +37,9 @@ class Landing extends Component {
             </div>
           </nav>
 
-          <div className="container pt-5">
-            <div className="row my-4">
-              <div className="col-md-6 text-center text-md-left text-lg-left landing-text">
+          <div className="container pt-3">
+            <div className="row">
+              <div className="col-md-6 my-5 py-3 text-center text-md-left text-lg-left landing-text">
                 <h1 className="fadeIn">RUPIAH.ID</h1>
                 <p className="fadeIn lead py-5 text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
                   transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web & mobile
@@ -49,7 +49,7 @@ class Landing extends Component {
               </div>
 
               <div className="col-md-6 text-center">
-
+                <img className="img-fluid" src={require('.././assets/laptop-monitor.svg')} alt="rupiah-dashboard"/>
               </div>
             </div>
           </div>

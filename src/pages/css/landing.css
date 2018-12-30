@@ -39,7 +39,9 @@
 
 .link-landing {
   color: #fff!important;
+  font-size: 18px;
   background-color: transparent!important;
+  padding: 10px 20px!important;
 }
 
 .link-landing:hover {

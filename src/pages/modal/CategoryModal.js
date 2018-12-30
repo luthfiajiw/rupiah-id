@@ -45,7 +45,6 @@ class CategoryModal extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <Dialog
         open={this.props.open}

@@ -12,6 +12,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Clear from '@material-ui/icons/Clear';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const override = css`
     border-color: red;
@@ -28,11 +30,14 @@ function Transition(props) {
 class Stuffs extends Component {
   state = {
     datas: null,
+    pagination: "",
     dataDetail: "",
     loading: true,
     uploadOpen: false,
     open: false,
     openCategoryModal: false,
+    openTooltipNext: false,
+    openTooltipPrev: false,
     detailOpen: false,
     confirmDelete: false,
     message: "",
@@ -48,7 +53,8 @@ class Stuffs extends Component {
     unit: "",
     disabled: true,
     token: "",
-    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/"
+    baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/",
+    urlProduct: "https://penjualanapp-api.herokuapp.com/api/v1/products?",
   }
 
   handleClose = () => {
@@ -166,11 +172,14 @@ class Stuffs extends Component {
   }
 
   getProduct = () => {
-    const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}products?token=${token}`).then(
+    const { urlProduct, token } = this.state
+    axios.get(`${urlProduct}token=${token}`).then(
       res => {
         this.setState({
-          datas: res.data.data
+          datas: res.data.data,
+          pagination: res.data.meta.pagination,
+          openTooltipPrev: false,
+          openTooltipNext: false
         })
       }
     ).catch(err => console.log(err))
@@ -208,7 +217,13 @@ class Stuffs extends Component {
         message: res.request.statusText,
         uploadOpen: false
       })
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      console.log(err);
+      this.setState({
+        message: "Failed",
+        uploadOpen: false
+      })
+    })
   }
 
   detailProduct = (id) => {
@@ -298,6 +313,24 @@ class Stuffs extends Component {
     this.getCategory();
   }
 
+  nextPage = () => {
+    this.setState({
+      urlProduct: this.state.pagination.links.next + "&",
+      openTooltipNext: true
+    })
+
+    this.getProduct()
+  }
+
+  prevPage = () => {
+    this.setState({
+      urlProduct: this.state.pagination.links.previous + "&",
+      openTooltipPrev: true
+    })
+
+    this.getProduct()
+  }
+
   render() {
     console.log(this.state);
     // Loading while getting data
@@ -354,6 +387,32 @@ class Stuffs extends Component {
           <DialogActions className="mx-auto">
               <Button onClick={this.handleClose} color="primary">
                 OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Add failed */}
+        <Dialog
+          open={this.state.message === "Failed" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"Gagal Menambah Barang"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <Clear style={{ fontSize: "100px", color: "rgb(205, 32, 63)" }} />
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+            <Button onClick={this.handleClose} color="primary">
+              OK
               </Button>
           </DialogActions>
         </Dialog>
@@ -608,8 +667,35 @@ class Stuffs extends Component {
           </div>
           <div className="row">
             <div className="col-md-12 d-flex justify-content-between">
-              <button type="button" className="btn btn-prev">Prev</button>
-              <button type="button" className="btn btn-next">Next</button>
+              <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={this.handleTooltipClose}
+                  open={this.state.openTooltipPrev}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Klik Sekali Lagi"
+                >
+                <button type="button" className="btn btn-prev" onClick={this.prevPage}>Prev</button>
+              </Tooltip>
+
+              <span className="page-info">Halaman {this.state.pagination.current_page} dari {this.state.pagination.total_pages}</span>
+
+              <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={this.handleTooltipClose}
+                  open={this.state.openTooltipNext}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Klik Sekali Lagi"
+                >
+              <button type="button" className="btn btn-next" onClick={this.nextPage}>Next</button>
+              </Tooltip>
             </div>
           </div>
         </div>
