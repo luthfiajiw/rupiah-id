@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const override = css`
     border-color: red;
@@ -30,11 +31,14 @@ class Customer extends Component {
     super(props);
     this.state = {
       token: "",
-      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/customers",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/customers?",
       datas: null,
+      pagination: "",
       loading: true,
       uploadOpen: false,
       detailOpen: false,
+      openTooltipNext: false,
+      openTooltipPrev: false,
       disabled: false,
       message: "",
       cities: null,
@@ -130,10 +134,13 @@ class Customer extends Component {
   getCustomers = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}?token=${token}`).then(res => {
+    axios.get(`${baseUrl}token=${token}`).then(res => {
       console.log(res.data);
       this.setState({
-        datas: res.data.data
+        datas: res.data.data,
+        pagination: res.data.meta.pagination,
+        openTooltipPrev: false,
+        openTooltipNext: false
       })
     }).catch(err => console.log(err))
   }
@@ -220,6 +227,24 @@ class Customer extends Component {
     }
   }
 
+  nextPage = () => {
+    this.setState({
+      baseUrl: this.state.pagination.links.next + "&",
+      openTooltipNext: true
+    })
+
+    this.getCustomers()
+  }
+
+  prevPage = () => {
+    this.setState({
+      baseUrl: this.state.pagination.links.previous + "&",
+      openTooltipPrev: true
+    })
+
+    this.getCustomers()
+  }
+
   componentWillMount() {
     this.setState({
       token: localStorage.getItem('token')
@@ -252,6 +277,10 @@ class Customer extends Component {
     return (
       <div className="customer">
         <Navbar headerApp="Pelanggan"/>
+          <div className="second-header">
+            <h4 className="text-center mt-5">Pelanggan</h4>
+            <hr className="w-50"/>
+          </div>
 
         {/* Success Add Supplier*/}
         <Dialog
@@ -509,8 +538,35 @@ class Customer extends Component {
           </div>
           <div className="row">
             <div className="col-md-12 d-flex justify-content-between">
-              <button type="button" className="btn btn-prev">Prev</button>
-              <button type="button" className="btn btn-next">Next</button>
+              <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={this.handleTooltipClose}
+                  open={this.state.openTooltipPrev}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Klik Sekali Lagi"
+                >
+                <button type="button" className="btn btn-prev" onClick={this.prevPage}>Prev</button>
+              </Tooltip>
+
+              <span className="page-info">Halaman {this.state.pagination.current_page} dari {this.state.pagination.total_pages}</span>
+
+              <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={this.handleTooltipClose}
+                  open={this.state.openTooltipNext}
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Klik Sekali Lagi"
+                >
+              <button type="button" className="btn btn-next" onClick={this.nextPage}>Next</button>
+              </Tooltip>
             </div>
           </div>
         </div>

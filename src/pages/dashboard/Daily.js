@@ -3,6 +3,8 @@ import '../css/table.css';
 import axios from 'axios';
 import { css } from 'react-emotion';
 import { ScaleLoader } from 'react-spinners';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const override = css`
     border-color: red;
@@ -17,12 +19,27 @@ class Daily extends Component {
     super(props);
     this.state = {
       token: "",
-      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1",
+      urlPurchaseDailyReport: "https://penjualanapp-api.herokuapp.com/api/v1/purchasereport/daily?",
+      urlSalesDailyReport: "https://penjualanapp-api.herokuapp.com/api/v1/salesreport/daily?",
+      urlStockDailyReport: "https://penjualanapp-api.herokuapp.com/api/v1/stockreport/daily?",
+      urlMutationDailyReport: "https://penjualanapp-api.herokuapp.com/api/v1/mutationreport/daily?",
       dates: "",
       purschaseDailyReport: null,
+      paginationPurchaseDailyReport: "",
+      openTooltipPrev1: false,
+      openTooltipNext1: false,
       salesDailyReport: [],
+      paginationSalesDailyReport: "",
+      openTooltipPrev2: false,
+      openTooltipNext2: false,
       stockDailyReport: [],
+      paginationStockDailyReport: "",
+      openTooltipPrev3: false,
+      openTooltipNext3: false,
       mutationDailyReport: [],
+      paginationMutationDailyReport: "",
+      openTooltipPrev4: false,
+      openTooltipNext4: false,
       totalPurchasesItem: [],
       totalItemsPurchased: "",
       totalSalesItem: [],
@@ -31,10 +48,13 @@ class Daily extends Component {
   }
 
   getPurchaseDailyReport = () => {
-    const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
+    const { urlPurchaseDailyReport, token } = this.state
+    axios.get(`${urlPurchaseDailyReport}token=${token}`).then(res => {
       this.setState({
-        purschaseDailyReport: res.data.data
+        purschaseDailyReport: res.data.data,
+        paginationPurchaseDailyReport: res.data.meta.pagination,
+        openTooltipPrev1: false,
+        openTooltipNext1: false,
       })
 
       for (var i = 0; i < this.state.purschaseDailyReport.length; i++) {
@@ -54,10 +74,13 @@ class Daily extends Component {
   }
 
   getSalesDailyReport = () => {
-    const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}/salesreport/daily?token=${token}`).then(res => {
+    const { urlSalesDailyReport, token } = this.state
+    axios.get(`${urlSalesDailyReport}token=${token}`).then(res => {
       this.setState({
-        salesDailyReport: res.data.data
+        salesDailyReport: res.data.data,
+        paginationSalesDailyReport: res.data.meta.pagination,
+        openTooltipPrev2: false,
+        openTooltipNext2: false,
       })
 
       for (var i = 0; i < this.state.salesDailyReport.length; i++) {
@@ -76,10 +99,13 @@ class Daily extends Component {
   }
 
   getStockDailyReport = () => {
-    const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}/stockreport/daily?token=${token}`).then(res => {
+    const { urlStockDailyReport, token } = this.state
+    axios.get(`${urlStockDailyReport}token=${token}`).then(res => {
       this.setState({
-        stockDailyReport: res.data.data
+        stockDailyReport: res.data.data,
+        paginationStockDailyReport: res.data.meta.pagination,
+        openTooltipPrev3: false,
+        openTooltipNext3: false,
       })
     }).catch(err => {
       console.log(err);
@@ -87,14 +113,89 @@ class Daily extends Component {
   }
 
   getMutationDailyReport = () => {
-    const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}/mutationreport/daily?token=${token}`).then(res => {
+    const { urlMutationDailyReport, token } = this.state
+    axios.get(`${urlMutationDailyReport}token=${token}`).then(res => {
       this.setState({
-        mutationDailyReport: res.data.data
+        mutationDailyReport: res.data.data,
+        paginationMutationDailyReport: res.data.meta.pagination,
+        openTooltipPrev4: false,
+        openTooltipNext4: false,
       })
     }).catch(err => {
       console.log(err);
     })
+  }
+
+  nextPage1 = () => {
+    this.setState({
+      urlPurchaseDailyReport: this.state.paginationPurchaseDailyReport.links.next + "&",
+      openTooltipNext1: true
+    })
+
+    this.getPurchaseDailyReport()
+  }
+
+  prevPage1 = () => {
+    this.setState({
+      urlPurchaseDailyReport: this.state.paginationPurchaseDailyReport.links.previous + "&",
+      openTooltipPrev1: true
+    })
+
+    this.getPurchaseDailyReport()
+  }
+
+  nextPage2 = () => {
+    this.setState({
+      urlSalesDailyReport: this.state.paginationSalesDailyReport.links.next + "&",
+      openTooltipNext2: true
+    })
+
+    this.getSalesDailyReport()
+  }
+
+  prevPage2 = () => {
+    this.setState({
+      urlSalesDailyReport: this.state.paginationSalesDailyReport.links.previous + "&",
+      openTooltipPrev2: true
+    })
+
+    this.getSalesDailyReport()
+  }
+
+  nextPage3 = () => {
+    this.setState({
+      urlStockDailyReport: this.state.paginationStockDailyReport.links.next + "&",
+      openTooltipNext3: true
+    })
+
+    this.getStockDailyReport()
+  }
+
+  prevPage3 = () => {
+    this.setState({
+      urlStockDailyReport: this.state.paginationStockDailyReport.links.previous + "&",
+      openTooltipPrev3: true
+    })
+
+    this.getStockDailyReport()
+  }
+
+  nextPage4 = () => {
+    this.setState({
+      urlMutationDailyReport: this.state.paginationMutationDailyReport.links.next + "&",
+      openTooltipNext4: true
+    })
+
+    this.getStockDailyReport()
+  }
+
+  prevPage4 = () => {
+    this.setState({
+      urlMutationDailyReport: this.state.paginationMutationDailyReport.links.previous + "&",
+      openTooltipPrev4: true
+    })
+
+    this.getStockDailyReport()
   }
 
   componentWillMount() {
@@ -218,6 +319,37 @@ class Daily extends Component {
               </table>
             </div>
           </div>
+          <div className="col-md-12 d-flex justify-content-between">
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipPrev2}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+              <button type="button" className="btn btn-prev" onClick={this.prevPage2}>Prev</button>
+            </Tooltip>
+
+            <span className="page-info">Halaman {this.state.paginationSalesDailyReport.current_page} dari {this.state.paginationSalesDailyReport.total_pages}</span>
+
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipNext2}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+            <button type="button" className="btn btn-next" onClick={this.nextPage2}>Next</button>
+            </Tooltip>
+          </div>
         </div>
 
         <div className="row bg-white shadow mt-5 py-2 ">
@@ -256,6 +388,37 @@ class Daily extends Component {
                 </tbody>
               </table>
             </div>
+          </div>
+          <div className="col-md-12 d-flex justify-content-between">
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipPrev1}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+              <button type="button" className="btn btn-prev" onClick={this.prevPage1}>Prev</button>
+            </Tooltip>
+
+            <span className="page-info">Halaman {this.state.paginationPurchaseDailyReport.current_page} dari {this.state.paginationPurchaseDailyReport.total_pages}</span>
+
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipNext1}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+            <button type="button" className="btn btn-next" onClick={this.nextPage1}>Next</button>
+            </Tooltip>
           </div>
         </div>
 
@@ -296,6 +459,37 @@ class Daily extends Component {
                 </tbody>
               </table>
             </div>
+          </div>
+          <div className="col-md-12 d-flex justify-content-between">
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipPrev3}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+              <button type="button" className="btn btn-prev" onClick={this.prevPage3}>Prev</button>
+            </Tooltip>
+
+            <span className="page-info">Halaman {this.state.paginationStockDailyReport.current_page} dari {this.state.paginationStockDailyReport.total_pages}</span>
+
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipNext3}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+            <button type="button" className="btn btn-next" onClick={this.nextPage3}>Next</button>
+            </Tooltip>
           </div>
         </div>
 
@@ -344,6 +538,37 @@ class Daily extends Component {
                 </tbody>
               </table>
             </div>
+          </div>
+          <div className="col-md-12 d-flex justify-content-between">
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipPrev4}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+              <button type="button" className="btn btn-prev" onClick={this.prevPage4}>Prev</button>
+            </Tooltip>
+
+            <span className="page-info">Halaman {this.state.paginationMutationDailyReport.current_page} dari {this.state.paginationMutationDailyReport.total_pages}</span>
+
+            <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={this.handleTooltipClose}
+                open={this.state.openTooltipNext4}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Klik Sekali Lagi"
+              >
+            <button type="button" className="btn btn-next" onClick={this.nextPage4}>Next</button>
+            </Tooltip>
           </div>
         </div>
       </div>
