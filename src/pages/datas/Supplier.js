@@ -32,6 +32,7 @@ class Supplier extends Component {
     this.state = {
       token: "",
       baseUrl:"https://penjualanapp-api.herokuapp.com/api/v1/suppliers?",
+      urlUpdate:"https://penjualanapp-api.herokuapp.com/api/v1/suppliers",
       pagination: "",
       datas: null,
       disabled: false,
@@ -109,13 +110,13 @@ class Supplier extends Component {
       detailOpen: true
     })
 
-    const { baseUrl, token } = this.state
+    const { urlUpdate, token } = this.state
 
-    axios.get(`${baseUrl}/${id}?token=${token}`).then(res => {
+    axios.get(`${urlUpdate}/${id}?token=${token}`).then(res => {
       this.setState({
         supplier_id: res.data.data.supplier_id,
-        city_id: res.data.data.city.id,
-        city_name: res.data.data.city.name,
+        city_id: res.data.data.cities.data.id,
+        city_name: res.data.data.cities.data.name,
         name: res.data.data.name,
         address: res.data.data.address,
         phone_number: res.data.data.phone_number
@@ -157,7 +158,7 @@ class Supplier extends Component {
 
     const { baseUrl, token } = this.state
 
-    axios.post(`${baseUrl}?token=${token}`, {
+    axios.post(`${baseUrl}token=${token}`, {
       city_id: this.state.city_id,
       name: this.state.name,
       address: this.state.address,
@@ -172,14 +173,14 @@ class Supplier extends Component {
   }
 
   updateSupplier = (id) => {
-    const { baseUrl, token } = this.state
+    const { urlUpdate, token } = this.state
 
     this.setState({
       uploadOpen: true,
       detailOpen: false
     })
 
-    axios.patch(`${baseUrl}/${id}?token=${token}`, {
+    axios.patch(`${urlUpdate}/${id}?token=${token}`, {
       name: this.state.name,
       address: this.state.address,
       phone_number: this.state.phone_number,
@@ -193,7 +194,7 @@ class Supplier extends Component {
   }
 
   deleteSupplier = (id) => {
-    const {baseUrl, token} = this.state
+    const {urlUpdate, token} = this.state
 
     const confirmDelete = window.confirm('Anda Yakin Ingin Menghapus Ini ?');
     this.setState({
@@ -201,7 +202,7 @@ class Supplier extends Component {
     })
 
     if (confirmDelete) {
-      axios.delete(`${baseUrl}/${id}?token=${token}`).then(
+      axios.delete(`${urlUpdate}/${id}?token=${token}`).then(
         res => {
           this.setState({
             message: "delete success",

@@ -86,7 +86,7 @@ class Category extends Component {
       loadingCreate: true
     })
 
-    axios.post(`${baseUrl}?token=${token}`,
+    axios.post(`${baseUrl}token=${token}`,
     {
       category_name: this.state.category_name
     }).then(res => {
@@ -98,7 +98,7 @@ class Category extends Component {
   }
 
   deleteCategory = (id) => {
-    const { baseUrl, token } = this.state
+    const { token } = this.state
 
     const confirmDelete = window.confirm('Anda Yakin Ingin Mengapus Ini?')
     this.setState({
@@ -107,7 +107,7 @@ class Category extends Component {
     })
 
     if (confirmDelete) {
-      axios.delete(`${baseUrl}/${id}?token=${token}`).then(res => {
+      axios.delete(`https://penjualanapp-api.herokuapp.com/api/v1/category/${id}?token=${token}`).then(res => {
         this.setState({
           message: "delete success",
           uploadOpen: false

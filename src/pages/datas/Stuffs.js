@@ -203,8 +203,8 @@ class Stuffs extends Component {
       uploadOpen: true
     })
 
-    const {baseUrl,token} = this.state
-    axios.post(`${baseUrl}products?token=${token}`, {
+    const {urlProduct,token} = this.state
+    axios.post(`${urlProduct}token=${token}`, {
       product_code: this.state.product_code,
       product_name: this.state.product_name,
       category_id: this.state.category_id,
@@ -332,7 +332,6 @@ class Stuffs extends Component {
   }
 
   render() {
-    console.log(this.state);
     // Loading while getting data
     if (this.state.datas === null || this.state.categories === null) {
       return(

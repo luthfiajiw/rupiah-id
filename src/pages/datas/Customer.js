@@ -32,6 +32,7 @@ class Customer extends Component {
     this.state = {
       token: "",
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/customers?",
+      urlUpdate: "https://penjualanapp-api.herokuapp.com/api/v1/customers",
       datas: null,
       pagination: "",
       loading: true,
@@ -111,13 +112,13 @@ class Customer extends Component {
       detailOpen: true
     })
 
-    const { baseUrl, token } = this.state
+    const { urlUpdate, token } = this.state
 
-    axios.get(`${baseUrl}/${id}?token=${token}`).then(res => {
+    axios.get(`${urlUpdate}/${id}?token=${token}`).then(res => {
       this.setState({
         customer_id: res.data.data.customer_id,
-        city_id: res.data.data.city.id,
-        city_name: res.data.data.city.name,
+        city_id: res.data.data.cities.data.id,
+        city_name: res.data.data.cities.data.name,
         name: res.data.data.name,
         address: res.data.data.address,
         phone_number: res.data.data.phone_number
@@ -135,7 +136,6 @@ class Customer extends Component {
     const { baseUrl, token } = this.state
 
     axios.get(`${baseUrl}token=${token}`).then(res => {
-      console.log(res.data);
       this.setState({
         datas: res.data.data,
         pagination: res.data.meta.pagination,
@@ -164,7 +164,7 @@ class Customer extends Component {
       uploadOpen: true
     })
 
-    axios.post(`${baseUrl}?token=${token}`, {
+    axios.post(`${baseUrl}token=${token}`, {
       city_id: this.state.city_id,
       name: this.state.name,
       address: this.state.address,
@@ -178,14 +178,14 @@ class Customer extends Component {
   }
 
   updateCustomer = (id) => {
-    const { baseUrl, token } = this.state
+    const { urlUpdate, token } = this.state
 
     this.setState({
       uploadOpen: true,
       detailOpen: false
     })
 
-    axios.patch(`${baseUrl}/${id}?token=${token}`, {
+    axios.patch(`${urlUpdate}/${id}?token=${token}`, {
       name: this.state.name,
       address: this.state.address,
       phone_number: this.state.phone_number,
@@ -199,7 +199,7 @@ class Customer extends Component {
   }
 
   deleteCustomer = (id) => {
-    const {baseUrl, token} = this.state
+    const {urlUpdate, token} = this.state
 
     const confirmDelete = window.confirm('Anda Yakin Ingin Menghapus Ini ?')
     this.setState({
@@ -207,7 +207,7 @@ class Customer extends Component {
     })
 
     if (confirmDelete) {
-      axios.delete(`${baseUrl}/${id}?token=${token}`).then(
+      axios.delete(`${urlUpdate}/${id}?token=${token}`).then(
         res => {
           this.setState({
             message: "delete success",

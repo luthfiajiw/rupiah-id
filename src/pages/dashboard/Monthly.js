@@ -98,8 +98,8 @@ class Monthly extends Component {
   }
 
   getStockMonthlyReport = () => {
-    const { urlMutationMonthlyReport, token } = this.state
-    axios.get(`${urlMutationMonthlyReport}token=${token}`).then(res => {
+    const { urlStockMonthlyReport, token } = this.state
+    axios.get(`${urlStockMonthlyReport}token=${token}`).then(res => {
       this.setState({
         stockMonthlyReport: res.data.data,
         paginationStockMonthlyReport: res.data.meta.pagination,
@@ -205,7 +205,7 @@ class Monthly extends Component {
   }
 
   componentDidMount() {
-    const months = ["Januari", "Februari", "Maret", "April", "Maret",
+    const months = ["", "Januari", "Februari", "Maret", "April", "Maret",
                     "Mei", "Juni", "Juli", "Agustus", "September", "Oktober",
                     "November", "Desember"]
     const date = new Date();
