@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import DoneAll from '@material-ui/icons/DoneAll';
+import Clear from '@material-ui/icons/Clear';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const override = css`
@@ -146,7 +147,13 @@ class Supplier extends Component {
         message: "Created",
         uploadOpen: false
       })
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      console.log(err)
+      this.setState({
+        message: "Failed",
+        uploadOpen: false
+      })
+  })
 
   }
 
@@ -277,6 +284,32 @@ class Supplier extends Component {
           <DialogActions className="mx-auto">
               <Button onClick={this.handleClose} color="primary">
                 OK
+              </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Add failed */}
+        <Dialog
+          open={this.state.message === "Failed" ? true : false}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+            {"Gagal Menambah Pemasok"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn">
+              <Clear style={{ fontSize: "100px", color: "rgb(205, 32, 63)" }} />
+            </div>
+          </DialogContent>
+          <DialogActions className="mx-auto">
+            <Button onClick={this.handleClose} color="primary">
+              OK
               </Button>
           </DialogActions>
         </Dialog>
