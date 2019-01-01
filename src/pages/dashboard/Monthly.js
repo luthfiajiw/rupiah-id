@@ -116,7 +116,7 @@ class Monthly extends Component {
     axios.get(`${urlMutationMonthlyReport}token=${token}`).then(res => {
       this.setState({
         mutationMonthlyReport: res.data.data,
-        paginationMutationMinthlyReport: res.data.meta.pagination,
+        paginationMutationMonthlyReport: res.data.meta.pagination,
         openTooltipPrev4: false,
         openTooltipNext4: false,
       })
