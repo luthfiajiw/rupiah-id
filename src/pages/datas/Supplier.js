@@ -72,28 +72,6 @@ class Supplier extends Component {
   };
 
   handleChange = (e) => {
-    const formSupp1 = document.forms['supps1'];
-
-    const name = formSupp1.elements['name'].value;
-    const phone_number = formSupp1.elements['phone_number'].value;
-    const address = formSupp1.elements['address'].value;
-
-    if (name.length !== 0) {
-      if (this.state.city_id > 0) {
-        if (phone_number.length !== 0) {
-          if (address.length !== 0) {
-            this.setState({
-              disabled: true
-            })
-          }
-        }
-      }
-    }else {
-      this.setState({
-        disabled: false
-      })
-    }
-
     this.setState({
       [e.target.name] : e.target.value
     })
@@ -474,7 +452,7 @@ class Supplier extends Component {
 
                       <div className="form-group inputDataBox">
                         <label className="px-2">No. HP :</label>
-                        <input className="form-control" type="text" name="phone_number" placeholder="No. Handphone" onChange={this.handleChange}/>
+                        <input className="form-control" type="tel" name="phone_number" placeholder="No. Handphone" onChange={this.handleChange}/>
                       </div>
 
                       <div className="form-group inputDataBox">
@@ -485,7 +463,7 @@ class Supplier extends Component {
                       </div>
                     </div>
                     <div className="inputDataBox">
-                      <button type="submit" className="btn btn-postSuppliers" disabled={!this.state.disabled} onClick={this.postSupplier}><i className="fas fa-plus"></i></button>
+                      <button type="submit" className="btn btn-postSuppliers" onClick={this.postSupplier}><i className="fas fa-plus"></i></button>
                     </div>
                   </form>
                 </div>
