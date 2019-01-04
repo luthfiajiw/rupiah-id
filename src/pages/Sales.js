@@ -61,10 +61,13 @@ class Sales extends Component {
   }
 
   handleProductCode = (e) => {
+    const filter = this.state.dataProducts.filter(item => {
+      return(item.product_code === e.target.value)
+    })
     this.setState({
       item_code: e.target.value,
-      item_name: e.target.innerHTML,
-      sell_price: e.target.getAttribute('name')
+      item_name: filter[0].product_name,
+      sell_price: filter[0].sell_price
     })
   }
 
@@ -78,9 +81,12 @@ class Sales extends Component {
   }
 
   handleCustomer = (e) => {
+    const filter = this.state.dataCustomers.filter(item => {
+      return(item.customer_id == e.target.value)
+    })
     this.setState({
       customer_id: parseInt(e.target.value),
-      customer_name: e.target.innerHTML
+      customer_name: filter[0].name
     })
   }
 
@@ -340,11 +346,11 @@ class Sales extends Component {
                       <form name="form1">
                         <div className="form-group inputSales mb-5">
                           <label>Nama Pelangan :</label>
-                          <select className="form-control" name="customer">
-                            <option value="0" onClick={this.handleCustomer}>Pilih</option>
+                          <select className="form-control" name="customer" onChange={this.handleCustomer}>
+                            <option value="0">Pilih</option>
                               {this.state.dataCustomers.map(data => {
                                 return(
-                                  <option value={data.customer_id} onClick={this.handleCustomer}>{data.name}</option>
+                                  <option value={data.customer_id}>{data.name}</option>
                                 )
                               })}
                           </select>
@@ -352,11 +358,11 @@ class Sales extends Component {
 
                         <div className="form-group inputSales">
                           <label>Barang yang mau dijual :</label>
-                          <select className="form-control" name="items">
-                            <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
+                          <select className="form-control" name="items" onChange={this.handleProductCode}>
+                            <option value="0" name="item_code">Pilih</option>
                               {this.state.dataProducts.map(data => {
                                 return(
-                                  <option value={data.product_code} name={data.sell_price} onClick={this.handleProductCode}>{data.product_name}</option>
+                                  <option value={data.product_code}>{data.product_name}</option>
                                 )
                               })}
                           </select>

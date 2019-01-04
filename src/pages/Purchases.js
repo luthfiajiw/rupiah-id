@@ -198,7 +198,6 @@ class Purchases extends Component {
   }
 
   render() {
-    console.log(this.state);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataSuppliers === null) {
       return(

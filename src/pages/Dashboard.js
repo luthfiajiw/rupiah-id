@@ -5,8 +5,18 @@ import Navbar from './Navbar';
 import Daily from './dashboard/Daily';
 import Monthly from './dashboard/Monthly';
 import axios from 'axios';
+import { css } from 'react-emotion';
+import { BounceLoader, BarLoader } from 'react-spinners';
 import Ink from 'react-ink';
 import { Redirect, Route, Switch, NavLink } from 'react-router-dom';
+
+const override = css`
+    border-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 30%);
+`;
 
 class Dashboard extends Component {
   constructor(props) {
@@ -21,13 +31,15 @@ class Dashboard extends Component {
   getPurchaseDailyReport = () => {
     const { baseUrl, token } = this.state
     axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
+      console.log(res);
       this.setState({
-        datas: res.data.data
+        datas: res.data
       })
     }).catch(err => {
       console.log(err);
-      localStorage.clear()
-      this.forceUpdate()
+      this.setState({
+        datas: null
+      })
     })
   }
 
@@ -37,9 +49,27 @@ class Dashboard extends Component {
     })
   }
 
+  componentDidMount() {
+    this.getPurchaseDailyReport();
+  }
+
   render() {
-    console.log(this.state);
-    if(localStorage.getItem('token') !== null) {
+    if (this.state.datas == null) {
+      return(
+        <div className="loading-wrapper">
+          <div className='sweet-loading text-center'>
+            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
+            <BounceLoader
+              className={override}
+              sizeUnit={"px"}
+              size={150}
+              color={'#ffffff'}
+              loading={this.state.loadingData}
+            />
+          </div>
+        </div>
+      )
+    } else if(this.state.datas !== null) {
     return (
           <div className="dashboard">
             <Navbar headerApp="Dashboard"/>
