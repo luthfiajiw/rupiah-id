@@ -51,9 +51,12 @@ class Purchases extends Component {
   }
 
   handleSupplier = (e) => {
+    const filter = this.state.dataSuppliers.filter(item => {
+      return(item.supplier_id == e.target.value)
+    })
     this.setState({
       supplier_id: parseInt(e.target.value),
-      supplier_name: e.target.innerHTML
+      supplier_name : filter[0].name
     })
   }
 
@@ -69,17 +72,18 @@ class Purchases extends Component {
 
 
   handleProductCode = (e) => {
+    const filter = this.state.dataProducts.filter(item => {
+      return(item.product_code === e.target.value)
+    })
+    console.log(filter);
     this.setState({
       item_code: e.target.value,
-      item_name: e.target.innerHTML,
-      buy_price: e.target.getAttribute('name')
+      item_name: filter[0].product_name,
+      buy_price: filter[0].buy_price
     })
   }
 
   handleProductAmount = (e) => {
-    const form1 = document.forms['form1']
-    const item_amount = form1.elements["item_amount"].value
-
     this.setState({
       item_amount: parseInt(e.target.value)
     })
@@ -103,9 +107,6 @@ class Purchases extends Component {
     this.setState({
       buyItems: buyItems,
     })
-
-
-
   }
 
   removeProductFromList = (i) => {
@@ -197,6 +198,7 @@ class Purchases extends Component {
   }
 
   render() {
+    console.log(this.state);
     // Loading while getting data
     if (this.state.dataProducts === null || this.state.dataSuppliers === null) {
       return(
@@ -344,11 +346,11 @@ class Purchases extends Component {
                     <form name="form1">
                       <div className="form-group inputPurchases mb-5">
                         <label>Nama Pemasok :</label>
-                        <select className="form-control" name="supplier">
-                          <option value="0" onClick={this.handleSupplier}>Pilih</option>
+                        <select onChange={this.handleSupplier} className="form-control" name="supplier">
+                          <option  value="0">Pilih</option>
                           {this.state.dataSuppliers.map(data => {
                             return(
-                              <option value={data.supplier_id} onClick={this.handleSupplier}>{data.name}</option>
+                              <option value={data.supplier_id}>{data.name}</option>
                             )
                           })}
                         </select>
@@ -356,11 +358,11 @@ class Purchases extends Component {
 
                       <div className="form-group inputPurchases">
                         <label>Barang yang mau dibeli :</label>
-                        <select className="form-control" name="items">
-                          <option value="0" name="item_code" onClick={this.handleProductCode}>Pilih</option>
+                        <select className="form-control" name="items" onChange={this.handleProductCode}>
+                          <option value="0" name="item_code">Pilih</option>
                           {this.state.dataProducts.map(data => {
                             return(
-                              <option value={data.product_code} name={data.buy_price} onClick={this.handleProductCode}>{data.product_name}</option>
+                              <option value={data.product_code} name={data.buy_price}>{data.product_name}</option>
                             )
                           })}
                         </select>

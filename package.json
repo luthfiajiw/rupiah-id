@@ -1,5 +1,5 @@
 {
-  "name": "tim-1",
+  "name": "rupiah-id",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.1",
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-ink": "^6.4.0",

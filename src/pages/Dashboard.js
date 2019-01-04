@@ -38,6 +38,7 @@ class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.state);
     if(localStorage.getItem('token') !== null) {
     return (
           <div className="dashboard">
