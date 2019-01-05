@@ -15,6 +15,23 @@
   text-shadow: 2px 5px 15px rgba(255, 123, 0, 0.5);
 }
 
+.navbar-toggler-icon {
+  margin-right: 0;
+  background-image: url('../../assets/tombol-drawer.svg')!important;
+  border-color: none!important;
+}
+
+.navbar-toggler {
+  border-color: #fff!important;
+}
+
+.navbar-toggler:active {
+  transform: scale(1.5);
+  transition: 1s;
+  transition-timing-function: ease-out;
+  box-shadow: 0px 5px 2px rgb(170, 204, 255, .5);
+}
+
 .mobile-app-rupiah {
   width: 50%;
   height: 10%!important;
