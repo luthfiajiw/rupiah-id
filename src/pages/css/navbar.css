@@ -62,3 +62,27 @@
 .navbar-dashboard a, .navbar-dashboard ul li {
   color: #fff!important;
 }
+
+.drawer{
+  padding-top: 50px;
+  z-index: 10000!important;
+  height: 100%;
+  width: 100%;
+  background-image: -webkit-linear-gradient(45deg, #ff9906, #ffb817);
+  background-image: -o-linear-gradient(45deg, #ff9906, #ffb817);
+  background-image: linear-gradient(45deg, #ff9906, #ffb817);
+}
+
+.drawer img {
+  width: 45px;
+  margin-bottom: 20px;
+  margin-left: 9%!important;
+}
+
+.drawer span {
+  text-indent: 30px;
+  font-size: 1.5em;
+  font-weight: bolder;
+  color: white;
+  text-shadow: 2px 5px 15px rgba(255, 123, 0, 0.5);
+}

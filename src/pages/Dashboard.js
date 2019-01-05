@@ -31,7 +31,6 @@ class Dashboard extends Component {
   getPurchaseDailyReport = () => {
     const { baseUrl, token } = this.state
     axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
-      console.log(res);
       this.setState({
         datas: res.data
       })
