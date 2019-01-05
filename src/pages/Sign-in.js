@@ -78,11 +78,8 @@ class SignIn extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({
-      [e.target.name] : e.target.value,
-    });
-
-    const {username, password} = this.state
+    const username = document.forms['form-signin'].elements['username'].value
+    const password = document.forms['form-signin'].elements['password'].value
 
     if (username.length > 0 && username.length < 10) {
       if (password.length > 4) {
@@ -99,6 +96,10 @@ class SignIn extends Component {
         disabled: false
       })
     }
+
+    this.setState({
+      [e.target.name] : e.target.value,
+    });
   }
 
   componentDidMount() {
@@ -195,7 +196,7 @@ class SignIn extends Component {
           <div>
             <img className="logo-rupiah" src={require('../assets/logo-r.png')} alt="rupiah-id"/>
           </div>
-          <form className="form-signin">
+          <form className="form-signin" name="form-signin">
             <div className="InputBox user">
               <li className="fas fa-user-circle"></li>
               <input id="inp-usr" type="text" name="username" required='required' onChange={this.handleChange}/>

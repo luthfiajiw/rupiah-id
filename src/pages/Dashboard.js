@@ -38,8 +38,9 @@ class Dashboard extends Component {
     }).catch(err => {
       console.log(err);
       this.setState({
-        datas: null
+        datas: "Failed"
       })
+      localStorage.clear()
     })
   }
 
@@ -69,7 +70,7 @@ class Dashboard extends Component {
           </div>
         </div>
       )
-    } else if(this.state.datas !== null) {
+    } else if(this.state.datas !== null || this.state.datas !== "Failed") {
     return (
           <div className="dashboard">
             <Navbar headerApp="Dashboard"/>
