@@ -30,7 +30,7 @@ class Dashboard extends Component {
 
   getPurchaseDailyReport = () => {
     const { baseUrl, token } = this.state
-    axios.get(`${baseUrl}/purchasereport/daily?token=${token}`).then(res => {
+    axios.get(`${baseUrl}/purchasereport/daily?token=${localStorage.getItem("token")}`).then(res => {
       this.setState({
         datas: res.data
       })
@@ -44,13 +44,10 @@ class Dashboard extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      token: localStorage.getItem("token")
-    })
+    this.getPurchaseDailyReport();
   }
 
   componentDidMount() {
-    this.getPurchaseDailyReport();
   }
 
   render() {
@@ -97,11 +94,12 @@ class Dashboard extends Component {
             </Switch>
           </div>
     );
-  } else {
+  } else if (this.state.datas === "Failed") {
     return(
       <Redirect to='/' />
     )}
-}
+  }
+
 }
 
 export default Dashboard;
