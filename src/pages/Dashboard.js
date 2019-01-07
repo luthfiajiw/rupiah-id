@@ -36,18 +36,15 @@ class Dashboard extends Component {
       })
     }).catch(err => {
       console.log(err);
+      localStorage.clear()
       this.setState({
         datas: "Failed"
       })
-      localStorage.clear()
     })
   }
 
   componentWillMount() {
     this.getPurchaseDailyReport();
-  }
-
-  componentDidMount() {
   }
 
   render() {

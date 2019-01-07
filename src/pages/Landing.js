@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './css/landing.css';
+import './css/animate.css';
 import { NavLink, Redirect} from 'react-router-dom';
 import Ink from 'react-ink';
 
@@ -16,7 +17,7 @@ class Landing extends Component {
     } else {
     return (
         <div className="bg-landing">
-          <nav className="container navbar navbar-expand-lg navbar-light">
+          <nav className="container fadeIn navbar navbar-expand-lg navbar-light">
             <NavLink className="navbar-brand my-3" to="/">
             <img className="nav-brand-landing" src={'https://svgshare.com/i/9zU.svg'} alt="logo rupiah"/>
             </NavLink>
@@ -49,7 +50,7 @@ class Landing extends Component {
               </div>
 
               <div className="col-md-6 text-center">
-                <img className="img-fluid" src={require('.././assets/laptop-monitor.svg')} alt="rupiah-dashboard"/>
+                <img className="img-fluid bounceInDown img-laptop" src={require('.././assets/laptop-monitor.svg')} alt="rupiah-dashboard"/>
               </div>
             </div>
           </div>

@@ -68,6 +68,8 @@ class Purchases extends Component {
     })
 
     document.forms['form1'].reset()
+    document.forms['form2'].reset()
+    document.forms['form3'].reset()
   }
 
 
@@ -341,7 +343,7 @@ class Purchases extends Component {
                 <hr className="text-left w-25 ml-0 my-4"></hr>
 
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <form name="form1">
                       <div className="form-group inputPurchases mb-5">
                         <label>Nama Pemasok :</label>
@@ -354,7 +356,10 @@ class Purchases extends Component {
                           })}
                         </select>
                       </div>
-
+                    </form>
+                  </div>
+                  <div className="col-md-4">
+                    <form name="form2">
                       <div className="form-group inputPurchases">
                         <label>Barang yang mau dibeli :</label>
                         <select className="form-control" name="items" onChange={this.handleProductCode}>
@@ -366,14 +371,19 @@ class Purchases extends Component {
                           })}
                         </select>
                       </div>
-
+                    </form>
+                  </div>
+                  <div className="col-md-4">
+                    <form name="form3">
                       <div className="form-group inputPurchases">
                         <label>Jumlah :</label>
                         <input className="form-control" type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
                       </div>
-                      <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToList}>Tambah</button>
+                      <div className="text-right">
+                        <button type="submit" className="btn btn-addItemPurchase my-2" onClick={this.addProductToList}>Tambah</button>
+                      </div>
                     </form>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>

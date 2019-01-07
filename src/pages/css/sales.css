@@ -21,12 +21,12 @@
 
 .inputSales input {
   padding: 7px;
-  width: 50%;
+  width: 100%;
 }
 
 .inputSales select {
   -webkit-padding: 5px;
-  width: 50%;
+  width: 100%;
 }
 
 @media screen and (max-width: 780px) {

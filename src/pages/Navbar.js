@@ -163,7 +163,7 @@ class Navbar extends Component {
 
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to="/profile" className="nav-link"><i className="far fa-user-circle px-2"></i>&nbsp;Profil</Link>
+                <Link to="/profile" className="ml-1 nav-link"><i className="far fa-user-circle px-2"></i>&nbsp;Profil</Link>
               </li>
               <li className="nav-item">
                 <Link to="/dashboard/daily" className="nav-link"><li className="fas fa-chart-bar"></li>Dashboard</Link>

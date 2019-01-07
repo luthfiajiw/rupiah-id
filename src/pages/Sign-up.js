@@ -28,10 +28,12 @@ const override = css`
 class SignUp extends Component {
   state = {
     data: undefined,
+    error: [],
     loading: true,
-    open: true,
+    open: false,
     redirect: false,
     disabled: false,
+    hidden: true,
     username: "",
     email: "",
     password: "",
@@ -50,7 +52,7 @@ class SignUp extends Component {
     e.preventDefault();
 
     this.setState({
-      data: "loading"
+      data: true
     })
 
     const formData = new FormData();
@@ -58,12 +60,18 @@ class SignUp extends Component {
     formData.append('email', this.state.email);
     formData.append('password', this.state.password);
     axios.post(`${this.state.baseUrl}/auth/register`, formData).then(res => {
-      console.log(res.data);
       this.setState({
         data: res.data,
-        redirect: true
+        redirect: true,
+        open: true
       })
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      this.setState({
+        data: false,
+        error: Object.values(err.response.data),
+        hidden: false
+      })
+    })
   }
 
   handleChange = (e) => {
@@ -121,43 +129,44 @@ class SignUp extends Component {
   }
 
 
-
   render() {
-
     // Processing signup
-    if (this.state.data === "loading") {
-      return(
-        <div className="loading-wrapper">
-          <div className='sweet-loading text-center'>
-            <img className="logo-r" src={require('../assets/rupiah-id.svg')} alt="rupiah-id"/>
-          <BounceLoader
-            className={override}
-            sizeUnit={"px"}
-            size={150}
-            color={'#ffffff'}
-            loading={this.state.loading}
-          />
-        </div>
-        </div>
-      )
-      // If success
-    }else if (sessionStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       return(
         <Redirect to="/dashboard/daily" />
       )
-    }else if (this.state.data !== "loading" && this.state.data !== undefined) {
-      return(
-        <div className="loading-wrapper">
-          <div className='sweet-loading text-center'>
-            <img className="logo-r" src={'https://svgshare.com/i/9zU.svg'} alt="rupiah-id"/>
-          <BounceLoader
-            className={override}
-            sizeUnit={"px"}
-            size={150}
-            color={'#ffffff'}
-            loading={this.state.loading}
-          />
-        </div>
+    }
+
+    return (
+      <div className="bg-sign-in">
+        {/* Loading Register */}
+        <Dialog
+          open={this.state.data}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title"
+            className="mx-auto text-center">
+              {"LOADING"}
+          </DialogTitle>
+
+          <DialogContent>
+            <div className="text-center wow bounceIn mx-3 mb-5 mt-0">
+              <BounceLoader
+                className={override}
+                sizeUnit={"px"}
+                size={130}
+                color={'#ff9906'}
+                loading= "true"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Register Succeed */}
         <Dialog
           open={this.state.open}
           TransitionComponent={Transition}
@@ -184,14 +193,15 @@ class SignUp extends Component {
             </Link>
           </DialogActions>
         </Dialog>
-        </div>
-      )
-    }
-    return (
-      <div className="bg-sign-in">
+
         <div className="sign-in text-center">
           <img className="logo-rupiah" src={require('../assets/logo-r.png')} alt="rupiah-id"/>
           <form className="form-signin">
+            <div className="eror">
+              <div className="errorMessage" hidden={this.state.hidden}>
+                {this.state.error}
+              </div>
+            </div>
             <div className="InputBox user">
               <li className="fas fa-user-circle"></li>
               <input id="inp-usr" type="text" name="username" value={this.state.username} onChange={this.handleChange} required='required' data-toggle="tooltip" data-placement="bottom" title="Maksimal 10 karakter"/>

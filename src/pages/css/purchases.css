@@ -21,12 +21,12 @@
 
 .inputPurchases input {
   padding: 7px;
-  width: 50%;
+  width: 100%;
 }
 
 .inputPurchases select {
   -webkit-padding: 5px;
-  width: 50%;
+  width: 100%;
 }
 
 @media screen and (max-width: 780px) {
@@ -43,6 +43,7 @@
 .btn-addItemPurchase {
   background-color: #ffc136;
   box-shadow: 0 5px 5px #ccc;
+
 }
 
 .product_amount {

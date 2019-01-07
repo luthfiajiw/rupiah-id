@@ -207,8 +207,6 @@ class SignIn extends Component {
               <input id="inp-pass" type="password" name="password" required='required' onChange={this.handleChange}/>
               <label id="label-pass">Password</label>
             </div>
-            <br/>
-            {/* <Link to="/dashboard/daily"> */}
             <button type="submit" className="btn btn-form" onClick={this.signIn} disabled={!this.state.disabled}>
               Masuk
               <Ink/>

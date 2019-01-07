@@ -72,7 +72,7 @@ class Sales extends Component {
   }
 
   handleProductAmount = (e) => {
-    const form1 = document.forms['form1']
+    const form1 = document.forms['form3']
     const item_amount = form1.elements["item_amount"].value
 
     this.setState({
@@ -342,7 +342,7 @@ class Sales extends Component {
                   <hr className="text-left w-25 ml-0 my-4"></hr>
 
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                       <form name="form1">
                         <div className="form-group inputSales mb-5">
                           <label>Nama Pelangan :</label>
@@ -355,7 +355,10 @@ class Sales extends Component {
                               })}
                           </select>
                         </div>
-
+                      </form>
+                    </div>
+                    <div className="col-md-4">
+                      <form name="form2">
                         <div className="form-group inputSales">
                           <label>Barang yang mau dijual :</label>
                           <select className="form-control" name="items" onChange={this.handleProductCode}>
@@ -367,12 +370,17 @@ class Sales extends Component {
                               })}
                           </select>
                         </div>
-
+                      </form>
+                    </div>
+                    <div className="col-md-4">
+                      <form name="form3">
                         <div className="form-group inputSales">
                           <label>Jumlah :</label>
                           <input className="form-control" type="number" name="item_amount" placeholder="jumlah barang" onChange={this.handleProductAmount}/>
                         </div>
-                        <button type="submit" className="btn btn-addItemSales my-2" onClick={this.addProductToList}>Tambah</button>
+                        <div className="text-right">
+                          <button type="submit" className="btn btn-addItemSales my-2" onClick={this.addProductToList}>Tambah</button>
+                        </div>
                       </form>
                     </div>
                   </div>
