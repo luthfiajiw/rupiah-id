@@ -22,7 +22,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datas: null,
+      datas: undefined,
       token: "",
       baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1"
     };
@@ -48,7 +48,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (this.state.datas == null) {
+    if (this.state.datas == undefined) {
       return(
         <div className="loading-wrapper">
           <div className='sweet-loading text-center'>
@@ -63,7 +63,7 @@ class Dashboard extends Component {
           </div>
         </div>
       )
-    } else if(this.state.datas !== null || this.state.datas !== "Failed") {
+    } else if(typeof this.state.datas === "object") {
     return (
           <div className="dashboard">
             <Navbar headerApp="Dashboard"/>
@@ -92,6 +92,7 @@ class Dashboard extends Component {
           </div>
     );
   } else if (this.state.datas === "Failed") {
+    localStorage.clear();
     return(
       <Redirect to='/' />
     )}

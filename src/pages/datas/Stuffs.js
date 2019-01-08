@@ -190,7 +190,7 @@ class Stuffs extends Component {
     axios.get(`${baseUrl}category?token=${token}`).then(
       res => {
         this.setState({
-          categories: res.data.data
+          categories: res.data.data,
         })
       }
     ).catch(err => console.log(err))
@@ -316,7 +316,7 @@ class Stuffs extends Component {
   nextPage = () => {
     this.setState({
       urlProduct: this.state.pagination.links.next + "&",
-      openTooltipNext: true
+      openTooltipNext: !this.state.openTooltipNext
     })
 
     this.getProduct()
@@ -325,7 +325,7 @@ class Stuffs extends Component {
   prevPage = () => {
     this.setState({
       urlProduct: this.state.pagination.links.previous + "&",
-      openTooltipPrev: true
+      openTooltipPrev: !this.state.openTooltipPrev
     })
 
     this.getProduct()

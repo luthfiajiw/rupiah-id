@@ -68,7 +68,6 @@ class Navbar extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (localStorage.getItem("token") === null) {
       return(
         <Redirect to="/" />

@@ -7,6 +7,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -17,7 +19,10 @@ class CategoryModal extends Component {
     super(props);
     this.state = {
       datas: [],
-      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/category",
+      baseUrl: "https://penjualanapp-api.herokuapp.com/api/v1/category?",
+      pagination: "",
+      openTooltipNext: false,
+      openTooltipPrev: false,
       token: ""
     };
   }
@@ -25,13 +30,32 @@ class CategoryModal extends Component {
   getCategory = () => {
     const { baseUrl, token } = this.state
 
-    axios.get(`${baseUrl}?token=${token}`).then(
+    axios.get(`${baseUrl}token=${token}`).then(
       res => {
         this.setState({
           datas: res.data.data,
+          pagination: res.data.meta.pagination
         })
       }
     )
+  }
+
+  nextPage = () => {
+    this.setState({
+      baseUrl: this.state.pagination.links.next + "&",
+      openTooltipNext: !this.state.openTooltipNext
+    })
+
+    this.getCategory()
+  }
+
+  prevPage = () => {
+    this.setState({
+      baseUrl: this.state.pagination.links.previous + "&",
+      openTooltipPrev: !this.state.openTooltipPrev
+    })
+
+    this.getCategory()
   }
 
   componentWillMount() {
@@ -45,6 +69,7 @@ class CategoryModal extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <Dialog
         open={this.props.open}
@@ -81,8 +106,33 @@ class CategoryModal extends Component {
             </div>
             <div className="row">
               <div className="col-md-12 d-flex justify-content-between">
-                <button type="button" className="btn btn-prev">Prev</button>
-                <button type="button" className="btn btn-next">Next</button>
+                <Tooltip
+                    PopperProps={{
+                      disablePortal: true,
+                    }}
+                    onClose={this.handleTooltipClose}
+                    open={this.state.openTooltipPrev}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title="Klik Sekali Lagi"
+                  >
+                <button type="button" className="btn btn-prev" onClick={this.prevPage}>Prev</button>
+                </Tooltip>
+
+                <Tooltip
+                    PopperProps={{
+                      disablePortal: true,
+                    }}
+                    onClose={this.handleTooltipClose}
+                    open={this.state.openTooltipNext}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    title="Klik Sekali Lagi"
+                  >
+                  <button type="button" className="btn btn-next" onClick={this.nextPage}>Next</button>
+                  </Tooltip>
               </div>
             </div>
           </div>

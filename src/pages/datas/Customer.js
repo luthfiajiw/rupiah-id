@@ -215,7 +215,7 @@ class Customer extends Component {
   nextPage = () => {
     this.setState({
       baseUrl: this.state.pagination.links.next + "&",
-      openTooltipNext: true
+      openTooltipNext: !this.state.openTooltipNext
     })
 
     this.getCustomers()
@@ -224,7 +224,7 @@ class Customer extends Component {
   prevPage = () => {
     this.setState({
       baseUrl: this.state.pagination.links.previous + "&",
-      openTooltipPrev: true
+      openTooltipPrev: !this.state.openTooltipPrev
     })
 
     this.getCustomers()

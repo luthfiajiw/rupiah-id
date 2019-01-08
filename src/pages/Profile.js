@@ -184,17 +184,17 @@ class Profile extends Component {
 
     axios.patch(`${baseUrl}/account/updatepassword?token=${token}`, {
       old_password: oldPass,
-      new_password: newPass,
+      password: newPass,
       confirm_password: confirmPass
     }).then(res => {
       this.setState({
         message: "Succeed",
         openPhoto: false
-      }).catch(err => {
-        this.setState({
-          message: "Failed",
-          openPhoto: false
-        })
+      })
+    }).catch(err => {
+      this.setState({
+        message: "Failed",
+        openPhoto: false
       })
     })
   }
@@ -232,7 +232,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="profile">
         <Navbar headerApp="Profil"/>

@@ -2,8 +2,12 @@ body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #fafafa;
-  font-family: 'Bree Serif', serif;
+  background: repeating-radial-gradient(
+       circle,
+       #ffffff,
+       #fdfdfd 50px
+ );
+ font-family: 'Bree Serif', serif;
 }
 
 .btn-addDatas {
