@@ -417,11 +417,11 @@ class Supplier extends Component {
 
                 <div className="form-group inputUpdateBox">
                   <label className="px-2">Asal Kota :</label>
-                  <select className="form-control" id="categories" name="categories">
-                    <option value={this.state.city_id} onClick={this.handleOption}>{this.state.city_name}</option>
+                  <select className="form-control" id="categories" name="categories" onChange={this.handleOption}>
+                    <option value={this.state.city_id}>{this.state.city_name}</option>
                     {this.state.cities.map(city => {
                       return(
-                        <option value={city.id} onClick={this.handleOption}>{city.name}</option>
+                        <option value={city.id}>{city.name}</option>
                       )
                     })}
                   </select>
@@ -473,11 +473,11 @@ class Supplier extends Component {
 
                       <div className="form-group inputDataBox">
                         <label className="px-2">Asal Kota :</label>
-                        <select className="form-control" name="city_id">
-                          <option value="0" onClick={this.handleOption}>Pilih</option>
+                        <select className="form-control" name="city_id" onChange={this.handleOption}>
+                          <option value="0">Pilih</option>
                           {this.state.cities.map((city,i) => {
                             return(
-                              <option value={city.id} onClick={this.handleOption}>{city.name}</option>
+                              <option value={city.id}>{city.name}</option>
                             )
                           })}
                         </select>
