@@ -19,7 +19,7 @@ class Landing extends Component {
         <div className="bg-landing">
           <nav className="container fadeIn navbar navbar-expand-lg navbar-light">
             <NavLink className="navbar-brand my-3" to="/">
-            <img className="nav-brand-landing" src={'https://svgshare.com/i/9zU.svg'} alt="logo rupiah"/>
+            <img className="nav-brand-landing" src={'https://imgur.com/FhclQFr.png'} alt="logo rupiah"/>
             </NavLink>
 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -108,7 +108,7 @@ class Navbar extends Component {
         </div>
         <nav className="navbar navbar-dashboard navbar-expand-lg">
           <a className="navbar-brand">
-            <img className="logo d-inline-block align-top" src={'https://svgshare.com/i/9zU.svg'} alt="logo-rupoah"/>
+            <img className="logo d-inline-block align-top" src={'https://imgur.com/FhclQFr.png'} alt="logo-rupoah"/>
              &nbsp; <span className="logo-text">UPIAH.ID</span>
           </a>
           <button onClick={()=>{this.setState({ openRight: !openRight, openLeft: false})}} className="navbar-toggler" type="button">
