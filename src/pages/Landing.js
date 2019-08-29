@@ -40,12 +40,17 @@ class Landing extends Component {
 
           <div className="container pt-3">
             <div className="row">
-              <div className="col-md-6 my-5 py-3 text-center text-md-left text-lg-left landing-text">
+              <div className="col-md-6 mt-5 text-center text-md-left text-lg-left landing-text">
                 <h1 className="fadeIn">RUPIAH.ID</h1>
-                <p className="fadeIn lead py-5 text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
-                  transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web & mobile
+                <p className="fadeIn lead text-justify">Rupiah.ID adalah aplikasi yang bertujuan untuk membantu mencatat
+                  transaksi penjualan dan pembelian yang terjadi pada barang daganganmu. Rupiah.ID merupakan aplikasi kasir berbasis web
                   sebagai pengganti peran aplikasi kasir di desktop. Dengan begitu kamu bisa melakukan transaksi & pembukuan melalui ponselmu
                   dimana pun kamu berada.
+                </p>
+
+                <p className="fadeIn lead text-justify">
+                  Aplikasi ini dibuat dalam kurun waktu satu bulan, dimana <b>Luthfi Aji Wicaksono</b> sebagai Frontend Developer dan <b>Sholeh Zuamsyah</b> sebagai
+                  Backend Developer yang bersama-sama membangun aplikasi sederhana ini.
                 </p>
               </div>
 
